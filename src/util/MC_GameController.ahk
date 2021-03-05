@@ -7,10 +7,13 @@ class MC_GameController{
     extensions:="png,bmp"
 
     __NEW(){
+        global DEFAULT_APP_ID
         this.imageSearcher := new ActiveImageSearcher( this.logger )
-        this.controller := new InActiveInputController( this.logger )
+        this.controller := new InActiveInputController( this.logger )        
+        this.currentTargetTitle:=DEFAULT_APP_ID
     }
     setActiveId(title){
+        this.currentTargetTitle:=title
         this.imageSearcher.setActiveId(title)
         this.controller.setActiveId(title)
     }
@@ -75,7 +78,7 @@ class MC_GameController{
         positionY+=randSecond
         ; ToolTip, % "TargetX = " positionX ", targetY= "positionY
         ; MouseMove %positionX%, %positionY%
-        this.click( positionX,positionY, needDelay )		
+        this.click( positionX, positionY, needDelay )		
     }
 
     sleep( secSleep ){
@@ -113,11 +116,10 @@ class MC_GameController{
         return false
     }
     clickRatioPos( ratioX, ratioY, maxSize:=40 ) {
-        global ACTIVE_ID
-        WinGetPos, , , winW, winH, %ACTIVE_ID%	
+        WinGetPos, winX, winY, winW, winH, % this.currentTargetTitle	
 
-        targetX:= winW * ratioX
-        targetY:= winH * ratioY
+        targetX:= winW * ratioX + winX
+        targetY:= winH * ratioY + winY
         ; ToolTip, % "WinW = " winW ", WinH = " winH ", TargetX = " targetX ", targetY= "targetY
         this.randomClick(targetX, targetY, 0, maxSize, true)
     }
