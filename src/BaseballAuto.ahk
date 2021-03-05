@@ -28,13 +28,14 @@ Class BaseballAuto{
 
         if ( ! this.started ){
             this.started:=true
+            this.running:=true
             this.logger.log("BaseballAuto Started!!")
 
             BaseballAutoGui.started()
             this.gameController.setActiveId(baseballAutoConfig.getDefaultPlayer().getAppTitle())
 
             counter:=1 
-            while( this.started = true ){
+            while( this.running = true ){
                 if not ( this.gameController.checkAppPlayer() ){
                     this.logger.log("Application Title을 확인하세요 변경 후 save ")
                     break
@@ -56,13 +57,16 @@ Class BaseballAuto{
         this.logger.log("BaseballAuto Done!!")
         this.stop()
     }
-
+    tryStop(){
+        this.logger.log("try to stop!")
+        this.running := false
+    }
     stop(){
         global BaseballAutoGui
         if ( this.started ){
             this.started:=false
-            BaseballAutoGui.stopped()
             this.logger.log("BaseballAuto Stopped!!")
+            BaseballAutoGui.stopped()
 
         }else{
             this.logger.log("BaseballAuto Already Stopped!!")

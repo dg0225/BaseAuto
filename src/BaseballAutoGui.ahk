@@ -197,7 +197,7 @@ Class BaseballAutoGui{
     }
     stopByGui() { 
         global baseballAuto
-        baseballAuto.stop()
+        baseballAuto.tryStop()
     }
 
     configByGui( thisGui ){
