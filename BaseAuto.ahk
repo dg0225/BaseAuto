@@ -1,52 +1,45 @@
-﻿#include %A_ScriptDir%\src\BaseballAuto.ahk
+﻿#include %A_ScriptDir%\src\BaseballAutoConfig.ahk
+#include %A_ScriptDir%\src\BaseballAuto.ahk
 #include %A_ScriptDir%\src\BaseballAutoGui.ahk
-#include %A_ScriptDir%\src\util\IniController.ahk
-#include %A_ScriptDir%\src\util\MC_Information.ahk
 
-; #include %A_ScriptDir%\src\gui\MC_MacroGui.ahk
+DEFAULT_APP_ID:="(Hard)"
 
-ACTIVE_ID:="(Hard)"
 BooleanDebugMode:=true
 
+baseballAutoConfig :=new BaseballAutoConfig( A_ScriptDir "/Config/main.ini" )
 baseballAutoGui := new BaseballAutoGui("baseball")
 baseballAuto := new BaseballAuto()
-baseballAutoConfig := new IniController( A_ScriptDir "/Config/main.ini" )
-basballAutoInfo :=new MC_Information( baseballAutoConfig)
 
-xPos:= baseballAutoConfig.loadValue("GUI_POSITION", "MAIN_X")
-yPos:= baseballAutoConfig.loadValue("GUI_POSITION", "MAIN_Y")
-(xPos = "") ? (xPos:=1150):
-(yPos = "") ? (yPos:=0):   
-baseballAutoGui.show( xPos , yPos )
 
+baseballAutoConfig.getLastGuiPosition( positionX, positionY )
+baseballAutoGui.show( positionX , positionY )
 
 ^F9::
-	baseballAuto.start()
+    baseballAuto.start()
 return 
 
 ^F10::
+    baseballAutoConfig.saveConfig()
     baseballAuto.stop()
 return 
 
-
 ^F12:: 
     WinActivate BaseAuto.ahk
-	Send, ^s
-	
-	global baseballAuto
+    Send, ^s
+
+    global baseballAuto
     baseballAuto.reload()
     Reload
 return 
 
-
 baseballGuiClose:
-{
-	global baseballAutoGui
-	title := baseballAutoGui.getTitle()   
-	WinGetPos, posx, posy, width, height, %title%   
-	baseballAutoConfig.saveValue("GUI_POSITION", "MAIN_X", posx)
-	baseballAutoConfig.saveValue("GUI_POSITION", "MAIN_Y", posy)
-	ExitApp
-}
+    {
+        global baseballAutoGui, baseballAutoConfig
+        title := baseballAutoGui.getTitle() 
+        WinGetPos, posx, posy, width, height, %title% 
+        baseballAutoConfig.setLastGuiPosition(posx, posy)
+        
+        ExitApp
+    }
 
-#include %A_ScriptDir%\src\mode\TestFunction.ahk
+    #include %A_ScriptDir%\src\mode\TestFunction.ahk

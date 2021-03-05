@@ -4,72 +4,74 @@
 #include %A_ScriptDir%\src\mode\GameStarterMode.ahk
 #include %A_ScriptDir%\src\mode\LeagueRunningMode.ahk
 
-
-
 Class BaseballAuto{
-	__NEW(){
-	
-		this.init()
-	}
+    __NEW(){
 
-    systemFileLogger:= new AutoLogger( "시 스 템" )
-	; macroGui := new MC_MacroGui( systemFileLogger )
-	
+        this.init()
+    }
+
+    logger:= new AutoLogger( "시 스 템" )
+    ; macroGui := new MC_MacroGui( logger )
+
     gameController := new MC_GameController()
     modeArray := []
-    
+
     init(){
-        
-        this.modeArray.Push( new GameStartMode( this.gameController ) )     
-		this.modeArray.Push( new LeagueRunningMode( this.gameController ) )     
-		this.systemFileLogger.log("BaseballAuto Ready !")
+
+        this.modeArray.Push( new GameStartMode( this.gameController ) ) 
+        this.modeArray.Push( new LeagueRunningMode( this.gameController ) ) 
+        this.logger.log("BaseballAuto Ready !")
     }
-      
+
     start(){
-		global BaseballAutoGui
-        
+        global BaseballAutoGui, baseballAutoConfig
+
         if ( ! this.started ){
             this.started:=true
-            this.systemFileLogger.log("BaseballAuto Started!!")
-            
-           BaseballAutoGui.started()
-            
-            counter:=1   
+            this.logger.log("BaseballAuto Started!!")
+
+            BaseballAutoGui.started()
+            this.gameController.setActiveId(baseballAutoConfig.getDefaultPlayer().getAppTitle())
+
+            counter:=1 
             while( this.started = true ){
-                
-            
-            
+                if not ( this.gameController.checkAppPlayer() ){
+                    this.logger.log("Application Title을 확인하세요 변경 후 save ")
+                    break
+                }
+
                 for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
                 {
-                    ; this.systemFileLogger.debug(  "Element number " . index . " is " . gameMode )                                     
+                    ; this.logger.debug(  "Element number " . index . " is " . gameMode )                                     
                     gameMode.checkAndRun()
                 }
-                
-				this.gameController.sleep(5)                
+
+                this.gameController.sleep(5) 
                 counter++
-				
-            }            
-        }else{            
-			this.systemFileLogger.log("BaseballAuto Already Started!!")
+
+            } 
+        }else{ 
+            this.logger.log("BaseballAuto Already Started!!")
         }
-        this.systemFileLogger.log("BaseballAuto Done!!")
+        this.logger.log("BaseballAuto Done!!")
+        this.stop()
     }
-    
+
     stop(){
-		global BaseballAutoGui
-                if (  this.started ){
+        global BaseballAutoGui
+        if ( this.started ){
             this.started:=false
-			BaseballAutoGui.stopped()
-			this.systemFileLogger.log("BaseballAuto Stopped!!")
-     
+            BaseballAutoGui.stopped()
+            this.logger.log("BaseballAuto Stopped!!")
+
         }else{
-			this.systemFileLogger.log("BaseballAuto Already Stopped!!")
-            
+            this.logger.log("BaseballAuto Already Stopped!!")
+
         }
     }
-    
+
     reload(){
-        this.systemFileLogger.log(" reload Call")
+        this.logger.log(" reload Call")
     }
 
 }
