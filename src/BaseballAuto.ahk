@@ -42,19 +42,15 @@ Class BaseballAuto{
                         if not ( this.gameController.checkAppPlayer() ){
                             this.logger.log("Application Title을 확인하세요 변경 후 save ")
                             break
-                        }
-					
+                        }					
                         for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
                         {
-							gameMode.setPlayer(player)
-                            ; this.logger.debug(  "Element number " . index . " is " . gameMode )                                     
+							gameMode.setPlayer(player)                            
                             gameMode.checkAndRun()
-                        }
-                        ; this.gameController.sleep(5) 
-						
+                        }                      
+						this.gameController.sleep(3) 						
                         if ( !player.needToStay() ){                        
-							
-                            ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
+						   ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
                         }
                     } 

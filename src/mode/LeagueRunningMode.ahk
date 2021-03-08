@@ -61,8 +61,17 @@ Class LeagueRunningMode{
     choicePlayType(){
         if ( this.gameController.searchImageFolder("리그모드\Window_ChoicePlayType") ){
 			this.player.setStay()
-            this.logger.log("전체 플레이 방식을 선택합니다.") 
-            this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_FullPlay")
+			if( this.player.getBattleType() = "D" ){
+				this.logger.log("수비 방식을 선택합니다.") 
+            this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyDepence")
+			}
+			if( this.player.getBattleType() = "O" ){
+				this.logger.log("공격 방식을 선택합니다.") 
+            this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyOppence")
+			}else{
+				this.logger.log("전체 플레이 방식을 선택합니다.") 
+				this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_FullPlay")
+			}            
         }
     }
 
@@ -78,8 +87,8 @@ Class LeagueRunningMode{
         global  baseballAutoConfig
         if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
             ; if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop\check_Stop") ){
-            ; 자동 중 다시 자동 play를 하지 말아라...
-            this.gameController.sleep(3)			
+            ; 자동 중 다시 자동 play를 하지 말아라...				
+            this.gameController.sleep(2)			
             if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
                 this.logger.log("자동 방식을 활성화 합니다.") 
 
@@ -115,7 +124,7 @@ Class LeagueRunningMode{
 			if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){
 				; if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop\check_Stop") ){
 				; 자동 중 다시 자동 play를 하지 말아라...
-				this.gameController.sleep(5)			
+				this.gameController.sleep(3)			
 				if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){					
 					this.logger.log("플레이 오프 류 종료") 				
 					this.gameController.searchAndClickFolder("리그모드\화면_결과_플레이오프" )            

@@ -39,10 +39,12 @@ class BaseballAutoConfig{
             playerEnabled:= this.configFile.loadValue(PLAYER_KEY, player.getKeyEnable() )
             playerRole:= this.configFile.loadValue(PLAYER_KEY, player.getKeyRole() )
             playerTitle:= this.configFile.loadValue(PLAYER_KEY, player.getKeyAppTitle() )
+			playerBattleType:= this.configFile.loadValue(PLAYER_KEY, player.getKeyBattleType() )
 
             player.setEnabled(playerEnabled)
             player.setAppTitle(playerTitle)
             player.setRole(playerRole)           
+			player.setBattleType(playerBattleType)
             if( A_Index = 1 )
             { 
                 player.setEnabled(true)
@@ -50,6 +52,10 @@ class BaseballAutoConfig{
                     player.setAppTitle("(Hard)")
                 if( playerRole = "" )
                     player.setRole("League")
+					
+				if (playerBattleType="")	
+					player.setBattleType("A")
+				
             }
             if( player.getEnabled() ){
                 this.enabledPlayers.push(player)
@@ -68,6 +74,7 @@ class BaseballAutoConfig{
             this.configFile.saveValue(PLAYER_KEY,element.getKeyEnable(), element.getEnabled()) 
             this.configFile.saveValue(PLAYER_KEY,element.getKeyAppTitle(), element.getAppTitle()) 
             this.configFile.saveValue(PLAYER_KEY,element.getKeyRole(), element.getRole()) 
+			this.configFile.saveValue(PLAYER_KEY,element.getKeyBattleType(), element.getBattleType()) 
         }
 
     }
@@ -81,6 +88,7 @@ class BaseAutoPlayer{
         this.enabled:=enabled
         this.appRole:=role        
 		this.status:="UNKNOWN"
+		this.battleType:="A"
     }
 
     getEnabled(){
@@ -100,10 +108,16 @@ class BaseAutoPlayer{
 			return true
 	}
 	setStay(){
-		this.status:="CONTROLLING"
+		global baseballAutoGui
+		
+		this.status:="ING"
+		baseballAutoGui.updateStatus( this.getKeyStatus(), this.status)
 	}
 	setFree(){
-		this.status:="AUTO_PLAYING"
+		global baseballAutoGui
+		
+		this.status:="AUTO"	
+		baseballAutoGui.updateStatus( this.getKeyStatus(), this.status)
 	}
 
     setEnabled( bool ){
@@ -117,14 +131,28 @@ class BaseAutoPlayer{
         this.AppTitle:=title            
     }
     setRole( role ){
+		; if( role != "")
         this.appRole:=role
     }
 
+	getBattleType(){
+		return this.battleType
+	
+	}
+	setBattleType( _battleType){
+		; if( _battleType !="")
+			this.battleType:=_battleType
+	}
+	
+	
     getKeyEnable(){
         return % "player" this.index "Enabled"
     }
     getKeyRole(){
         return % "player" this.index "Role"
+    }
+	getKeyBattleType(){
+        return % "player" this.index "BattleType"
     }
     getKeyAppTitle(){
         return % "player" this.index "AppTitle"
@@ -132,8 +160,5 @@ class BaseAutoPlayer{
     getKeyStatus(){
         return % "player" this.index "Status"
     }
-
-
-
 
 }

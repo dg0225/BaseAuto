@@ -65,13 +65,13 @@ Class BaseballAutoGui{
             if( player.getEnabled() ){
                 option:= % option " checked"
             }
-            this.guiMain.Add("CheckBox", "Player" index " :", option, guiLable,0)
+            this.guiMain.Add("CheckBox", index " :", option, guiLable,0)
         }
         for index, player in baseballAutoConfig.players
         {
             guiLable:=player.getKeyAppTitle()
             if( index = 1 ){
-                option:="xs+85 ys+15 w70"
+                option:="xs+45 ys+15 w70"
             }else{
                 option:="xp y+2 wp hp"
             }
@@ -85,10 +85,22 @@ Class BaseballAutoGui{
             guiLable:=player.getKeyRole()
             option:="xp y+2 wp"
             if( index = 1 ){
-                option:="xs+165 ys+15 +Center w70 h100"
+                option:="xs+120 ys+15 +Center w70 h100"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
             this.guiMain.Controls[guiLable].select(player.getRole())
+        }
+		 for index, player in baseballAutoConfig.players
+        {
+            guiType:="ComboBox"
+            guiTitle:="D|O|A"
+            guiLable:=player.getKeyBattleType()
+            option:="xp y+2 wp"
+            if( index = 1 ){
+                option:="xs+195 ys+15 +Center w35 h100"
+            }
+            this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
+            this.guiMain.Controls[guiLable].select(player.getBattleType())
         }
 
         for index, player in baseballAutoConfig.players
@@ -103,11 +115,11 @@ Class BaseballAutoGui{
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
         this.guiMain.Add("Button", "Save", "x" this.maxGroupWidth -30 " y0", "RoleSaveButton",0)
-		this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
-		this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
+		; this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
+		; this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
         this.guiMain.Controls["RoleSaveButton"].BindMethod(this.roleSaveByGui.Bind(this))
-        this.guiMain.Controls["RolePassButton"].BindMethod(this.rolePassByGui.Bind(this))
-        this.guiMain.Controls["RoleAllowButton"].BindMethod(this.roleAllowByGui.Bind(this))
+        ; this.guiMain.Controls["RolePassButton"].BindMethod(this.rolePassByGui.Bind(this))
+        ; this.guiMain.Controls["RoleAllowButton"].BindMethod(this.roleAllowByGui.Bind(this))
       
         return currentWindowHeight
     }
@@ -160,7 +172,9 @@ Class BaseballAutoGui{
         return currentWindowHeight
 
     }
-
+	updateStatus( statusLabel, status ){
+		this.guiMain.Controls[statusLabel].setText(status)	
+	}
     initLogWindow(_height){
         currentWindowHeight=200
         this.guiMain.Add("Text", "Start       ", "x10 	y" _height+5 "w200 section", "GuiLoggerTitle",0)
@@ -263,8 +277,8 @@ Class BaseballAutoGui{
         ; ToolTip % player.getKeyEnable()
         ; ToolTip % this.guiMain.Controls[player.getKeyAppTitle()].get()
         player.setAppTitle(this.guiMain.Controls[player.getKeyAppTitle()].get())
-
         player.setRole(this.guiMain.Controls[player.getKeyRole()].get())
+		player.setBattleType(this.guiMain.Controls[player.getKeyBattleType()].get())
     }
     remoteTooltips(){
 
