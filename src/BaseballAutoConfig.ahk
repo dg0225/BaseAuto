@@ -32,7 +32,7 @@ class BaseballAutoConfig{
     initConfig(){
 
         PLAYER_KEY:="PLAYERS_CONFIG"
-        loop, 2
+        loop, 4
         {
             player := new BaseAutoPlayer(A_Index)
 
