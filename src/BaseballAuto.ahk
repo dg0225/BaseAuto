@@ -54,7 +54,7 @@ Class BaseballAuto{
 						
                         if ( !player.needToStay() ){                        
 							
-                            this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
+                            ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
                         }
                     } 

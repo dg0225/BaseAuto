@@ -29,7 +29,7 @@ Class LeagueRunningMode{
     startLeagueInMainWindow(){
         if ( this.gameController.searchImageFolder("리그모드\Window_Main") ){		
 			this.player.setStay()
-            this.logger.log("리그를 돌겠습니다.")
+            this.logger.log(this.player.getAppTitle() " 리그를 돌겠습니다.")
             ; Loop상 일단 클리만 수행한다.
             this.gameController.searchAndClickFolder("리그모드\Button_league")
             ; if( this.gameController.searchAndClickFolder("리그모드\Button_league")  ){
@@ -68,7 +68,7 @@ Class LeagueRunningMode{
 
     skippPlayLineupStatus(){
         if ( this.gameController.searchImageFolder("리그모드\Button_skipBeforePlay") ){
-            this.logger.log("라인업 등을 넘어갑니다.") 
+            this.logger.log(this.player.getAppTitle() " 라인업 등을 넘어갑니다.") 
             if( this.gameController.searchAndClickFolder("리그모드\Button_skipBeforePlay") = true ){
                 this.skippPlayLineupStatus()			
             }		
