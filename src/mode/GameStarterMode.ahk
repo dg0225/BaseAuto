@@ -17,26 +17,29 @@ Class GameStartMode{
         ; return ImageSearcher.funcSearchImage()
 
     }
-
+	setPlayer( _player )
+	{
+		this.player:=_player
+	}
     checkGameDown(){
-        global globalCurrentPlayer
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_GameIcon") ){
-            globalCurrentPlayer.status:="NEW"
+			this.player.setStay()
             this.logger.log("컴프야 게임을 실행합니다.: 15초 wait ")
             this.gmaeController.searchAndClickFolder("게임실행모드\Button_GameIcon") 
             this.gmaeController.sleep(15)					
         }
     }
     skipAndroidAds(){
-        global globalCurrentPlayer
+        
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_AdroidAds") ){
-            globalCurrentPlayer.status:="NEW"
+			this.player.setStay()            
             this.logger.log("안드로이드 광고 ㅠㅠ") 
             this.gmaeController.searchAndClickFolder("게임실행모드\Button_AdroidAds",0,30) 
         }
     }
     skipPopupAndAds(){
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_NoMoreAds") ){
+			this.player.setStay()
             this.logger.log("팝업 광고 등을 취소합니다..") 
             if( this.gmaeController.searchAndClickFolder("게임실행모드\Button_NoMoreAds") = true ){
                 this.skipPopupAndAds()			

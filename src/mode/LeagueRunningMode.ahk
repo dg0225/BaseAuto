@@ -8,15 +8,18 @@ Class LeagueRunningMode{
     __NEW( controller ){
         this.gameController :=controller
     }
-
+	
+	setPlayer( _player )
+	{
+		this.player:=_player
+	}
     checkAndRun(){
-
-        this.startLeagueInMainWindow() 	
-        this.skippLeagueSchedule()
-        this.skippBattleHistory()
-        this.choicePlayType()
-        this.skippPlayLineupStatus()
-        this.activateAutoPlay()		
+        this.startLeagueInMainWindow(  ) 	
+        this.skippLeagueSchedule(  )
+        this.skippBattleHistory(  )
+        this.choicePlayType(  )
+        this.skippPlayLineupStatus(  )
+        this.activateAutoPlay(  )		
         this.checkAutoPlayEnding()
         this.skipLevelUpOrPopUp()
         this.checkGameResultWindow()
@@ -25,6 +28,7 @@ Class LeagueRunningMode{
     }
     startLeagueInMainWindow(){
         if ( this.gameController.searchImageFolder("리그모드\Window_Main") ){		
+			this.player.setStay()
             this.logger.log("리그를 돌겠습니다.")
             ; Loop상 일단 클리만 수행한다.
             this.gameController.searchAndClickFolder("리그모드\Button_league")
@@ -35,6 +39,7 @@ Class LeagueRunningMode{
     }
     skippLeagueSchedule(){
         if ( this.gameController.searchImageFolder("리그모드\화면_경기일정") ){
+			this.player.setStay()
             this.logger.log("일정 화면을 넘어갑니다.")			
             ; Loop상 일단 클리만 수행한다.
             this.gameController.searchAndClickFolder("리그모드\Button_PlayStart")
@@ -45,6 +50,7 @@ Class LeagueRunningMode{
     }		
     skippBattleHistory(){
         if ( this.gameController.searchImageFolder("리그모드\화면_상대전적") ){
+			this.player.setStay()
             this.logger.log("전적 화면을 넘어갑니다.")
             if ( this.gameController.searchAndClickFolder("리그모드\Button_PlayStart") ){
                 this.logger.log("경기가 시작 됩니다. 15초 기다립니다.")
@@ -54,6 +60,7 @@ Class LeagueRunningMode{
     }	
     choicePlayType(){
         if ( this.gameController.searchImageFolder("리그모드\Window_ChoicePlayType") ){
+			this.player.setStay()
             this.logger.log("전체 플레이 방식을 선택합니다.") 
             this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_FullPlay")
         }
@@ -68,7 +75,7 @@ Class LeagueRunningMode{
         }
     }
     activateAutoPlay(){
-        global globalCurrentPlayer, baseballAutoConfig
+        global  baseballAutoConfig
         if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
             ; if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop\check_Stop") ){
             ; 자동 중 다시 자동 play를 하지 말아라...
@@ -84,12 +91,11 @@ Class LeagueRunningMode{
                     this.gameController.clickRatioPos(0.76, 0.097, 20)
                 this.gameController.sleep(2)			
                 if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") != true ){
-                    globalCurrentPlayer["status"]:="AUTO_PLAYING"
+                    this.player.setFree()
                     return true
                 }
             }else{
-                globalCurrentPlayer["status"]:="AUTO_PLAYING"
-                this.logger.log("이녀석은 자동중")
+                this.player.setFree()
             }
         }
     } 
@@ -100,28 +106,47 @@ Class LeagueRunningMode{
         }
     }
     checkAutoPlayEnding(){
-        global globalCurrentPlayer
         if( this.gameController.searchImageFolder("리그모드\화면_결과_타구장" ) ){		
-            globalCurrentPlayer.status:="RESULTING"
+			this.player.setStay()
             this.logger.log("경기 종료를 확인했습니다.") 
             ; this.gameController.sleep(10)
             this.gameController.searchAndClickFolder("리그모드\화면_결과_타구장" ) 
-        }
+        }else{
+			if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){
+				; if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop\check_Stop") ){
+				; 자동 중 다시 자동 play를 하지 말아라...
+				this.gameController.sleep(5)			
+				if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){					
+					this.logger.log("플레이 오프 류 종료") 				
+					this.gameController.searchAndClickFolder("리그모드\화면_결과_플레이오프" )            
+					this.gameController.sleep(3)			
+					if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){
+						this.logger.log("오류 인거 같으니 넘어가준다.") 
+						this.player.setFree()
+					}else{
+						this.player.setStay()
+					}				
+				}
+			}
+		}
     }
     skipLevelUpOrPopUp(){
         if( this.gameController.searchImageFolder("리그모드\화면_결과_레벨업_성장" ) ){		
+			this.player.setStay()
             this.logger.log("레벨업이나 성장을 무시합니다.") 
             this.gameController.searchAndClickFolder("리그모드\버튼_결과_레벨업_성장_X" ) 
         }		
     }
     checkGameResultWindow(){
         if( this.gameController.searchImageFolder("리그모드\화면_결과_경기결과" ) ){		
+			this.player.setStay()
             this.logger.log("경기 결과를 확인했습니다.") 
             this.gameController.searchAndClickFolder("리그모드\버튼_결과_다음_확인" ) 
         }			
     }
     checkMVPWindow(){
         if( this.gameController.searchImageFolder("리그모드\화면_결과_MVP" ) ){		
+			this.player.setStay()
             this.logger.log("MVP 를 확인했습니다.") 
             ; this.gameController.sleep(10)
             this.gameController.searchAndClickFolder("리그모드\버튼_결과_다음_확인" ) 

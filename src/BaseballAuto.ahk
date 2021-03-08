@@ -46,19 +46,16 @@ Class BaseballAuto{
 					
                         for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
                         {
+							gameMode.setPlayer(player)
                             ; this.logger.debug(  "Element number " . index . " is " . gameMode )                                     
                             gameMode.checkAndRun()
                         }
                         ; this.gameController.sleep(5) 
-						if( globalContinueFlag ){
-							this.logger.log( "그냥 넘어갑니다.. " globalCurrentPlayer.getAppTitle())
-							break
-						}						
-                        if ( globalCurrentPlayer["status"]="AUTO_PLAYING" ){                        
+						
+                        if ( !player.needToStay() ){                        
+							
                             this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
-                        }else{
-                            this.logger.log( "아직 아니다. " globalCurrentPlayer.getAppTitle())
                         }
                     } 
 

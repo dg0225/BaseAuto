@@ -42,8 +42,7 @@ class BaseballAutoConfig{
 
             player.setEnabled(playerEnabled)
             player.setAppTitle(playerTitle)
-            player.setRole(playerRole)
-            
+            player.setRole(playerRole)           
             if( A_Index = 1 )
             { 
                 player.setEnabled(true)
@@ -54,6 +53,7 @@ class BaseballAutoConfig{
             }
             if( player.getEnabled() ){
                 this.enabledPlayers.push(player)
+
             }
             ; msgbox % "player " A_Index " Enabled : " player["ENABLE"] " Title: " player["TITLE"] " Role : "player["ROLE"]
             this.players.Push( player)
@@ -80,6 +80,7 @@ class BaseAutoPlayer{
         this.appTitle:=title
         this.enabled:=enabled
         this.appRole:=role        
+		this.status:="UNKNOWN"
     }
 
     getEnabled(){
@@ -92,6 +93,18 @@ class BaseAutoPlayer{
     getAppTitle(){
         return this.appTitle
     }
+	needToStay(){
+		if( this.status = "UNKNOWN" or this.status ="AUTO_PLAYING" )
+			return false
+		else
+			return true
+	}
+	setStay(){
+		this.status:="CONTROLLING"
+	}
+	setFree(){
+		this.status:="AUTO_PLAYING"
+	}
 
     setEnabled( bool ){
         if( bool = true or bool="true" or bool=1)
