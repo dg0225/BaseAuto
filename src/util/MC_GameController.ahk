@@ -120,6 +120,8 @@ class MC_GameController{
 
         targetX:= winW * ratioX + winX
         targetY:= winH * ratioY + winY
+        ; MsgBox, % "X" winW "   Y " winH "   title " this.currentTargetTitle
+        ; MouseMove, %targetX%, %targetY%
         ; ToolTip, % "WinW = " winW ", WinH = " winH ", TargetX = " targetX ", targetY= "targetY
         this.randomClick(targetX, targetY, 0, maxSize, true)
     }

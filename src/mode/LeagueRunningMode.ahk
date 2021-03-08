@@ -21,6 +21,7 @@ Class LeagueRunningMode{
         this.skipLevelUpOrPopUp()
         this.checkGameResultWindow()
         this.checkMVPWindow()
+        this.checkSpeedUp()
     }
     startLeagueInMainWindow(){
         if ( this.gameController.searchImageFolder("리그모드\Window_Main") ){		
@@ -67,22 +68,43 @@ Class LeagueRunningMode{
         }
     }
     activateAutoPlay(){
+        global globalCurrentPlayer, baseballAutoConfig
         if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
             ; if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop\check_Stop") ){
             ; 자동 중 다시 자동 play를 하지 말아라...
             this.gameController.sleep(3)			
             if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
                 this.logger.log("자동 방식을 활성화 합니다.") 
-                this.gameController.clickRatioPos(0.76, 0.097, 20)
+
+                if( baseballAutoConfig.enabledPlayers.length() > 1 )
+                    this.gameController.clickRatioPos(0.80, 0.12, 5)
+                else
+                    this.gameController.clickRatioPos(0.76, 0.097, 20)
                 this.gameController.sleep(2)			
                 if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") != true ){
+                    globalCurrentPlayer["status"]:="AUTO_PLAYING"
                     return true
                 }
+            }else{
+                globalCurrentPlayer["status"]:="AUTO_PLAYING"
+                this.logger.log("이녀석은 자동중")
             }
         }
     } 
+    checkSpeedUp(){
+        global globalCurrentPlayer
+        if ( this.gameController.searchImageFolder("리그모드\button_playSlow") ){
+            this.logger.log("자동은 빠르게 ") 
+            if( this.gameController.searchAndClickFolder("리그모드\button_playSlow" ) ){
+                this.logger.log("이녀석은 자동 중222")
+                globalCurrentPlayer["status"]:="AUTO_PLAYING"
+            }
+        }
+    }
     checkAutoPlayEnding(){
+        global globalCurrentPlayer
         if( this.gameController.searchImageFolder("리그모드\화면_결과_타구장" ) ){		
+            globalCurrentPlayer.status:="RESULTING"
             this.logger.log("경기 종료를 확인했습니다.") 
             ; this.gameController.sleep(10)
             this.gameController.searchAndClickFolder("리그모드\화면_결과_타구장" ) 

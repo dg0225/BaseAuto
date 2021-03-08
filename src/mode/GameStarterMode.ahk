@@ -19,14 +19,18 @@ Class GameStartMode{
     }
 
     checkGameDown(){
+        global globalCurrentPlayer
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_GameIcon") ){
+            globalCurrentPlayer.status:="NEW"
             this.logger.log("컴프야 게임을 실행합니다.: 15초 wait ")
             this.gmaeController.searchAndClickFolder("게임실행모드\Button_GameIcon") 
             this.gmaeController.sleep(15)					
         }
     }
     skipAndroidAds(){
+        global globalCurrentPlayer
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_AdroidAds") ){
+            globalCurrentPlayer.status:="NEW"
             this.logger.log("안드로이드 광고 ㅠㅠ") 
             this.gmaeController.searchAndClickFolder("게임실행모드\Button_AdroidAds",0,30) 
         }

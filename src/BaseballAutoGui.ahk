@@ -220,14 +220,21 @@ Class BaseballAutoGui{
     roleSaveByGui(){
         global baseballAutoConfig
 
+        baseballAutoConfig.enabledPlayers:=[]
         for index,player in baseballAutoConfig.players
+        {
             this.getGuiInfo(player) 
+            if( player.getEnabled() ){
+                baseballAutoConfig.enabledPlayers.push(player)
+            }
+        }
+
 
         baseballAutoConfig.saveConfig()
         ToolTip, Role Saved
         Sleep , 500
         ToolTip
-        ; ToolTip, [ Text, X, Y, WhichToolTip]
+        ; ToolTip, % "Enabled Players " baseballAutoConfig.enabledPlayers.length()
 
     }
     getGuiInfo(player){

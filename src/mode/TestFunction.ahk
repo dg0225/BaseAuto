@@ -2,6 +2,7 @@
 
 !F6::
     localController := new MC_GameController()
-    localController.clickRatioPos(0.76, 0.097, 20)
-
+    localController.setActiveId("(MEmu1)")
+    localController.clickRatioPos(0.80, 0.12, 20)
+    
 return

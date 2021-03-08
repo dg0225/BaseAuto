@@ -5,6 +5,7 @@ class BaseballAutoConfig{
         this.configFile := new IniController( configFileName )
 
         This.players := []
+        This.enabledPlayers:= []
         this.initConfig()
     }
     getDefaultPlayer(){
@@ -50,6 +51,9 @@ class BaseballAutoConfig{
                     player.setAppTitle("(Hard)")
                 if( playerRole = "" )
                     player.setRole("League")
+            }
+            if( player.getEnabled() ){
+                this.enabledPlayers.push(player)
             }
             ; msgbox % "player " A_Index " Enabled : " player["ENABLE"] " Title: " player["TITLE"] " Role : "player["ROLE"]
             this.players.Push( player)
