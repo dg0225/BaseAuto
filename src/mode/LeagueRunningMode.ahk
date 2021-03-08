@@ -63,11 +63,10 @@ Class LeagueRunningMode{
 			this.player.setStay()
 			if( this.player.getBattleType() = "D" ){
 				this.logger.log("수비 방식을 선택합니다.") 
-            this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyDepence")
-			}
-			if( this.player.getBattleType() = "O" ){
+				this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyDepence")
+			} else if( this.player.getBattleType() = "O" ){
 				this.logger.log("공격 방식을 선택합니다.") 
-            this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyOppence")
+				this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyOppence")
 			}else{
 				this.logger.log("전체 플레이 방식을 선택합니다.") 
 				this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_FullPlay")
@@ -93,11 +92,10 @@ Class LeagueRunningMode{
                 this.logger.log("자동 방식을 활성화 합니다.") 
 
                 if( baseballAutoConfig.enabledPlayers.length() > 1 )
-                    ; this.gameController.clickRatioPos(0.80, 0.12, 5)
-					; this.gameController.clickRatioPos(0.76, 0.097, 20)
 					this.gameController.clickRatioPos(0.744, 0.114, 10)
                 else
                     this.gameController.clickRatioPos(0.76, 0.097, 20)
+					
                 this.gameController.sleep(2)			
                 if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") != true ){
                     this.player.setFree()
