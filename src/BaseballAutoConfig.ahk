@@ -102,7 +102,7 @@ class BaseAutoPlayer{
         return this.appTitle
     }
 	needToStay(){
-		if( this.status = "UNKNOWN" or this.status ="AUTO_PLAYING" )
+		if( this.status = "UNKNOWN" or this.status ="AUTO" )
 			return false
 		else
 			return true
