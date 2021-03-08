@@ -103,7 +103,11 @@ Class BaseballAutoGui{
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
         this.guiMain.Add("Button", "Save", "x" this.maxGroupWidth -30 " y0", "RoleSaveButton",0)
+		this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
+		this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
         this.guiMain.Controls["RoleSaveButton"].BindMethod(this.roleSaveByGui.Bind(this))
+        this.guiMain.Controls["RolePassButton"].BindMethod(this.rolePassByGui.Bind(this))
+        this.guiMain.Controls["RoleAllowButton"].BindMethod(this.roleAllowByGui.Bind(this))
       
         return currentWindowHeight
     }
@@ -237,6 +241,23 @@ Class BaseballAutoGui{
         ; ToolTip, % "Enabled Players " baseballAutoConfig.enabledPlayers.length()
 
     }
+	rolePassByGui(){
+		global globalContinueFlag
+		globalContinueFlag:=true
+		ToolTip, " JUST NEXT PLAYER"
+		Sleep , 500
+        ToolTip
+	}
+	roleAllowByGui(){
+		global globalCurrentPlayer
+		globalCurrentPlayer["status"]:="AUTO_PLAYING"
+		ToolTip, % globalCurrentPlayer.getAppTitle() " Already AutoPlaying()"
+        Sleep , 500
+        ToolTip
+	}
+	
+      
+	  
     getGuiInfo(player){
         player.setEnabled(this.guiMain.Controls[player.getKeyEnable()].get())
         ; ToolTip % player.getKeyEnable()

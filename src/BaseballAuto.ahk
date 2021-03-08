@@ -24,7 +24,7 @@ Class BaseballAuto{
     }
 
     start(){
-        global BaseballAutoGui, baseballAutoConfig, globalCurrentPlayer
+        global BaseballAutoGui, baseballAutoConfig, globalCurrentPlayer,globalContinueFlag
 
         if ( ! this.started ){
             this.started:=true
@@ -37,21 +37,25 @@ Class BaseballAuto{
                 for playerIndex, player in baseballAutoConfig.enabledPlayers{
                     globalCurrentPlayer:=player
                     this.gameController.setActiveId(player.getAppTitle())
-
+					globalContinueFlag:=false
                     while( this.running = true ){
                         if not ( this.gameController.checkAppPlayer() ){
                             this.logger.log("Application Title을 확인하세요 변경 후 save ")
                             break
                         }
-
+					
                         for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
                         {
                             ; this.logger.debug(  "Element number " . index . " is " . gameMode )                                     
                             gameMode.checkAndRun()
                         }
                         ; this.gameController.sleep(5) 
+						if( globalContinueFlag ){
+							this.logger.log( "그냥 넘어갑니다.. " globalCurrentPlayer.getAppTitle())
+							break
+						}						
                         if ( globalCurrentPlayer["status"]="AUTO_PLAYING" ){                        
-                            this.logger.log( "넘어가자. " globalCurrentPlayer.getAppTitle())
+                            this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
                         }else{
                             this.logger.log( "아직 아니다. " globalCurrentPlayer.getAppTitle())

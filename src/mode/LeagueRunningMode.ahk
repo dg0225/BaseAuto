@@ -77,7 +77,9 @@ Class LeagueRunningMode{
                 this.logger.log("자동 방식을 활성화 합니다.") 
 
                 if( baseballAutoConfig.enabledPlayers.length() > 1 )
-                    this.gameController.clickRatioPos(0.80, 0.12, 5)
+                    ; this.gameController.clickRatioPos(0.80, 0.12, 5)
+					; this.gameController.clickRatioPos(0.76, 0.097, 20)
+					this.gameController.clickRatioPos(0.744, 0.114, 10)
                 else
                     this.gameController.clickRatioPos(0.76, 0.097, 20)
                 this.gameController.sleep(2)			
@@ -92,13 +94,9 @@ Class LeagueRunningMode{
         }
     } 
     checkSpeedUp(){
-        global globalCurrentPlayer
         if ( this.gameController.searchImageFolder("리그모드\button_playSlow") ){
             this.logger.log("자동은 빠르게 ") 
-            if( this.gameController.searchAndClickFolder("리그모드\button_playSlow" ) ){
-                this.logger.log("이녀석은 자동 중222")
-                globalCurrentPlayer["status"]:="AUTO_PLAYING"
-            }
+            this.gameController.searchAndClickFolder("리그모드\button_playSlow" )            
         }
     }
     checkAutoPlayEnding(){
