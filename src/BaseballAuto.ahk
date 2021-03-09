@@ -37,7 +37,7 @@ Class BaseballAuto{
                 for playerIndex, player in baseballAutoConfig.enabledPlayers{
                     globalCurrentPlayer:=player
 					globalCurrentPlayer.setCheck()
-					if( !globalCurrentPlayer.needToRun()){
+					if( globalCurrentPlayer.needToStop()){
 						baseballAutoConfig.enabledPlayers.remove(playerIndex)
 						if( baseballAutoConfig.enabledPlayers.length() = 0 )
 							this.running:=false

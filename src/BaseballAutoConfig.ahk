@@ -112,11 +112,11 @@ class BaseAutoPlayer{
 		else
 			return true
 	}
-	needToRun(){
+	needToStop(){
 		if( this.status ="끝")
-			return false
-		else
 			return true
+		else
+			return false
 	}
 	setWantToWaitResult(){
 		this.watingResult:=true
