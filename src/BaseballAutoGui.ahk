@@ -106,11 +106,11 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="Text"
-            guiTitle:="Unknown"
+            guiTitle:="몰라"
             guiLable:=player.getKeyStatus()
             option:="xp y+10 wp hp"
             if( index = 1 ){
-                option:="xs+245 ys+20"
+                option:="xs+235 ys+20 w70"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
@@ -162,17 +162,27 @@ Class BaseballAutoGui{
         this.guiMain.Controls["GuiResumeButton"].BindMethod(this.resumeByGui.Bind(this))
         this.guiMain.Controls["GuiPauseButton"].BindMethod(this.pauseByGui.Bind(this))	
 
-        this.guiMain.Add("Button", "리로드[F12]", "w90 h30 X+5 yp-4 ", "GuiReloadButton", 0)
+        this.guiMain.Add("Button", "리로드[F12]", "w80 h30 X+5 yp-4 ", "GuiReloadButton", 0)
         this.guiMain.Controls["GuiReloadButton"].BindMethod(this.reloadByGui.Bind(this))
 
-        this.guiMain.Add("Button", "설정", "w70 h30 X+10 ", "GuiConfigButton", 0)
+        this.guiMain.Add("Button", "설정", "w60 h30 X+5 ", "GuiConfigButton", 0)
+		this.guiMain.Add("Button", "W", "w20 h30 X+5 ", "GuiWaitResultButton", 0)
 
         this.guiMain.Controls["GuiConfigButton"].BindMethod(this.configByGui.Bind(this))
+		this.guiMain.Controls["GuiWaitResultButton"].BindMethod(this.waitingResultByGui.Bind(this))
 
         return currentWindowHeight
 
     }
-	updateStatus( statusLabel, status ){
+	updateStatusColor( statusLabel, status , changeColor:=false ){
+		if( changeColor ){			
+			this.guiMain.Controls[statusLabel].SetOptions("+cRed")		
+		}else{
+			this.guiMain.Controls[statusLabel].SetOptions("+cBlack")		
+		}
+		this.guiMain.Controls[statusLabel].setText(status)	
+	}
+	updateStatus( statusLabel, status ){		
 		this.guiMain.Controls[statusLabel].setText(status)	
 	}
     initLogWindow(_height){
@@ -269,9 +279,13 @@ Class BaseballAutoGui{
         Sleep , 500
         ToolTip
 	}
-	
-      
-	  
+	waitingResultByGui(){
+		global  baseballAutoConfig
+		ToolTip, 모든 경기가 종료되길 체크 합니다.
+        Sleep , 1000
+        ToolTip
+		baseballAutoConfig.setWantToResult()	
+	}
     getGuiInfo(player){
         player.setEnabled(this.guiMain.Controls[player.getKeyEnable()].get())
         ; ToolTip % player.getKeyEnable()

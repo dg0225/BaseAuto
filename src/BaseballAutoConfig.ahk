@@ -63,7 +63,13 @@ class BaseballAutoConfig{
             this.players.Push( player)
         }
     }
-
+	setWantToResult(){
+		for index,player in this.enabledPlayers
+        {
+            player.setWantToWaitResult()            
+        }
+		
+	}
     saveConfig(){
 
         PLAYER_KEY:="PLAYERS_CONFIG"
@@ -85,7 +91,8 @@ class BaseAutoPlayer{
         this.appTitle:=title
         this.enabled:=enabled
         this.appRole:=role        
-		this.status:="UNKNOWN"
+		this.watingResult:=false
+		this.status:="몰라"
 		this.battleType:="A"
     }
 
@@ -100,22 +107,52 @@ class BaseAutoPlayer{
         return this.appTitle
     }
 	needToStay(){
-		if( this.status = "UNKNOWN" or this.status ="AUTO" )
+		if( this.status = "몰라" or this.status ="자동중" or this.status ="리그종료" or this.status ="끝")
 			return false
 		else
 			return true
 	}
+	needToRun(){
+		if( this.status ="끝")
+			return false
+		else
+			return true
+	}
+	setWantToWaitResult(){
+		this.watingResult:=true
+	}
+	getWaitingResult(){
+		return this.watingResult
+	}
+	setCheck(){
+		this.setStatusColor( true)
+	}
+	setCheckDone(){
+		this.setStatusColor(false)
+	}
 	setStay(){
-		global baseballAutoGui
-		
-		this.status:="ING"
-		baseballAutoGui.updateStatus( this.getKeyStatus(), this.status)
+		this.setStatus("조작중")
+	}
+	setBye(){
+		this.setStatus("끝")
+	}
+	setRealFree(){
+		this.setStatus("리그종료")		
 	}
 	setFree(){
-		global baseballAutoGui
-		
-		this.status:="AUTO"	
-		baseballAutoGui.updateStatus( this.getKeyStatus(), this.status)
+		this.setStatus("자동중")		
+	}
+	setUnkown(){
+		this.setStatus("몰라")		
+	}
+	setStatus( status ){
+		global baseballAutoGui		
+		this.status:=status
+		baseballAutoGui.updateStatus( this.getKeyStatus(), this.status, changeColor)
+	}
+	setStatusColor( changeColor:=false){
+		global baseballAutoGui		
+		baseballAutoGui.updateStatusColor( this.getKeyStatus(), this.status, changeColor)	
 	}
 
     setEnabled( bool ){

@@ -36,6 +36,13 @@ Class BaseballAuto{
             while( this.running = true ){
                 for playerIndex, player in baseballAutoConfig.enabledPlayers{
                     globalCurrentPlayer:=player
+					globalCurrentPlayer.setCheck()
+					if( !globalCurrentPlayer.needToRun()){
+						baseballAutoConfig.enabledPlayers.remove(playerIndex)
+						if( baseballAutoConfig.enabledPlayers.length() = 0 )
+							this.running:=false
+						continue
+					}
                     this.gameController.setActiveId(player.getAppTitle())
 					globalContinueFlag:=false
                     while( this.running = true ){
@@ -54,6 +61,7 @@ Class BaseballAuto{
                             break
                         }
                     } 
+					globalCurrentPlayer.setCheckDone()
 
                 }
             }
