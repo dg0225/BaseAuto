@@ -18,6 +18,7 @@ Class LeagueRunningMode{
         this.skippLeagueSchedule(  )
         this.skippBattleHistory(  )
         this.choicePlayType(  )
+		this.checkSpeedUp()
         this.skippPlayLineupStatus(  )
 		this.checkSpeedUp()
         this.activateAutoPlay(  )		

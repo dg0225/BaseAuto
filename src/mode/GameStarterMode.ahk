@@ -34,7 +34,7 @@ Class GameStartMode{
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_AdroidAds") ){
 			this.player.setStay()            
             this.logger.log("안드로이드 광고 ㅠㅠ") 
-            this.gmaeController.searchAndClickFolder("게임실행모드\Button_AdroidAds",0,30) 
+            this.gmaeController.searchAndClickFolder("게임실행모드\Button_AdroidAds") 
         }
     }
     skipPopupAndAds(){
