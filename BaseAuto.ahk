@@ -6,7 +6,7 @@ DEFAULT_APP_ID:="(Hard)"
 
 BooleanDebugMode:=true
 
-baseballAutoConfig :=new BaseballAutoConfig( A_ScriptDir "/Config/main.ini" )
+baseballAutoConfig :=new BaseballAutoConfig( "main.ini" )
 baseballAutoGui := new BaseballAutoGui("baseball")
 baseballAuto := new BaseballAuto()
 

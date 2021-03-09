@@ -1,9 +1,20 @@
 ﻿#include %A_ScriptDir%\src\util\IniController.ahk
 class BaseballAutoConfig{
-
+	baseDirectory:="Config"
     __NEW( configFileName ){
         this.configFile := new IniController( configFileName )
 
+
+		FileCreateDir, % This.baseDirectory
+        if( modulePath != "" ){
+            tempDir := % This.baseDirectory "\" this.directory
+            FileCreateDir, % tempDir
+            this.directory:=tempDir
+        }else{
+            this.directory:=this.baseDirectory
+        }
+		
+		
         This.players := []
         This.enabledPlayers:= []
         this.initConfig()
