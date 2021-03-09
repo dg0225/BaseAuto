@@ -56,7 +56,7 @@ Class LeagueRunningMode{
             this.logger.log("전적 화면을 넘어갑니다.")
             if ( this.gameController.searchAndClickFolder("리그모드\Button_PlayStart") ){
                 this.logger.log("경기가 시작 됩니다. 15초 기다립니다.")
-                this.gameController.sleep(15)
+                this.gameController.sleep(10)
             }				
         }		
     }	
@@ -73,6 +73,7 @@ Class LeagueRunningMode{
 				this.logger.log("전체 플레이 방식을 선택합니다.") 
 				this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_FullPlay")
 			}            
+			this.gameController.sleep(2)
         }
     }
 
