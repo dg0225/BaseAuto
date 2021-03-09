@@ -110,7 +110,7 @@ Class BaseballAutoGui{
             guiLable:=player.getKeyStatus()
             option:="xp y+10 wp hp"
             if( index = 1 ){
-                option:="xs+245 ys+20 +Center"
+                option:="xs+245 ys+20"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }

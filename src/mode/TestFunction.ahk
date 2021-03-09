@@ -1,11 +1,20 @@
-﻿#include %A_ScriptDir%\src\util\MC_GameController.ahk
+﻿; #include %A_ScriptDir%\src\util\MC_GameController.ahk
 
 !F6::
-    /* localController := new MC_GameController()
-    localController.setActiveId("(1)")
-    ; localController.clickRatioPos(0.80, 0.12, 20)
-    localController.clickRatioPos(0.744, 0.114, 10) */
 	
-	BaseballAutoGui.updateStatus("player1Status","TEst")
+	targetX:=178
+	targetY:=63
+	MouseMove, %targetX%, %targetY%
+
+	; CoordMode, Pixel, Screen
+
+	; MouseMove, 758, 286
+	; msgbox "TEST"
+	; targetX:=758
+	; targetY:=286
+	; MouseMove, %targetX%, %targetY%
+
+	; BaseballAutoGui.updateStatus("player1Status","TEst")
 	
 return
+

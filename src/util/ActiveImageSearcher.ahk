@@ -3,7 +3,7 @@
 Class ActiveImageSearcher{
 
     pathPrefix:="\Resource\Image\"
-    percentage:=50
+    percentage:=30
     currentTargetTitle:=""
 
     __NEW( _logger ){
