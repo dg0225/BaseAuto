@@ -19,12 +19,13 @@ Class LeagueRunningMode{
         this.skippBattleHistory(  )
         this.choicePlayType(  )
         this.skippPlayLineupStatus(  )
+		this.checkSpeedUp()
         this.activateAutoPlay(  )		
         this.checkAutoPlayEnding()
         this.skipLevelUpOrPopUp()
         this.checkGameResultWindow()
         this.checkMVPWindow()
-        this.checkSpeedUp()
+        
     }
     startLeagueInMainWindow(){
         if ( this.gameController.searchImageFolder("리그모드\Window_Main") ){		
@@ -81,7 +82,13 @@ Class LeagueRunningMode{
                 this.skippPlayLineupStatus()			
             }		
         }
+		
+		if ( this.gameController.searchImageFolder("리그모드\화면_찬스상황") ){
+            this.logger.log(this.player.getAppTitle() " 찬스상황 등을 넘어갑니다.") 
+            this.gameController.searchAndClickFolder("리그모드\화면_찬스상황\Button_취소")                
+        }		
     }
+	
     activateAutoPlay(){
         global  baseballAutoConfig
         if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
@@ -109,8 +116,14 @@ Class LeagueRunningMode{
     checkSpeedUp(){
         if ( this.gameController.searchImageFolder("리그모드\button_playSlow") ){
             this.logger.log("자동은 빠르게 ") 
-            this.gameController.searchAndClickFolder("리그모드\button_playSlow" )            
-        }
+            if( this.gameController.searchAndClickFolder("리그모드\button_playSlow" ) = true){
+				if ( this.gameController.searchImageFolder("리그모드\화면_자동이닝설정") ){
+					if( this.gameController.searchAndClickFolder("리그모드\화면_자동이닝설정\버튼_X" ) = true){
+						this.checkSpeedUp()
+					}
+				}		
+			}
+        }		
     }
     checkAutoPlayEnding(){
         if( this.gameController.searchImageFolder("리그모드\화면_결과_타구장" ) ){		
