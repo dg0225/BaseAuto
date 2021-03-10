@@ -50,7 +50,9 @@ Class BaseballAuto{
                     }
                     this.gameController.setActiveId(player.getAppTitle())
                     globalContinueFlag:=false
+                    
                     while( this.running = true ){
+                        localChecker:=0
                         if not ( this.gameController.checkAppPlayer() ){
                             this.logger.log("Application Title을 확인하세요 변경 후 save ")
 
@@ -62,12 +64,21 @@ Class BaseballAuto{
                         for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
                         {
                             gameMode.setPlayer(player) 
-                            gameMode.checkAndRun()
+                            localChecker+=gameMode.checkAndRun()
                         } 
                         this.gameController.sleep(3) 						
                         if ( !player.needToStay() ){ 
                             ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
+                        }else{
+                            ; Stay 를 벗어 나게 해주자
+                            if ( localChecker = 0 ){
+                                this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
+                                this.player.setUnkown()
+                                break
+                            }else{
+                                this.logger.debug("LocalChecker Count=" localChecker)
+                            }
                         }
                     } 
                     globalCurrentPlayer.setCheckDone()
