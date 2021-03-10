@@ -106,7 +106,7 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="Text"
-            guiTitle:="몰라"
+            guiTitle:=player.getStatus()
             guiLable:=player.getKeyStatus()
             option:="xp y+10 wp hp"
             if( index = 1 ){

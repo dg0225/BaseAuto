@@ -1,10 +1,15 @@
 ﻿; #include %A_ScriptDir%\src\util\MC_GameController.ahk
 
 !F6::
+	; IfExist, A_ScriptDir
+	IfExist, %A_ScriptDir%\asd
+	{
 
-    targetX:=178
-    targetY:=63
-    MouseMove, %targetX%, %targetY%
+		msgbox "NOT"
+	}
+    ; targetX:=178
+    ; targetY:=63
+    ; MouseMove, %targetX%, %targetY%
 
     ; CoordMode, Pixel, Screen
 

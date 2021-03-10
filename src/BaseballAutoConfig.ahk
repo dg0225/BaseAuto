@@ -92,7 +92,7 @@ class BaseAutoPlayer{
         this.enabled:=enabled
         this.appRole:=role 
         this.watingResult:=false
-        this.status:="몰라"
+        this.status:="Unknwon"
         this.battleType:="A"
     }
 
@@ -107,7 +107,7 @@ class BaseAutoPlayer{
         return this.appTitle
     }
     needToStay(){
-        if( this.status = "몰라" or this.status ="자동중" or this.status ="리그종료" or this.status ="끝")
+        if( this.status = "Unknwon" or this.status ="자동중" or this.status ="리그종료" or this.status ="끝")
             return false
         else
             return true
@@ -143,7 +143,10 @@ class BaseAutoPlayer{
         this.setStatus("자동중")		
     }
     setUnkown(){
-        this.setStatus("몰라")		
+        this.setStatus("Unknwon")		
+    }
+    getStatus(){
+        return this.status
     }
     setStatus( status ){
         global baseballAutoGui		

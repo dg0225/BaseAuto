@@ -33,7 +33,7 @@ Class GameStartMode{
 
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_AdroidAds") ){
             this.player.setStay() 
-            this.logger.log("안드로이드 광고 ㅠㅠ") 
+            this.logger.log("안드로이드 광고를 클릭합니다.") 
             this.gmaeController.searchAndClickFolder("게임실행모드\Button_AdroidAds") 
         }
     }
@@ -41,7 +41,7 @@ Class GameStartMode{
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_NoMoreAds") ){
             this.player.setStay()
             this.logger.log("팝업 광고 등을 취소합니다..") 
-            if( this.gmaeController.searchAndClickFolder("게임실행모드\Button_NoMoreAds") = true ){
+            if ( this.gmaeController.searchAndClickFolder("게임실행모드\Button_NoMoreAds") = true ){
                 this.skipPopupAndAds()			
             }		
         }

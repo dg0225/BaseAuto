@@ -22,7 +22,7 @@ class MC_GameController{
     }
     searchImageFolder( targetFolder, needLog=true) {
 
-        if( this.internalSearchImageFolder( targetFolder, fileName, posX, posY ) ){
+        if ( this.internalSearchImageFolder( targetFolder, fileName, posX, posY ) ){
             this.logger.debug( fileName "가 존재합니다. X=" posX ", Y=" posY )
             return true
         }else{
@@ -34,7 +34,11 @@ class MC_GameController{
     }
 
     internalSearchImageFolder( targetFolder, ByRef fileName, ByRef posX, ByRef posY ) {
-
+        IfNotExist, %A_ScriptDir%\Resource\Image\%targetFolder%
+        {
+            this.logger.debug( "ERROR : 폴더 [ " targetFolder " ]자체가 존재하지 않습니다." )
+            return false
+        }
         Loop, %A_ScriptDir%\Resource\Image\%targetFolder%\*
         {
             if A_LoopFileExt in % this.extensions
@@ -49,10 +53,10 @@ class MC_GameController{
     }
 
     searchAndClickFolder( targetFolder, relateX=0, relateY=0 , boolDelay=true ) {
-        if( this.internalSearchImageFolder( targetFolder, fileName, imgX, imgY ) ){ 
+        if ( this.internalSearchImageFolder( targetFolder, fileName, imgX, imgY ) ){ 
             targetX:=imgX+relateX
             targetY:=imgY+relateY
-            this.logger.debug( fileName "를 클릭합니다. X=" imgX ", Y=" imgY ", ResultX="  targetX ", ResultY=" targetY)
+            this.logger.debug( fileName "를 클릭합니다. X=" imgX ", Y=" imgY ", ResultX=" targetX ", ResultY=" targetY)
             this.randomClick(targetX, targetY, 0, 15, boolDelay)
             Return true
 
@@ -120,8 +124,8 @@ class MC_GameController{
         targetY:= winH * ratioY + winY
         ; MouseMove, %targetX%, %targetY%
         ; ToolTip, % "WinW = " winW ", WinH = " winH ", TargetX = " targetX ", targetY= "targetY
-        this.logger.debug( "특정 비율을 클릭합니다.(화면)  WinW="  winW ", WinH=" winH ", WinX" winX " , WinY" winY)
-        this.logger.debug( "특정 비율을 클릭합니다. RatioX=" ratioX ", RatioY=" ratioY ", ResultX="  targetX ", ResultY=" targetY )
+        this.logger.debug( "특정 비율을 클릭합니다.(화면) WinW=" winW ", WinH=" winH ", WinX" winX " , WinY" winY)
+        this.logger.debug( "특정 비율을 클릭합니다. RatioX=" ratioX ", RatioY=" ratioY ", ResultX=" targetX ", ResultY=" targetY )
         this.randomClick(targetX, targetY, 0, maxSize, true)
     }
 }
