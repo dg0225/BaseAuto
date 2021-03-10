@@ -22,7 +22,6 @@
         FormatTime, sFileName, %A_NOW%, MM월dd일
         FormatTime, TimeString, %A_NOW%, HH:mm:ss
 
-
         formattedContent:=% "`n[" TimeString "][" this.module "]: " content
 
         FileAppend, %formattedContent%, % this.directory "\log(" sFileName ").txt",UTF-8 

@@ -90,7 +90,7 @@ Class BaseballAutoGui{
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
             this.guiMain.Controls[guiLable].select(player.getRole())
         }
-		 for index, player in baseballAutoConfig.players
+        for index, player in baseballAutoConfig.players
         {
             guiType:="ComboBox"
             guiTitle:="D|O|A"
@@ -115,12 +115,12 @@ Class BaseballAutoGui{
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
         this.guiMain.Add("Button", "Save", "x" this.maxGroupWidth -30 " y0", "RoleSaveButton",0)
-		; this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
-		; this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
+        ; this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
+        ; this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
         this.guiMain.Controls["RoleSaveButton"].BindMethod(this.roleSaveByGui.Bind(this))
         ; this.guiMain.Controls["RolePassButton"].BindMethod(this.rolePassByGui.Bind(this))
         ; this.guiMain.Controls["RoleAllowButton"].BindMethod(this.roleAllowByGui.Bind(this))
-      
+
         return currentWindowHeight
     }
     applyPlayerDescripter(){
@@ -166,28 +166,28 @@ Class BaseballAutoGui{
         this.guiMain.Controls["GuiReloadButton"].BindMethod(this.reloadByGui.Bind(this))
 
         this.guiMain.Add("Button", "설정", "w60 h30 X+5 ", "GuiConfigButton", 0)
-		this.guiMain.Add("Button", "W", "w20 h30 X+5 ", "GuiWaitResultButton", 0)
+        this.guiMain.Add("Button", "W", "w20 h30 X+5 ", "GuiWaitResultButton", 0)
 
         this.guiMain.Controls["GuiConfigButton"].BindMethod(this.configByGui.Bind(this))
-		this.guiMain.Controls["GuiWaitResultButton"].BindMethod(this.waitingResultByGui.Bind(this))
+        this.guiMain.Controls["GuiWaitResultButton"].BindMethod(this.waitingResultByGui.Bind(this))
 
         return currentWindowHeight
 
     }
-	updateStatusColor( statusLabel, status , changeColor:=false ){
-		if( changeColor ){			
-			this.guiMain.Controls[statusLabel].SetOptions("+cRed")		
-		}else{
-			this.guiMain.Controls[statusLabel].SetOptions("+cBlack")		
-		}
-		this.guiMain.Controls[statusLabel].setText(status)	
-	}
-	updateStatus( statusLabel, status ){		
-		this.guiMain.Controls[statusLabel].setText(status)	
-	}
+    updateStatusColor( statusLabel, status , changeColor:=false ){
+        if( changeColor ){			
+            this.guiMain.Controls[statusLabel].SetOptions("+cRed")		
+        }else{
+            this.guiMain.Controls[statusLabel].SetOptions("+cBlack")		
+        }
+        this.guiMain.Controls[statusLabel].setText(status)	
+    }
+    updateStatus( statusLabel, status ){		
+        this.guiMain.Controls[statusLabel].setText(status)	
+    }
     initLogWindow(_height){
         currentWindowHeight=200
-        this.guiMain.Add("Text", "Start       ", "x10 	y" _height+5 "w200 section", "GuiLoggerTitle",0)
+        this.guiMain.Add("Text", "Start ", "x10 	y" _height+5 "w200 section", "GuiLoggerTitle",0)
         ; this.guiMain.Add("Edit", "Logs", "Readonly xp y+5 w" this.maxGroupWidth-1 " h" currentWindowHeight-30 , "GuiLoggerLogging",0)
         this.guiMain.Add("logEdit", "Logs", "Readonly xp y+5 w" this.maxGroupWidth-1 " h" currentWindowHeight-30 r1, "GuiLoggerLogging",0)
         ; this.guiMain.addGroupBox("Logs", 10, _height , this.maxGroupWidth, currentWindowHeight , , true )
@@ -205,7 +205,7 @@ Class BaseballAutoGui{
     initConfigWindow(_height){
         currentWindowHeight=80
         this.guiMain.addGroupBox("Config", 10, _height , this.maxGroupWidth, currentWindowHeight , , true )
-        this.guiMain.Add("CheckBox", "Pushbullet               ", "T", "configPushbulletEnabled",0)
+        this.guiMain.Add("CheckBox", "Pushbullet ", "T", "configPushbulletEnabled",0)
         this.guiMain.Add("CheckBox", "SchreenShot Error ", "B", "configScreenShotOnError",0)
 
         return currentWindowHeight
@@ -257,7 +257,6 @@ Class BaseballAutoGui{
             }
         }
 
-
         baseballAutoConfig.saveConfig()
         ToolTip, Role Saved
         Sleep , 500
@@ -265,34 +264,34 @@ Class BaseballAutoGui{
         ; ToolTip, % "Enabled Players " baseballAutoConfig.enabledPlayers.length()
 
     }
-	rolePassByGui(){
-		global globalContinueFlag
-		globalContinueFlag:=true
-		ToolTip, " JUST NEXT PLAYER"
-		Sleep , 500
-        ToolTip
-	}
-	roleAllowByGui(){
-		global globalCurrentPlayer
-		globalCurrentPlayer["status"]:="AUTO_PLAYING"
-		ToolTip, % globalCurrentPlayer.getAppTitle() " Already AutoPlaying()"
+    rolePassByGui(){
+        global globalContinueFlag
+        globalContinueFlag:=true
+        ToolTip, " JUST NEXT PLAYER"
         Sleep , 500
         ToolTip
-	}
-	waitingResultByGui(){
-		global  baseballAutoConfig
-		ToolTip, 모든 경기가 종료되길 체크 합니다.
+    }
+    roleAllowByGui(){
+        global globalCurrentPlayer
+        globalCurrentPlayer["status"]:="AUTO_PLAYING"
+        ToolTip, % globalCurrentPlayer.getAppTitle() " Already AutoPlaying()"
+        Sleep , 500
+        ToolTip
+    }
+    waitingResultByGui(){
+        global baseballAutoConfig
+        ToolTip, 모든 경기가 종료되길 체크 합니다.
         Sleep , 1000
         ToolTip
-		baseballAutoConfig.setWantToResult()	
-	}
+        baseballAutoConfig.setWantToResult()	
+    }
     getGuiInfo(player){
         player.setEnabled(this.guiMain.Controls[player.getKeyEnable()].get())
         ; ToolTip % player.getKeyEnable()
         ; ToolTip % this.guiMain.Controls[player.getKeyAppTitle()].get()
         player.setAppTitle(this.guiMain.Controls[player.getKeyAppTitle()].get())
         player.setRole(this.guiMain.Controls[player.getKeyRole()].get())
-		player.setBattleType(this.guiMain.Controls[player.getKeyBattleType()].get())
+        player.setBattleType(this.guiMain.Controls[player.getKeyBattleType()].get())
     }
     remoteTooltips(){
 

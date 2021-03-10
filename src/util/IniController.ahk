@@ -1,12 +1,12 @@
 ﻿Class IniController{
 
-	__New( strFileName, configPath:="Config" ){
-		
-		FileCreateDir, % configPath		
-		this.iniFile:=configPath "\" strFileName		
+   __New( strFileName, configPath:="Config" ){
+
+      FileCreateDir, % configPath		
+      this.iniFile:=configPath "\" strFileName		
    }
 
-	loadValue( strTitle, strKey ){ 
+   loadValue( strTitle, strKey ){ 
       IniRead, value, % this.iniFile ,%strTitle%, %strKey%
       IfEqual value, ERROR
       {

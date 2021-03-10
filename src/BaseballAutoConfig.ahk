@@ -1,10 +1,10 @@
 ﻿#include %A_ScriptDir%\src\util\IniController.ahk
 class BaseballAutoConfig{
-	
+
     __NEW( configFileName ){
         this.configFile := new IniController( configFileName )
 
-		This.players := []
+        This.players := []
         This.enabledPlayers:= []
         this.initConfig()
     }
@@ -37,12 +37,12 @@ class BaseballAutoConfig{
             playerEnabled:= this.configFile.loadValue(PLAYER_KEY, player.getKeyEnable() )
             playerRole:= this.configFile.loadValue(PLAYER_KEY, player.getKeyRole() )
             playerTitle:= this.configFile.loadValue(PLAYER_KEY, player.getKeyAppTitle() )
-			playerBattleType:= this.configFile.loadValue(PLAYER_KEY, player.getKeyBattleType() )
+            playerBattleType:= this.configFile.loadValue(PLAYER_KEY, player.getKeyBattleType() )
 
             player.setEnabled(playerEnabled)
             player.setAppTitle(playerTitle)
-            player.setRole(playerRole)           
-			player.setBattleType(playerBattleType)
+            player.setRole(playerRole) 
+            player.setBattleType(playerBattleType)
             if( A_Index = 1 )
             { 
                 player.setEnabled(true)
@@ -50,10 +50,10 @@ class BaseballAutoConfig{
                     player.setAppTitle("(Hard)")
                 if( playerRole = "" )
                     player.setRole("League")
-					
-				if (playerBattleType="")	
-					player.setBattleType("A")
-				
+
+                if (playerBattleType="")	
+                    player.setBattleType("A")
+
             }
             if( player.getEnabled() ){
                 this.enabledPlayers.push(player)
@@ -63,13 +63,13 @@ class BaseballAutoConfig{
             this.players.Push( player)
         }
     }
-	setWantToResult(){
-		for index,player in this.enabledPlayers
+    setWantToResult(){
+        for index,player in this.enabledPlayers
         {
-            player.setWantToWaitResult()            
+            player.setWantToWaitResult() 
         }
-		
-	}
+
+    }
     saveConfig(){
 
         PLAYER_KEY:="PLAYERS_CONFIG"
@@ -78,22 +78,22 @@ class BaseballAutoConfig{
             this.configFile.saveValue(PLAYER_KEY,element.getKeyEnable(), element.getEnabled()) 
             this.configFile.saveValue(PLAYER_KEY,element.getKeyAppTitle(), element.getAppTitle()) 
             this.configFile.saveValue(PLAYER_KEY,element.getKeyRole(), element.getRole()) 
-			this.configFile.saveValue(PLAYER_KEY,element.getKeyBattleType(), element.getBattleType()) 
+            this.configFile.saveValue(PLAYER_KEY,element.getKeyBattleType(), element.getBattleType()) 
         }
 
     }
 }
 
 class BaseAutoPlayer{
-    
+
     __NEW( index , title:="(Main)", enabled:=false, role:="" ){
         this.index:=index
         this.appTitle:=title
         this.enabled:=enabled
-        this.appRole:=role        
-		this.watingResult:=false
-		this.status:="몰라"
-		this.battleType:="A"
+        this.appRole:=role 
+        this.watingResult:=false
+        this.status:="몰라"
+        this.battleType:="A"
     }
 
     getEnabled(){
@@ -106,54 +106,54 @@ class BaseAutoPlayer{
     getAppTitle(){
         return this.appTitle
     }
-	needToStay(){
-		if( this.status = "몰라" or this.status ="자동중" or this.status ="리그종료" or this.status ="끝")
-			return false
-		else
-			return true
-	}
-	needToStop(){
-		if( this.status ="끝")
-			return true
-		else
-			return false
-	}
-	setWantToWaitResult(){
-		this.watingResult:=true
-	}
-	getWaitingResult(){
-		return this.watingResult
-	}
-	setCheck(){
-		this.setStatusColor( true)
-	}
-	setCheckDone(){
-		this.setStatusColor(false)
-	}
-	setStay(){
-		this.setStatus("조작중")
-	}
-	setBye(){
-		this.setStatus("끝")
-	}
-	setRealFree(){
-		this.setStatus("리그종료")		
-	}
-	setFree(){
-		this.setStatus("자동중")		
-	}
-	setUnkown(){
-		this.setStatus("몰라")		
-	}
-	setStatus( status ){
-		global baseballAutoGui		
-		this.status:=status
-		baseballAutoGui.updateStatus( this.getKeyStatus(), this.status, changeColor)
-	}
-	setStatusColor( changeColor:=false){
-		global baseballAutoGui		
-		baseballAutoGui.updateStatusColor( this.getKeyStatus(), this.status, changeColor)	
-	}
+    needToStay(){
+        if( this.status = "몰라" or this.status ="자동중" or this.status ="리그종료" or this.status ="끝")
+            return false
+        else
+            return true
+    }
+    needToStop(){
+        if( this.status ="끝")
+            return true
+        else
+            return false
+    }
+    setWantToWaitResult(){
+        this.watingResult:=true
+    }
+    getWaitingResult(){
+        return this.watingResult
+    }
+    setCheck(){
+        this.setStatusColor( true)
+    }
+    setCheckDone(){
+        this.setStatusColor(false)
+    }
+    setStay(){
+        this.setStatus("조작중")
+    }
+    setBye(){
+        this.setStatus("끝")
+    }
+    setRealFree(){
+        this.setStatus("리그종료")		
+    }
+    setFree(){
+        this.setStatus("자동중")		
+    }
+    setUnkown(){
+        this.setStatus("몰라")		
+    }
+    setStatus( status ){
+        global baseballAutoGui		
+        this.status:=status
+        baseballAutoGui.updateStatus( this.getKeyStatus(), this.status, changeColor)
+    }
+    setStatusColor( changeColor:=false){
+        global baseballAutoGui		
+        baseballAutoGui.updateStatusColor( this.getKeyStatus(), this.status, changeColor)	
+    }
 
     setEnabled( bool ){
         if( bool = true or bool="true" or bool=1)
@@ -163,30 +163,29 @@ class BaseAutoPlayer{
     }
 
     setAppTitle( title ){
-        this.AppTitle:=title            
+        this.AppTitle:=title 
     }
     setRole( role ){
-		; if( role != "")
+        ; if( role != "")
         this.appRole:=role
     }
 
-	getBattleType(){
-		return this.battleType
-	
-	}
-	setBattleType( _battleType){
-		; if( _battleType !="")
-			this.battleType:=_battleType
-	}
-	
-	
+    getBattleType(){
+        return this.battleType
+
+    }
+    setBattleType( _battleType){
+        ; if( _battleType !="")
+        this.battleType:=_battleType
+    }
+
     getKeyEnable(){
         return % "player" this.index "Enabled"
     }
     getKeyRole(){
         return % "player" this.index "Role"
     }
-	getKeyBattleType(){
+    getKeyBattleType(){
         return % "player" this.index "BattleType"
     }
     getKeyAppTitle(){

@@ -9,7 +9,7 @@ class MC_GameController{
     __NEW(){
         global DEFAULT_APP_ID
         this.imageSearcher := new ActiveImageSearcher( this.logger )
-        this.controller := new InActiveInputController( this.logger )        
+        this.controller := new InActiveInputController( this.logger ) 
         this.currentTargetTitle:=DEFAULT_APP_ID
     }
     setActiveId(title){
@@ -23,7 +23,7 @@ class MC_GameController{
     searchImageFolder( targetFolder, needLog=true) {
 
         if( this.internalSearchImageFolder( targetFolder, fileName, posX, posY ) ){
-            this.logger.debug( fileName "가 존재합니다." )
+            this.logger.debug( fileName "가 존재합니다. X=" posX ", Y=" posY )
             return true
         }else{
             if( needLog ){
@@ -50,15 +50,14 @@ class MC_GameController{
 
     searchAndClickFolder( targetFolder, relateX=0, relateY=0 , boolDelay=true ) {
         if( this.internalSearchImageFolder( targetFolder, fileName, imgX, imgY ) ){ 
-
-            imgX:=imgX+relateX
-            imgY:=imgY+relateY
-
-            this.randomClick(imgX, imgY, 0, 15, boolDelay)
+            targetX:=imgX+relateX
+            targetY:=imgY+relateY
+            this.logger.debug( fileName "를 클릭합니다. X=" imgX ", Y=" imgY ", ResultX="  targetX ", ResultY=" targetY)
+            this.randomClick(targetX, targetY, 0, 15, boolDelay)
             Return true
 
         }else{
-            this.logger.debug( "No " targetFolder " 을 찾지 못했습니다. " )
+            this.logger.debug( "폴더 [ " targetFolder " ]에 존재하는 이미지가 없어 클릭을 못합니다." )
             return false
         } 
     }
@@ -117,12 +116,12 @@ class MC_GameController{
     }
     clickRatioPos( ratioX, ratioY, maxSize:=40 ) {
         WinGetPos, winX, winY, winW, winH, % this.currentTargetTitle	
-
         targetX:= winW * ratioX + winX
         targetY:= winH * ratioY + winY
-        ; MsgBox, % "X" winW "   Y " winH "   title " this.currentTargetTitle
         ; MouseMove, %targetX%, %targetY%
         ; ToolTip, % "WinW = " winW ", WinH = " winH ", TargetX = " targetX ", targetY= "targetY
+        this.logger.debug( "특정 비율을 클릭합니다.(화면)  WinW="  winW ", WinH=" winH ", WinX" winX " , WinY" winY)
+        this.logger.debug( "특정 비율을 클릭합니다. RatioX=" ratioX ", RatioY=" ratioY ", ResultX="  targetX ", ResultY=" targetY )
         this.randomClick(targetX, targetY, 0, maxSize, true)
     }
 }

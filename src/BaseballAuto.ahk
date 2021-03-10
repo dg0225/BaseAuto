@@ -36,32 +36,36 @@ Class BaseballAuto{
             while( this.running = true ){
                 for playerIndex, player in baseballAutoConfig.enabledPlayers{
                     globalCurrentPlayer:=player
-					globalCurrentPlayer.setCheck()
-					if( globalCurrentPlayer.needToStop()){
-						baseballAutoConfig.enabledPlayers.remove(playerIndex)
-						if( baseballAutoConfig.enabledPlayers.length() = 0 )
-							this.running:=false
-						continue
-					}
+                    globalCurrentPlayer.setCheck()
+                    if( globalCurrentPlayer.needToStop()){
+                        baseballAutoConfig.enabledPlayers.remove(playerIndex)
+                        if( baseballAutoConfig.enabledPlayers.length() = 0 )
+                            this.running:=false
+                        continue
+                    }
                     this.gameController.setActiveId(player.getAppTitle())
-					globalContinueFlag:=false
+                    globalContinueFlag:=false
                     while( this.running = true ){
                         if not ( this.gameController.checkAppPlayer() ){
                             this.logger.log("Application Title을 확인하세요 변경 후 save ")
+                            
+                            baseballAutoConfig.enabledPlayers.remove(playerIndex)
+                            if( baseballAutoConfig.enabledPlayers.length() = 0 )
+                                this.running:=false                            
                             break
                         }					
                         for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
                         {
-							gameMode.setPlayer(player)                            
+                            gameMode.setPlayer(player) 
                             gameMode.checkAndRun()
-                        }                      
-						this.gameController.sleep(3) 						
-                        if ( !player.needToStay() ){                        
-						   ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
+                        } 
+                        this.gameController.sleep(3) 						
+                        if ( !player.needToStay() ){ 
+                            ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
                         }
                     } 
-					globalCurrentPlayer.setCheckDone()
+                    globalCurrentPlayer.setCheckDone()
 
                 }
             }

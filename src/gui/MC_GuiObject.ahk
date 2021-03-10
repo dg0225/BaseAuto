@@ -149,11 +149,11 @@ class GuiCtrlObj {
         else if This.Type="Edit"
             Gui, Add, Edit, % This.Options, % This.Text
         else if This.Type="logEdit"
-            {
-                Gui, font, s7, Verdana
-                Gui, Add, Edit, % This.Options   
-                Gui, font, 
-            }
+        {
+            Gui, font, s7, Verdana
+            Gui, Add, Edit, % This.Options 
+            Gui, font, 
+        }
         else if This.Type="ComboBox"
             Gui, Add, ComboBox, % This.Options, % This.Text
         else if This.Type="Button"
