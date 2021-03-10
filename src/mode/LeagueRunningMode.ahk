@@ -53,6 +53,10 @@ Class LeagueRunningMode{
                     this.logger.log("일정 화면을 넘어갑니다.(종료 요청 중)")
                 }
             }else{
+				if ( this.gameController.searchImageFolder("리그모드\화면_도전과제_상태\초과1단계") ){
+					this.player.setNeedSkip()
+				}
+				
                 this.logger.log("일정 화면을 넘어갑니다.")
                 if ( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_게임시작") ){
 
@@ -65,6 +69,7 @@ Class LeagueRunningMode{
 
     skippBattleHistory(){
         if ( this.gameController.searchImageFolder("리그모드\화면_상대전적") ){
+			this.player.setStay()
             if ( this.player.getWaitingResult() ){				
                 if ( this.gameController.searchImageFolder("리그모드\버튼_플레이시작_게임시작") ){
                     this.logger.log("정상 종료를 요청 하였습니다.")
@@ -161,6 +166,7 @@ Class LeagueRunningMode{
     checkAutoPlayEnding(){
         if ( this.gameController.searchImageFolder("리그모드\화면_결과_타구장" ) ){		
             this.player.setStay()
+			this.player.addResult()
             this.logger.log("경기 종료를 확인했습니다.") 
             ; this.gameController.sleep(10)
             this.gameController.searchAndClickFolder("리그모드\화면_결과_타구장" ) 
@@ -169,8 +175,8 @@ Class LeagueRunningMode{
                 ; if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop\check_Stop") ){
                 ; 자동 중 다시 자동 play를 하지 말아라...
                 this.gameController.sleep(4)			
-                if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){					
-                    this.logger.log("플레이 오프 류 종료") 				
+                if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){								
+                    this.logger.log("플레이 오프 경기가 종료 된거 같습니다") 				
                     this.gameController.searchAndClickFolder("리그모드\화면_결과_플레이오프" ) 
                     this.gameController.sleep(3)			
                     if ( this.gameController.searchImageFolder("리그모드\화면_결과_플레이오프") ){
@@ -178,6 +184,7 @@ Class LeagueRunningMode{
                         this.player.setFree()
                     }else{
                         this.player.setStay()
+						this.player.addResult()
                     }				
                 }
             }

@@ -86,14 +86,33 @@ class BaseballAutoConfig{
 
 class BaseAutoPlayer{
 
-    __NEW( index , title:="(Main)", enabled:=false, role:="" ){
+    __NEW( index , title:="(Main)", enabled:=false, role:="League" ){
         this.index:=index
         this.appTitle:=title
         this.enabled:=enabled
         this.appRole:=role 
         this.watingResult:=false
         this.status:="Unknwon"
-        this.battleType:="A"
+        this.battleType:="D"
+        this.result:=0
+    } 
+    getResult(){
+        return this.result
+    }
+    addResult(){
+        this.result+=1
+        this.setGuiResult()
+    } 
+    setGuiResult( ){
+        global baseballAutoGui		 
+        baseballAutoGui.updateStatus( this.getKeyResult(), this.result)
+    }
+    setNeedSkip(){
+        this.setResultColor(true)
+    }
+    setResultColor( changeColor:=false){
+        global baseballAutoGui		
+        baseballAutoGui.updateResultColor( this.getKeyResult(), this.result, changeColor)	
     }
 
     getEnabled(){
@@ -145,6 +164,7 @@ class BaseAutoPlayer{
     setUnkown(){
         this.setStatus("Unknwon")		
     }
+
     getStatus(){
         return this.status
     }
@@ -187,6 +207,9 @@ class BaseAutoPlayer{
     }
     getKeyRole(){
         return % "player" this.index "Role"
+    }
+    getKeyResult(){
+        return % "player" this.index "Result"
     }
     getKeyBattleType(){
         return % "player" this.index "BattleType"

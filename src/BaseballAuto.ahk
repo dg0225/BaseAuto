@@ -33,7 +33,12 @@ Class BaseballAuto{
 
             BaseballAutoGui.started()
 
-            while( this.running = true ){
+            while( this.running = true ){ 
+                if ( baseballAutoConfig.enabledPlayers.length() = 0 ){
+                    this.running:=false
+                    this.logger.log("가능한 AppPlayer가 없습니다.")
+                }
+
                 for playerIndex, player in baseballAutoConfig.enabledPlayers{
                     globalCurrentPlayer:=player
                     globalCurrentPlayer.setCheck()
@@ -48,10 +53,10 @@ Class BaseballAuto{
                     while( this.running = true ){
                         if not ( this.gameController.checkAppPlayer() ){
                             this.logger.log("Application Title을 확인하세요 변경 후 save ")
-                            
+
                             baseballAutoConfig.enabledPlayers.remove(playerIndex)
                             if( baseballAutoConfig.enabledPlayers.length() = 0 )
-                                this.running:=false                            
+                                this.running:=false 
                             break
                         }					
                         for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
@@ -67,7 +72,7 @@ Class BaseballAuto{
                     } 
                     globalCurrentPlayer.setCheckDone()
 
-                }
+                } 
             }
 
         }else{ 

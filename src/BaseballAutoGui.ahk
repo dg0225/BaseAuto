@@ -57,12 +57,12 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiLable:=player.getKeyEnable()
-            if( index = 1 ){
-                option:="xs+5 ys+20 h10 disabled"
+            if ( index = 1 ){
+                option:=% "xs+5 ys+20 disabled"
             }else{
-                option:="xp y+10 wp hp"
+                option:="xp y+10"
             }
-            if( player.getEnabled() ){
+            if ( player.getEnabled() ){
                 option:= % option " checked"
             }
             this.guiMain.Add("CheckBox", index " :", option, guiLable,0)
@@ -70,10 +70,10 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiLable:=player.getKeyAppTitle()
-            if( index = 1 ){
-                option:="xs+45 ys+15 w70"
+            if ( index = 1 ){
+                option:="xs+45 ys+15 w60 r1"
             }else{
-                option:="xp y+2 wp hp"
+                option:="xp y+2 wp r1"
             }
             this.guiMain.Add("Edit", player.getAppTitle(), option, guiLable,0)
         }
@@ -82,11 +82,12 @@ Class BaseballAutoGui{
         {
             guiType:="ComboBox"
             guiTitle:="League|ETC"
-            guiLable:=player.getKeyRole()
-            option:="xp y+2 wp"
-            if( index = 1 ){
-                option:="xs+120 ys+15 +Center w70 h100"
-            }
+            guiLable:=player.getKeyRole() 
+            if ( index = 1 )
+                option:="xs+110 ys+15 +Center w70"
+            else
+                option:="xp y+2 wp"
+
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
             this.guiMain.Controls[guiLable].select(player.getRole())
         }
@@ -96,11 +97,23 @@ Class BaseballAutoGui{
             guiTitle:="D|O|A"
             guiLable:=player.getKeyBattleType()
             option:="xp y+2 wp"
-            if( index = 1 ){
-                option:="xs+195 ys+15 +Center w35 h100"
+            if ( index = 1 ){
+                option:="xs+185 ys+15 +Center w35 h100"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
             this.guiMain.Controls[guiLable].select(player.getBattleType())
+        }
+
+        for index, player in baseballAutoConfig.players
+        {
+            guiType:="Text"
+            guiTitle:=player.getResult()
+            guiLable:=player.getKeyResult()
+            option:="xp y+10 wp hp"
+            if( index = 1 ){
+                option:="xs+225 ys+20 w10"
+            }
+            this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
 
         for index, player in baseballAutoConfig.players
@@ -187,9 +200,8 @@ Class BaseballAutoGui{
     }
     initLogWindow(_height){
         currentWindowHeight=200
-        this.guiMain.Add("Text", "Start ", "x10 	y" _height+5 "w200 section", "GuiLoggerTitle",0)
         ; this.guiMain.Add("Edit", "Logs", "Readonly xp y+5 w" this.maxGroupWidth-1 " h" currentWindowHeight-30 , "GuiLoggerLogging",0)
-        this.guiMain.Add("logEdit", "Logs", "Readonly xp y+5 w" this.maxGroupWidth-1 " h" currentWindowHeight-30 r1, "GuiLoggerLogging",0)
+        this.guiMain.Add("logEdit", "Logs", "Readonly x10 y" _height+5 " w" this.maxGroupWidth-1 " h" currentWindowHeight-5 , "GuiLoggerLogging",0)
         ; this.guiMain.addGroupBox("Logs", 10, _height , this.maxGroupWidth, currentWindowHeight , , true )
 
         ; this.guiMain.Add("Text", "GoodDay", "x+15 	yp w100", "GuiLoggerSubTitle",0)
@@ -200,13 +212,13 @@ Class BaseballAutoGui{
     guiLog( title, subTitle, logMessage ){
         currentLog:=this.guiMain.Controls["GuiLoggerLogging"].get()
         this.guiMain.Controls["GuiLoggerLogging"].set( logMessage currentLog )
-        this.guiMain.Controls["GuiLoggerTitle"].set( title )
     }
     initConfigWindow(_height){
         currentWindowHeight=80
         this.guiMain.addGroupBox("Config", 10, _height , this.maxGroupWidth, currentWindowHeight , , true )
-        this.guiMain.Add("CheckBox", "Pushbullet ", "T", "configPushbulletEnabled",0)
-        this.guiMain.Add("CheckBox", "SchreenShot Error ", "B", "configScreenShotOnError",0)
+
+        this.guiMain.Add("CheckBox", "Pushbullet ", "xs+5 ys+20 h10", "configPushbulletEnabled",0)
+        this.guiMain.Add("CheckBox", "SchreenShot Error ", "xp y+10", "configScreenShotOnError",0)
 
         return currentWindowHeight
     }
