@@ -50,7 +50,8 @@ Class BaseballAuto{
                     }
                     this.gameController.setActiveId(player.getAppTitle())
                     globalContinueFlag:=false
-                    
+
+                    loopCount:=0
                     while( this.running = true ){
                         localChecker:=0
                         if not ( this.gameController.checkAppPlayer() ){
@@ -66,18 +67,24 @@ Class BaseballAuto{
                             gameMode.setPlayer(player) 
                             localChecker+=gameMode.checkAndRun()
                         } 
-                        this.gameController.sleep(3) 						
-                        this.logger.log( player.getAppTitle() " : checker count=" localChecker)
+                        this.gameController.sleep(3) 						                        
+                        ; this.logger.log( player.getAppTitle() " checker count=" localChecker)
                         if ( !player.needToStay() ){ 
                             ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
                         }else{
                             ; Stay 를 벗어 나게 해주자
                             if ( localChecker = 0 ){
-                                this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
-                                this.player.setUnkown()
+                                if ( loopCount = 3 ){
+                                    this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
+                                    this.player.setUnkown()
+                                    break
+                                }
+                                loopCount+=1                                
                                 break
-                            }                             
+                            } else{
+                                loopCount:=0
+                            }
                         }
                     } 
                     globalCurrentPlayer.setCheckDone()
