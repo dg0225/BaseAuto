@@ -75,13 +75,11 @@ Class BaseballAuto{
                         }else{
                             ; Stay 를 벗어 나게 해주자
                             if ( localChecker = 0 ){
-                                if ( loopCount = 3 ){
+                                if ( loopCount = 60 ){
                                     this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
                                     this.player.setUnkown()
-                                    break
                                 }
-                                loopCount+=1                                
-                                break
+                                loopCount+=1                                                               
                             } else{
                                 loopCount:=0
                             }
