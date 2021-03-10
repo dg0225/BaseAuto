@@ -50,10 +50,10 @@ Class LeagueRunningMode{
                     this.logger.log("정상 종료를 요청 하였습니다.")
                     this.player.setBye()
                 }else if( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_이어하기") ){
-                    this.logger.log("중단 된 경기가 있습니다..")					
+                    this.logger.log("일정 화면을 넘어갑니다.(종료 요청 중)")
                 }
             }else{
-                this.logger.log("일정 화면을 넘어갑니다.(종료 요청 중)")
+                this.logger.log("일정 화면을 넘어갑니다.")
                 if ( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_게임시작") ){
 
                 }else if( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_이어하기") ){
