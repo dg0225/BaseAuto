@@ -107,11 +107,11 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="Text"
-            guiTitle:=player.getResult()
+            guiTitle:=player.getResult()            
             guiLable:=player.getKeyResult()
-            option:="xp y+10 wp hp"
-            if( index = 1 ){
-                option:="xs+225 ys+20 w10"
+            option:="xp y+10 wp hp Right"
+            if( index = 1 ){			
+                option:="xs+225 ys+20 w10 Right"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
@@ -123,7 +123,7 @@ Class BaseballAutoGui{
             guiLable:=player.getKeyStatus()
             option:="xp y+10 wp hp"
             if( index = 1 ){
-                option:="xs+235 ys+20 w70"
+                option:="xs+245 ys+20 w60"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
