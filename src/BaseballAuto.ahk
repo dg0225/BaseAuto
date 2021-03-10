@@ -67,7 +67,7 @@ Class BaseballAuto{
                             localChecker+=gameMode.checkAndRun()
                         } 
                         this.gameController.sleep(3) 						
-                        this.logger.log( player.getAppTitle() " = LocalChecker Count=" localChecker)
+                        this.logger.log( player.getAppTitle() " : checker count=" localChecker)
                         if ( !player.needToStay() ){ 
                             ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
                             break
