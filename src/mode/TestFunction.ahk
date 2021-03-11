@@ -23,3 +23,8 @@
 
 return
 
+!F7::
+	WinGetPos, winX, winY, winW, winH, (Hard)			
+	msgbox % "Winx=" winX "  winY=" winY "  winW=" winW "  winH=" winH
+
+return

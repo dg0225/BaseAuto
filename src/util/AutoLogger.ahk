@@ -22,12 +22,12 @@
         FormatTime, sFileName, %A_NOW%, MM월dd일
         FormatTime, TimeString, %A_NOW%, HH:mm:ss
 
-        formattedContent:=% "`n[" TimeString "][" this.module "]: " content
+        formattedContent:=% "[" TimeString "][" this.module "]: " content "`n"
 
         FileAppend, %formattedContent%, % this.directory "\log(" sFileName ").txt",UTF-8 
 
         global BaseballAutoGui
-        formattedContent:="`n[" TimeString "]: " content
+        formattedContent:="[" TimeString "]: " content "`n"
 
         if( BaseballAutoGui != "" ){
             BaseballAutoGui.guiLog( this.module, "How", formattedContent)
@@ -38,7 +38,7 @@
         FormatTime, sFileName, %A_NOW%, MM월dd일
         FormatTime, TimeString, %A_NOW%, HH:mm:ss
 
-        formattedContent:=% "`n[" TimeString "][" this.module "]: " content
+        formattedContent:=% "[" TimeString "][" this.module "]: " content "`n"
         FileAppend, %formattedContent%, % this.directory "\log(" sFileName ").txt", UTF-8
     }
 

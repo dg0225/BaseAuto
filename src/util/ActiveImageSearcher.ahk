@@ -26,10 +26,10 @@ Class ActiveImageSearcher{
         If( ErrorLevel = 0 ){
             intPosX := oX
             intPosY := oY 
-            this.logger.debug( target "을 찾았습니다. X=" intPosX ", Y=" intPosY )
+            ; this.logger.debug( target "을 찾았습니다. X=" intPosX ", Y=" intPosY )
             return true
         }else If(Errorlevel = 2){		
-            this.logger.debug( "ERROR ---" target "파일자체가 존재하지 않습니다." )
+            ; this.logger.debug( "ERROR ---" target "파일자체가 존재하지 않습니다." )
             return false
         }
         return false

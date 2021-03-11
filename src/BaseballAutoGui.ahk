@@ -305,10 +305,7 @@ Class BaseballAutoGui{
         player.setRole(this.guiMain.Controls[player.getKeyRole()].get())
         player.setBattleType(this.guiMain.Controls[player.getKeyBattleType()].get())
     }
-    remoteTooltips(){
-
-        ToolTip
-    }
+	
     started(){
         ; msgbox % "Started " this.BoolPaused
         this.statusPaused:=false

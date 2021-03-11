@@ -77,11 +77,12 @@ class MC_GameController{
         Random, randFirst, randomStart, randomEnd
         Random, randSecond, randomStart, randomEnd
 
-        positionX+=randFirst
-        positionY+=randSecond
+        targetX:=positionX+randFirst
+		targetY:=positionY+randSecond
+		this.logger.debug( "Before X=" positionX " Y=" positionY "  Apply X=" targetX ", Y=" targetY " Click")
         ; ToolTip, % "TargetX = " positionX ", targetY= "positionY
         ; MouseMove %positionX%, %positionY%
-        this.click( positionX, positionY, needDelay )		
+        this.click( targetX, targetY, needDelay )		
     }
 
     sleep( secSleep ){

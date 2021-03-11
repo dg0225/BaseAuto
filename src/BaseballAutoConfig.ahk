@@ -28,7 +28,9 @@ class BaseballAutoConfig{
     }
 
     initConfig(){
-
+		This.players := []
+        This.enabledPlayers:= []
+		
         PLAYER_KEY:="PLAYERS_CONFIG"
         loop, 4
         {
