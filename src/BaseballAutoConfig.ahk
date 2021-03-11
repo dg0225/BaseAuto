@@ -114,7 +114,7 @@ class BaseAutoPlayer{
     }
     setResultColor( changeColor:=false){
         global baseballAutoGui		
-        baseballAutoGui.updateResultColor( this.getKeyResult(), this.result, changeColor)	
+        baseballAutoGui.updateStatusColor( this.getKeyResult(), this.result, changeColor)	
     }
 
     getEnabled(){
