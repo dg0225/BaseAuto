@@ -26,8 +26,6 @@ Class MC_ScanWindow {
         Gui , color, 0xFFFFFF
 
         Gui, % This.Name ":Show", % "w" MC_ScanWindow.widthToScan " h" MC_ScanWindow.heightToScan , % This.Title
-        Gui , color, 0xFFFFFF
-        ; WinSet, TransColor, 0xFFFFFF, % This.Title
         WinSet, Transparent, 70, % This.Title
         
         OnMessage(0x201, this.onMouseClick.Bind(this))

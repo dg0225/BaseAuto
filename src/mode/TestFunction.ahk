@@ -23,17 +23,11 @@ Class MC_ScanWindow {
          Gui, % This.Name ":Margin", 4, 4
          Gui, % This.Name ":Font", s , 
         Gui , -Border +Resize -Caption +AlwaysOnTop
-        ; Gui ,   +1Resize +AlwaysOnTop
-        ; Gui , color, 0xFFFFFF
-
         Gui, % This.Name ":Show", % "w" MC_ScanWindow.widthToScan " h" MC_ScanWindow.heightToScan , % This.Title
-        ; Gui , color, 0xFFFFFF
-        ; WinSet, Transparent, 70, % This.Title
+        WinSet, Transparent, 70, % This.Title
 
         OnMessage(0x201, this.onMouseClick.Bind(this))
         OnMessage(0x200, this.onMouseMove.Bind(this))
-        ; this.closeObj:=ObjBindMethod(this, "onCloseWindow", this.Hwnd)
-        ; onMessage(0x112,this.onCloseWindow.Bind(this))
         onMessage(0x100,this.onKeyDown.Bind(this))
     } 
     onKeyDown( wParam, lParam, msg, hwnd){
@@ -43,14 +37,11 @@ Class MC_ScanWindow {
         }
         if ( wParam = this.KEY_ESC ){
             this.closeGui(this)
-            ; Gui, % This.Name ":Destroy"
-            ; ToolTip, "ESC Input"
         } else if (wParam = this.KEY_F){
             ToolTip, "F Input"
         } 
     }
     closeGui(){
-        ToolTip, "I'm ???"
         Gui, % This.Name ":Default"
         Gui, Destroy 
     }
@@ -66,13 +57,11 @@ Class MC_ScanWindow {
 
     onMouseMove( wparam, lParam, msg, hwnd ){	
         if ( hwnd != this.Hwnd){
-
             return
         } 
 
         if ( wParam = 1 ){
             PostMessage, 0XA1, 2,,, % This.Title
-
             return
         }else{ 
             if( this.clicked ){
@@ -103,10 +92,6 @@ Class MC_ScanWindow {
 
 !F6::
     ; IfExist, A_ScriptDir
-    IfExist, %A_ScriptDir%\asd
-    {
-		msgbox "NOT"
-	}
 	globalCurrentPlayer.setStay()
     ; targetX:=178
     ; targetY:=63
