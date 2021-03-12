@@ -105,9 +105,9 @@ Class MC_ScanWindow {
     ; IfExist, A_ScriptDir
     IfExist, %A_ScriptDir%\asd
     {
-
-        msgbox "NOT"
-    }
+		msgbox "NOT"
+	}
+	globalCurrentPlayer.setStay()
     ; targetX:=178
     ; targetY:=63
     ; MouseMove, %targetX%, %targetY%
@@ -125,8 +125,9 @@ Class MC_ScanWindow {
 return
 
 !F7::
-    WinGetPos, winX, winY, winW, winH, (Hard)			
-    msgbox % "Winx=" winX " winY=" winY " winW=" winW " winH=" winH
+	globalCurrentPlayer.setUnknwon()
+    ; WinGetPos, winX, winY, winW, winH, (Hard)			
+    ; msgbox % "Winx=" winX " winY=" winY " winW=" winW " winH=" winH
 
 return 
 
@@ -202,4 +203,4 @@ Return
 ; {
 ; if wparam =1 ; LButton
 ; PostMessage, 0xA1, 2,,, A
-; }
+; 

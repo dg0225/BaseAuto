@@ -162,9 +162,10 @@ class BaseAutoPlayer{
     }
     setFree(){
         this.setStatus("자동중")		
-    }
-    setUnkown(){
-        this.setStatus("Unknwon")		
+    }	
+	
+    setUnknwon(){
+		this.setStatus("Unknwon")		
     }
 
     getStatus(){
