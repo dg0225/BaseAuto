@@ -167,12 +167,12 @@ Class LeagueRunningMode{
 
                 this.gameController.sleep(2)			
                 if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") != true ){
-					this.logger.log("자동 게임이 시작되었습니다.") 
+					this.logger.log(this.player.getAppTitle() " 자동 게임이 시작되었습니다.") 
                     this.player.setFree()
                     return 1
                 }
             }else{
-				this.logger.log("자동 게임이 진행 중인것으로 보입니다.") 
+				;this.logger.log(this.player.getAppTitle() " 자동 게임이 진행 중인것으로 보입니다.") 
                 this.player.setFree()
                 return 1
             }
