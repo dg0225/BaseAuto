@@ -56,6 +56,8 @@ Class MC_ScanWindow {
     ; }
 
     onMouseMove( wparam, lParam, msg, hwnd ){	
+        global baseballAutoConfig
+        
         if ( hwnd != this.Hwnd){
             return
         } 
@@ -72,7 +74,7 @@ Class MC_ScanWindow {
                 posX+=6
                 winWidth-=12
                 winHeight-=6
-                WinGetPos, posX1, posY1, winWidth1, winHeight1, (MEmu1)
+                WinGetPos, posX1, posY1, winWidth1, winHeight1, % baseballAutoConfig.getDefaultPlayer().getAppTitle()
                 tooltip, % "PosX:" posX " posY:" posY " winWidth:" winWidth " winHeight:" winHeight "`n" "PosX:" posX1 " posY:" posY1 " winWidth:" winWidth1 " winHeight:" winHeight1
             }	
         }
