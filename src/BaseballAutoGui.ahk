@@ -137,9 +137,9 @@ Class BaseballAutoGui{
             guiType:="Text"
             guiTitle:=player.getStatus()
             guiLable:=player.getKeyStatus()
-            option:="xp y+10 wp hp"
+            option:="xp y+10 wp hp +Center"
             if( index = 1 ){
-                option:="xs+245 ys+20 w60"
+                option:="xs+245 ys+20 w60 +Center"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
