@@ -39,12 +39,28 @@ Class BaseballAutoGui{
 
     init(){
         mainHeight:=5
+        mainHeight+=this.initConfigButton(mainHeight)		
         mainHeight+=this.initPlayerWindow(mainHeight)		
         mainHeight+=this.initButtonWindow(mainHeight)
         mainHeight+=this.initLogWindow(mainHeight)		
 
         this.totalHeight:=mainHeight+this.initConfigWindow(mainHeight)+5
         return mainHeight
+    }
+
+    initConfigButton( _height ){
+        currentWindowHeight:=15
+        ; option:=% "xs+5 ys+20 disabled"
+
+        this.guiMain.Add("Button", "Save", "x" this.maxGroupWidth -35 " y0", "RoleSaveButton",0)
+        this.guiMain.Add("Button", "Clear", "x" this.maxGroupWidth -85 " y0", "StatClearButton",0)
+        ; this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
+        ; this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
+        this.guiMain.Controls["RoleSaveButton"].BindMethod(this.roleSaveByGui.Bind(this))
+        this.guiMain.Controls["StatClearButton"].BindMethod(this.clearStatsByGui.Bind(this))
+        ; this.guiMain.Controls["RolePassButton"].BindMethod(this.rolePassByGui.Bind(this))
+        ; this.guiMain.Controls["RoleAllowButton"].BindMethod(this.roleAllowByGui.Bind(this))
+        return currentWindowHeight
     }
     initPlayerWindow( _height ){
         global baseballAutoConfig
@@ -81,10 +97,10 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="ComboBox"
-            guiTitle:="League|ETC"
+            guiTitle:="리그|기타"
             guiLable:=player.getKeyRole() 
             if ( index = 1 )
-                option:="xs+110 ys+15 +Center w70"
+                option:="xs+110 ys+15 +Center w50"
             else
                 option:="xp y+2 wp"
 
@@ -94,11 +110,11 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="ComboBox"
-            guiTitle:="D|O|A"
+            guiTitle:="수비|공격|전체"
             guiLable:=player.getKeyBattleType()
             option:="xp y+2 wp"
             if ( index = 1 ){
-                option:="xs+185 ys+15 +Center w35 h100"
+                option:="xs+165 ys+15 +Center w50 h100"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
             this.guiMain.Controls[guiLable].select(player.getBattleType())
@@ -107,11 +123,11 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="Text"
-            guiTitle:=player.getResult()            
+            guiTitle:=player.getResult() 
             guiLable:=player.getKeyResult()
             option:="xp y+10 wp hp Right"
             if( index = 1 ){			
-                option:="xs+225 ys+20 w10 Right"
+                option:="xs+220 ys+20 w20 Right"
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
@@ -127,12 +143,6 @@ Class BaseballAutoGui{
             }
             this.guiMain.Add(guiType, guiTitle, option, guiLable,0)
         }
-        this.guiMain.Add("Button", "Save", "x" this.maxGroupWidth -30 " y0", "RoleSaveButton",0)
-        ; this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
-        ; this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
-        this.guiMain.Controls["RoleSaveButton"].BindMethod(this.roleSaveByGui.Bind(this))
-        ; this.guiMain.Controls["RolePassButton"].BindMethod(this.rolePassByGui.Bind(this))
-        ; this.guiMain.Controls["RoleAllowButton"].BindMethod(this.roleAllowByGui.Bind(this))
 
         return currentWindowHeight
     }
@@ -257,6 +267,15 @@ Class BaseballAutoGui{
 
         Reload
     }
+    clearStatsByGui(){
+
+        global baseballAutoConfig
+        
+        for index,player in baseballAutoConfig.players
+        {
+            player.setResult(0)
+        }           
+    }
     roleSaveByGui(){
         global baseballAutoConfig
 
@@ -305,7 +324,7 @@ Class BaseballAutoGui{
         player.setRole(this.guiMain.Controls[player.getKeyRole()].get())
         player.setBattleType(this.guiMain.Controls[player.getKeyBattleType()].get())
     }
-	
+
     started(){
         ; msgbox % "Started " this.BoolPaused
         this.statusPaused:=false

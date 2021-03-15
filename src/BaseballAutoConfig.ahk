@@ -28,9 +28,9 @@ class BaseballAutoConfig{
     }
 
     initConfig(){
-		This.players := []
+        This.players := []
         This.enabledPlayers:= []
-		
+
         PLAYER_KEY:="PLAYERS_CONFIG"
         loop, 4
         {
@@ -40,22 +40,23 @@ class BaseballAutoConfig{
             playerRole:= this.configFile.loadValue(PLAYER_KEY, player.getKeyRole() )
             playerTitle:= this.configFile.loadValue(PLAYER_KEY, player.getKeyAppTitle() )
             playerBattleType:= this.configFile.loadValue(PLAYER_KEY, player.getKeyBattleType() )
+            playerResultType:= this.configFile.loadValue(PLAYER_KEY, player.getKeyResult() )
 
             player.setEnabled(playerEnabled)
             player.setAppTitle(playerTitle)
             player.setRole(playerRole) 
             player.setBattleType(playerBattleType)
+            player.setResult(playerResultType)
             if( A_Index = 1 )
             { 
                 player.setEnabled(true)
                 if( playerTitle = "" )
                     player.setAppTitle("(Hard)")
                 if( playerRole = "" )
-                    player.setRole("League")
+                    player.setRole("리그")
 
                 if (playerBattleType="")	
-                    player.setBattleType("A")
-
+                    player.setBattleType("전체")
             }
             if( player.getEnabled() ){
                 this.enabledPlayers.push(player)
@@ -82,8 +83,11 @@ class BaseballAutoConfig{
             this.configFile.saveValue(PLAYER_KEY,element.getKeyRole(), element.getRole()) 
             this.configFile.saveValue(PLAYER_KEY,element.getKeyBattleType(), element.getBattleType()) 
         }
-
     }
+    savePlayerResult( player ){
+        this.configFile.saveValue("PLAYERS_CONFIG",player.getKeyResult(), player.getResult()) 
+    }
+
 }
 
 class BaseAutoPlayer{
@@ -95,18 +99,25 @@ class BaseAutoPlayer{
         this.appRole:=role 
         this.watingResult:=false
         this.status:="Unknwon"
-        this.battleType:="D"
+        this.battleType:="전체"
         this.result:=0
     } 
     getResult(){
         return this.result
     }
-    addResult(){
-        this.result+=1
-        this.setGuiResult()
+    addResult(){ 
+
+        this.setResult( this.result + 1)
+
     } 
-    setGuiResult( ){
-        global baseballAutoGui		 
+    setResult( result ){
+        global baseballAutoGui, baseballAutoConfig
+        if ( result ="" ){
+            result:=0
+        }
+        this.result:=result
+        
+        baseballAutoConfig.savePlayerResult(this)
         baseballAutoGui.updateStatus( this.getKeyResult(), this.result)
     }
     setNeedSkip(){
@@ -163,9 +174,9 @@ class BaseAutoPlayer{
     setFree(){
         this.setStatus("자동중")		
     }	
-	
+
     setUnknwon(){
-		this.setStatus("Unknwon")		
+        this.setStatus("Unknwon")		
     }
 
     getStatus(){

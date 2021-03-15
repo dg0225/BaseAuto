@@ -112,7 +112,8 @@ Class MC_ScanWindow {
 return
 
 !F7::
-	globalCurrentPlayer.setUnknwon()
+	; globalCurrentPlayer.setUnknwon()
+    globalCurrentPlayer.addResult()
     ; WinGetPos, winX, winY, winW, winH, (Hard)			
     ; msgbox % "Winx=" winX " winY=" winY " winW=" winW " winH=" winH
 

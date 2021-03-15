@@ -104,13 +104,13 @@ Class LeagueRunningMode{
     choicePlayType(){
         if ( this.gameController.searchImageFolder("리그모드\Window_ChoicePlayType") ){
             this.player.setStay()
-            if ( this.player.getBattleType() = "D" ) {
+            if ( this.player.getBattleType() = "수비" ) {
                 this.logger.log("수비 방식을 선택합니다.") 
                 if ( this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyDepence") ){
                     this.gameController.sleep(2)
                     return 1
                 }
-            } else if( this.player.getBattleType() = "O" ){
+            } else if( this.player.getBattleType() = "공격" ){
                 this.logger.log("공격 방식을 선택합니다.") 
                 if ( this.gameController.searchAndClickFolder("리그모드\Window_ChoicePlayType\Button_OnlyOppence") ){
                     this.gameController.sleep(2)
