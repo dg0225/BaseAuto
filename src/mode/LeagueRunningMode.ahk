@@ -32,7 +32,7 @@ Class LeagueRunningMode{
         counter+=this.checkGameResultWindow()
         counter+=this.checkMVPWindow()
         counter+=this.checkTotalLeagueEnd()
-		return counter
+        return counter
     }
 
     startLeagueInMainWindow()
@@ -48,14 +48,14 @@ Class LeagueRunningMode{
     }
     skippLeagueSchedule(){
         if ( this.gameController.searchImageFolder("리그모드\화면_경기일정") ){		
-			this.logger.log("경기 일정 화면을 넘어갑니다.")
+            this.logger.log("경기 일정 화면을 넘어갑니다.")
             this.player.setStay()
-			if ( this.gameController.searchImageFolder("리그모드\화면_도전과제_상태\초과1단계") ){
-				this.logger.log("초과 1단계 이상을 달성했습니다.")
+            if ( this.gameController.searchImageFolder("리그모드\화면_도전과제_상태\초과1단계") ){
+                this.logger.log("초과 1단계 이상을 달성했습니다.")
                 this.player.setNeedSkip()
             }
             if ( this.player.getWaitingResult() ){				
-				this.logger.log(this.player.getAppTitle() " 정상 종료를 요청을 확인했습니다.")
+                this.logger.log(this.player.getAppTitle() " 정상 종료를 요청을 확인했습니다.")
                 if ( this.gameController.searchImageFolder("리그모드\버튼_플레이시작_게임시작") ){
                     this.logger.log(this.player.getAppTitle() " 바이 바이.")
                     this.player.setBye()
@@ -63,7 +63,7 @@ Class LeagueRunningMode{
                     this.logger.log("정상 요청이지만 이어하기를 수행했습니다.")
                     return 1
                 }
-            }else{              
+            }else{ 
                 if ( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_게임시작") ){
                     return 1
                 }else if( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_이어하기") ){
@@ -76,7 +76,7 @@ Class LeagueRunningMode{
 
     skippBattleHistory(){
         if ( this.gameController.searchImageFolder("리그모드\화면_상대전적") ){
-			this.logger.log("전적 화면을 넘어갑니다.")
+            this.logger.log("전적 화면을 넘어갑니다.")
             this.player.setStay()
             if ( this.player.getWaitingResult() ){								
                 if ( this.gameController.searchImageFolder("리그모드\버튼_플레이시작_게임시작") ){
@@ -147,7 +147,7 @@ Class LeagueRunningMode{
     }
     checkTotalLeagueEnd(){
         if ( this.gameController.searchImageFolder("리그모드\화면_리그_완전종료") ){
-			this.logger.log(this.player.getAppTitle() " 리그가 종료 되었습니다. 우승했길....") 
+            this.logger.log(this.player.getAppTitle() " 리그가 종료 되었습니다. 우승했길....") 
             this.player.setRealFree()
         }
         return 0				
@@ -160,19 +160,19 @@ Class LeagueRunningMode{
             this.gameController.sleep(2)			
             if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
                 this.logger.log("자동 방식을 활성화 합니다.") 
-				if ( baseballAutoConfig.enabledPlayers.length() > 1 )
+                if ( baseballAutoConfig.enabledPlayers.length() > 1 )
                     this.gameController.clickRatioPos(0.744, 0.114, 10)
                 else
                     this.gameController.clickRatioPos(0.76, 0.097, 20)
 
                 this.gameController.sleep(2)			
                 if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") != true ){
-					this.logger.log(this.player.getAppTitle() " 자동 게임이 시작되었습니다.") 
+                    this.logger.log(this.player.getAppTitle() " 자동 게임이 시작되었습니다.") 
                     this.player.setFree()
                     return 1
                 }
             }else{
-				;this.logger.log(this.player.getAppTitle() " 자동 게임이 진행 중인것으로 보입니다.") 
+                ;this.logger.log(this.player.getAppTitle() " 자동 게임이 진행 중인것으로 보입니다.") 
                 this.player.setFree()
                 return 1
             }
@@ -186,7 +186,7 @@ Class LeagueRunningMode{
             this.logger.log("자동은 빠르게 ") 
             if ( this.gameController.searchAndClickFolder("리그모드\button_playSlow" ) = true){				
                 if ( this.gameController.searchImageFolder("리그모드\화면_자동이닝설정") ){
-					this.logger.log("자동 이닝 관련 팝업이 나와 버렸습니다... 아 타이밍") 
+                    this.logger.log("자동 이닝 관련 팝업이 나와 버렸습니다... 아 타이밍") 
                     if ( this.gameController.searchAndClickFolder("리그모드\화면_자동이닝설정\버튼_X" ) = true){
                         this.checkSpeedUp()
                     }

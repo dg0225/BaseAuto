@@ -203,8 +203,8 @@ class BaseAutoPlayer{
         this.AppTitle:=title 
     }
     setRole( role ){
-        if  role not in 리그,ETC
-        {   
+        if role not in 리그,ETC
+        { 
             role:="리그"
         }
         this.appRole:=role
@@ -215,11 +215,11 @@ class BaseAutoPlayer{
 
     }
     setBattleType( _battleType){
-        if  _battleType not in 수비,공격,전체
+        if _battleType not in 수비,공격,전체
         {
             _battleType:="전체"
         }
-        
+
         this.battleType:=_battleType
     }
 

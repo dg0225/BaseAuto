@@ -3,7 +3,7 @@ Class MC_ScanWindow {
 
     static widthToScan=200
     static heightToScan=50
-    
+
     KEY_ESC:=27
     KEY_F:=70
     KEY_C:=67
@@ -22,12 +22,12 @@ Class MC_ScanWindow {
         Gui, % This.Name ":Default"
 
         ; Gui , -Border +Resize -Caption +AlwaysOnTop
-        Gui ,-Caption +Resize  +AlwaysOnTop
+        Gui ,-Caption +Resize +AlwaysOnTop
         Gui , color, 0xFFFFFF
 
         Gui, % This.Name ":Show", % "w" MC_ScanWindow.widthToScan " h" MC_ScanWindow.heightToScan , % This.Title
         WinSet, Transparent, 70, % This.Title
-        
+
         OnMessage(0x201, this.onMouseClick.Bind(this))
         OnMessage(0x200, this.onMouseMove.Bind(this))
         ; this.closeObj:=ObjBindMethod(this, "onCloseWindow", this.Hwnd)
@@ -45,12 +45,12 @@ Class MC_ScanWindow {
             ; ToolTip, "ESC Input"
         } else if (wParam = this.KEY_F){
             ToolTip, "F Input"
-        }        
+        } 
     }
     closeGui(){
         ToolTip, "I'm ???"
         Gui, % This.Name ":Default"
-        Gui, Destroy        
+        Gui, Destroy 
     }
     ; onCloseWindow( wParam, lParam, msg, hwnd){
     ;     ToolTip, "I'SUPER Die"
@@ -66,13 +66,13 @@ Class MC_ScanWindow {
         if ( hwnd != this.Hwnd){
 
             return
-        }        
+        } 
 
         if ( wParam = 1 ){
             PostMessage, 0XA1, 2,,, % This.Title
 
             return
-        }else{           
+        }else{ 
             if( this.clicked ){
                 this.clicked:=false
                 WinGetPos, posX, posY, winWidth, winHeight, % this.Title
@@ -89,7 +89,7 @@ Class MC_ScanWindow {
         if ( hwnd != this.Hwnd){
             return
         }
-        this.clicked:=true        
+        this.clicked:=true 
     }
 
 }

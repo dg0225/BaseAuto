@@ -270,11 +270,11 @@ Class BaseballAutoGui{
     clearStatsByGui(){
 
         global baseballAutoConfig
-        
+
         for index,player in baseballAutoConfig.players
         {
             player.setResult(0)
-        }           
+        } 
     }
     roleSaveByGui(){
         global baseballAutoConfig

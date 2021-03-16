@@ -26,7 +26,7 @@ Class GameStartMode{
             if( this.gmaeController.searchAndClickFolder("게임실행모드\Button_GameIcon") ){
                 this.gmaeController.sleep(15)					
                 return 1
-            }            
+            } 
         }
         return 0
     }
@@ -37,7 +37,7 @@ Class GameStartMode{
             this.logger.log("안드로이드 광고를 클릭합니다.") 
             if( this.gmaeController.searchAndClickFolder("게임실행모드\Button_AdroidAds") ){
                 return 1
-            }            
+            } 
         }
         return 0
     }

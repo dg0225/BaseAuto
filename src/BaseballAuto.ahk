@@ -67,7 +67,7 @@ Class BaseballAuto{
                             gameMode.setPlayer(player) 
                             localChecker+=gameMode.checkAndRun()
                         } 
-                        this.gameController.sleep(3) 						                        
+                        this.gameController.sleep(3) 						 
                         ; this.logger.log( player.getAppTitle() " checker count=" localChecker)
                         if ( !player.needToStay() ){ 
                             ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
@@ -79,7 +79,7 @@ Class BaseballAuto{
                                     this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
                                     player.setUnknwon()
                                 }
-                                loopCount+=1                                                               
+                                loopCount+=1 
                             } else{
                                 loopCount:=0
                             }

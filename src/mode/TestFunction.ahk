@@ -20,8 +20,8 @@ Class MC_ScanWindow {
 
     initWindow(){
         Gui, % This.Name ":Default"
-         Gui, % This.Name ":Margin", 4, 4
-         Gui, % This.Name ":Font", s , 
+        Gui, % This.Name ":Margin", 4, 4
+        Gui, % This.Name ":Font", s , 
         Gui , -Border +Resize -Caption +AlwaysOnTop
         Gui, % This.Name ":Show", % "w" MC_ScanWindow.widthToScan " h" MC_ScanWindow.heightToScan , % This.Title
         WinSet, Transparent, 70, % This.Title
@@ -57,7 +57,7 @@ Class MC_ScanWindow {
 
     onMouseMove( wparam, lParam, msg, hwnd ){	
         global baseballAutoConfig
-        
+
         if ( hwnd != this.Hwnd){
             return
         } 
@@ -94,7 +94,7 @@ Class MC_ScanWindow {
 
 !F6::
     ; IfExist, A_ScriptDir
-	globalCurrentPlayer.setStay()
+    globalCurrentPlayer.setStay()
     ; targetX:=178
     ; targetY:=63
     ; MouseMove, %targetX%, %targetY%
@@ -112,7 +112,7 @@ Class MC_ScanWindow {
 return
 
 !F7::
-	; globalCurrentPlayer.setUnknwon()
+    ; globalCurrentPlayer.setUnknwon()
     globalCurrentPlayer.addResult()
     ; WinGetPos, winX, winY, winW, winH, (Hard)			
     ; msgbox % "Winx=" winX " winY=" winY " winW=" winW " winH=" winH

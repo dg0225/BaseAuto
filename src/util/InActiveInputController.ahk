@@ -22,7 +22,7 @@ class InActiveInputController{
     fixedClick( posX, posY ){
         ; global BooleanDebugMode
         ; if( BooleanDebugMode = true ){
-            ; this.logger.debug(" fixed Click Position " posX ", " posY ) 
+        ; this.logger.debug(" fixed Click Position " posX ", " posY ) 
         ; } 
         lParam:= posX|posY<< 16 
         PostMessage, 0x201, 1, %lParam%, , % this.currentTargetTitle ;WM_LBUTTONDOWN
