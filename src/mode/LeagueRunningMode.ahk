@@ -53,11 +53,13 @@ Class LeagueRunningMode{
             if ( this.gameController.searchImageFolder("리그모드\화면_도전과제_상태\초과1단계") ){
                 if ( this.gameController.searchImageFolder("리그모드\화면_도전과제_상태\화면_리그경기") ){
                     this.logger.log("초과 1단계 이상을 달성했습니다.")
-                    this.player.setNeedSkip()                    
+                    this.player.setNeedSkip(true)
                 }else{
                     this.logger.log("이미 포스트 시즌입니다.")
                     this.player.setPostSeason()
                 } 
+            }else{
+                this.player.setNeedSkip(false)
             }
             if ( this.player.getWaitingResult() ){				
                 this.logger.log(this.player.getAppTitle() " 정상 종료를 요청을 확인했습니다.")

@@ -120,8 +120,11 @@ class BaseAutoPlayer{
         baseballAutoConfig.savePlayerResult(this)
         baseballAutoGui.updateStatus( this.getKeyResult(), this.result)
     }
-    setNeedSkip(){
-        this.setResultColor(1)
+    setNeedSkip( needSkip:=false){
+        if( needSkip )
+            this.setResultColor(1)
+        else
+            this.setResultColor(0)
     }
     setPostSeason(){
         this.setResultColor(2)
