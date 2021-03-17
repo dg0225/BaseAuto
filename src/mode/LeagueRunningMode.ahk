@@ -51,8 +51,13 @@ Class LeagueRunningMode{
             this.logger.log("경기 일정 화면을 넘어갑니다.")
             this.player.setStay()
             if ( this.gameController.searchImageFolder("리그모드\화면_도전과제_상태\초과1단계") ){
-                this.logger.log("초과 1단계 이상을 달성했습니다.")
-                this.player.setNeedSkip()
+                if ( this.gameController.searchImageFolder("리그모드\화면_도전과제_상태\플레이오프") ){
+                    this.logger.log("이미 포스트 시즌입니다.")
+                    this.player.setPostSeason()
+                }else{
+                    this.logger.log("초과 1단계 이상을 달성했습니다.")
+                    this.player.setNeedSkip()
+                } 
             }
             if ( this.player.getWaitingResult() ){				
                 this.logger.log(this.player.getAppTitle() " 정상 종료를 요청을 확인했습니다.")

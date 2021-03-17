@@ -41,13 +41,15 @@ Class BaseballAuto{
 
                 for playerIndex, player in baseballAutoConfig.enabledPlayers{
                     globalCurrentPlayer:=player
-                    globalCurrentPlayer.setCheck()
+                                        
                     if( globalCurrentPlayer.needToStop()){
                         baseballAutoConfig.enabledPlayers.remove(playerIndex)
                         if( baseballAutoConfig.enabledPlayers.length() = 0 )
                             this.running:=false
                         continue
                     }
+
+                    globalCurrentPlayer.setCheck()
                     this.gameController.setActiveId(player.getAppTitle())
                     globalContinueFlag:=false
 
@@ -79,7 +81,7 @@ Class BaseballAuto{
                                     this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
                                     player.setUnknwon()
                                 }
-                                loopCount+=1 
+                                loopCount+=1
                             } else{
                                 loopCount:=0
                             }

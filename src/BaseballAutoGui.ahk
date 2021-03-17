@@ -197,9 +197,11 @@ Class BaseballAutoGui{
         return currentWindowHeight
 
     }
-    updateStatusColor( statusLabel, status , changeColor:=false ){
-        if( changeColor ){			
+    updateStatusColor( statusLabel, status , changeColor:=0 ){
+        if( changeColor = 1 ){			
             this.guiMain.Controls[statusLabel].SetOptions("+cRed")		
+        }else if( changeColor = 2 ){			
+            this.guiMain.Controls[statusLabel].SetOptions("+cBlue")		
         }else{
             this.guiMain.Controls[statusLabel].SetOptions("+cBlack")		
         }

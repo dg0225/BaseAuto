@@ -121,9 +121,12 @@ class BaseAutoPlayer{
         baseballAutoGui.updateStatus( this.getKeyResult(), this.result)
     }
     setNeedSkip(){
-        this.setResultColor(true)
+        this.setResultColor(1)
     }
-    setResultColor( changeColor:=false){
+    setPostSeason(){
+        this.setResultColor(2)
+    }
+    setResultColor( changeColor:=0){
         global baseballAutoGui		
         baseballAutoGui.updateStatusColor( this.getKeyResult(), this.result, changeColor)	
     }
@@ -149,6 +152,7 @@ class BaseAutoPlayer{
             return true
         else
             return false
+        this.setStatusColor(2)
     }
     setWantToWaitResult(){
         this.watingResult:=true
@@ -157,10 +161,10 @@ class BaseAutoPlayer{
         return this.watingResult
     }
     setCheck(){
-        this.setStatusColor( true)
+        this.setStatusColor(1)
     }
     setCheckDone(){
-        this.setStatusColor(false)
+        this.setStatusColor(0)
     }
     setStay(){
         this.setStatus("조작중")
@@ -185,9 +189,9 @@ class BaseAutoPlayer{
     setStatus( status ){
         global baseballAutoGui		
         this.status:=status
-        baseballAutoGui.updateStatus( this.getKeyStatus(), this.status, changeColor)
+        baseballAutoGui.updateStatus( this.getKeyStatus(), this.status)
     }
-    setStatusColor( changeColor:=false){
+    setStatusColor( changeColor:=0){
         global baseballAutoGui		
         baseballAutoGui.updateStatusColor( this.getKeyStatus(), this.status, changeColor)	
     }
