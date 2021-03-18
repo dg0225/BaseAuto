@@ -13,9 +13,11 @@ class InActiveInputController{
     }
 
     click( x, y ) {
-        WinGetPos, winX, winY, winW, winH, % this.currentTargetTitle
-        px:=x-winX
-        py:=y-winy
+        ; WinGetPos, winX, winY, winW, winH, % this.currentTargetTitle
+        px:=x
+        ; px:=x-winX
+        py:=y
+        ; py:=y-winy
         this.fixedClick(px, py ) 
     }
 

@@ -1,5 +1,6 @@
 ﻿#include %A_ScriptDir%\src\util\AutoLogger.ahk
 #include %A_ScriptDir%\src\util\ActiveImageSearcher.ahk
+#include %A_ScriptDir%\src\util\InActiveImageSearcher.ahk
 #include %A_ScriptDir%\src\util\InActiveInputController.ahk
 
 class MC_GameController{
@@ -8,8 +9,9 @@ class MC_GameController{
 
     __NEW(){
         global DEFAULT_APP_ID
-        this.imageSearcher := new ActiveImageSearcher( this.logger )
-        this.controller := new InActiveInputController( this.logger ) 
+        ; this.imageSearcher := new ActiveImageSearcher( this.logger )
+        this.imageSearcher := new InActiveImageSearcher( this.logger ) 
+        this.controller := new InActiveInputController( this.logger )         
         this.currentTargetTitle:=DEFAULT_APP_ID
     }
     setActiveId(title){
@@ -18,7 +20,8 @@ class MC_GameController{
         this.controller.setActiveId(title)
     }
     checkAppPlayer(){
-        return this.imageSearcher.possible()
+        return true
+        ; return this.imageSearcher.possible()
     }
     searchImageFolder( targetFolder, needLog=true) {
 
@@ -39,17 +42,23 @@ class MC_GameController{
             this.logger.debug( "ERROR : 폴더 [ " targetFolder " ]자체가 존재하지 않습니다." )
             return false
         }
+
+        this.imageSearcher.prepare()
+        findResult:=false        
         Loop, %A_ScriptDir%\Resource\Image\%targetFolder%\*
         {
             if A_LoopFileExt in % this.extensions
             {
                 fileName=%targetFolder%\%A_LoopFileName%
                 If( this.imageSearcher.funcSearchImage( posX, posY, fileName) = true ) { 
-                    return true
+                    findResult:=true
+                    break
                 } 
             }
         } 
-        return false
+        this.imageSearcher.done()
+        return findResult
+        ; return false
     }
 
     searchAndClickFolder( targetFolder, relateX=0, relateY=0 , boolDelay=true ) {
@@ -121,8 +130,8 @@ class MC_GameController{
     }
     clickRatioPos( ratioX, ratioY, maxSize:=40 ) {
         WinGetPos, winX, winY, winW, winH, % this.currentTargetTitle	
-        targetX:= winW * ratioX + winX
-        targetY:= winH * ratioY + winY
+        targetX:= winW * ratioX 
+        targetY:= winH * ratioY 
         ; MouseMove, %targetX%, %targetY%
         ; ToolTip, % "WinW = " winW ", WinH = " winH ", TargetX = " targetX ", targetY= "targetY
         this.logger.debug( "특정 비율을 클릭합니다.(화면) WinW=" winW ", WinH=" winH ", WinX" winX " , WinY" winY)
