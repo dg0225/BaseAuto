@@ -5,7 +5,7 @@ class InActiveInputController{
     currentTargetTitle:=""
     __NEW( logger ){
         global DEFAULT_APP_ID
-        this.logger :=_logger
+        this.logger :=logger
         this.currentTargetTitle:=DEFAULT_APP_ID
     }
     setActiveId(targetId){
@@ -24,9 +24,14 @@ class InActiveInputController{
     fixedClick( posX, posY ){
         ; global BooleanDebugMode
         ; if( BooleanDebugMode = true ){
-        ; this.logger.debug(" fixed Click Position " posX ", " posY ) 
+        ; this.logger.log(" fixed Click Position " posX ", " posY ) 
         ; } 
         lParam:= posX|posY<< 16 
+        ; LD player
+        ; PostMessage, 0x201, 1, %lParam%, TheRender, % this.currentTargetTitle ;WM_LBUTTONDOWN
+        ; sleep, 50	
+        ; PostMessage, 0x202, 0, %lParam%, TheRender, % this.currentTargetTitle ;WM_LBUTTONUP       
+
         PostMessage, 0x201, 1, %lParam%, , % this.currentTargetTitle ;WM_LBUTTONDOWN
         sleep, 50	
         PostMessage, 0x202, 0, %lParam%, , % this.currentTargetTitle ;WM_LBUTTONUP       

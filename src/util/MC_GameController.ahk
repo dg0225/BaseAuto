@@ -20,8 +20,7 @@ class MC_GameController{
         this.controller.setActiveId(title)
     }
     checkAppPlayer(){
-        return true
-        ; return this.imageSearcher.possible()
+        return this.imageSearcher.possible()
     }
     searchImageFolder( targetFolder, needLog=true) {
 
