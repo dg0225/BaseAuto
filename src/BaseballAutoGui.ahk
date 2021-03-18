@@ -51,11 +51,18 @@ Class BaseballAutoGui{
     initConfigButton( _height ){
         currentWindowHeight:=15
         ; option:=% "xs+5 ys+20 disabled"
+    ;    his.guiMain.Add("Button", "Bye", "x" 100 " y0", "ByeButton",0)
+    ;     this.guiMain.Add("Button", "Hi", "x" 150 " y0", "HiButton",0) t
 
-        this.guiMain.Add("Button", "Save", "x" this.maxGroupWidth -35 " y0", "RoleSaveButton",0)
-        this.guiMain.Add("Button", "Clear", "x" this.maxGroupWidth -85 " y0", "StatClearButton",0)
+        ; this.guiMain.Add("Button", "Bye", "x" this.maxGroupWidth -200 " y0 w50", "ByeButton",0)
+        ; this.guiMain.Add("Button", "Hi", "x" this.maxGroupWidth -150 " y0 w50", "HiButton",0)
+        this.guiMain.Add("Button", "Clear", "x" this.maxGroupWidth -90 " y0 w50", "StatClearButton",0)
+        this.guiMain.Add("Button", "Save", "x" this.maxGroupWidth -40 " y0 w50", "RoleSaveButton",0)
+        
         ; this.guiMain.Add("Button", "pass", "x" this.maxGroupWidth -30 " y+10", "RolePassButton",0)
         ; this.guiMain.Add("Button", "OK", "x" this.maxGroupWidth -30 " y+10", "RoleAllowButton",0)
+        ; this.guiMain.Controls["ByeButton"].BindMethod(this.byePlayerFunction.Bind(this))
+        ; this.guiMain.Controls["HiButton"].BindMethod(this.HiPlayerFunction.Bind(this))
         this.guiMain.Controls["RoleSaveButton"].BindMethod(this.roleSaveByGui.Bind(this))
         this.guiMain.Controls["StatClearButton"].BindMethod(this.clearStatsByGui.Bind(this))
         ; this.guiMain.Controls["RolePassButton"].BindMethod(this.rolePassByGui.Bind(this))
@@ -257,6 +264,36 @@ Class BaseballAutoGui{
         this.changeContents( this.toggleConfig)
         this.toggleConfig?this.toggleConfig:=false:this.toggleConfig:=true
 
+    }
+    byePlayerFunction(){
+        global globalCurrentPlayer, baseballAutoConfig
+        targetAppTiile:=globalCurrentPlayer.getAppTitle()
+        if( targetAppTiile = "" ){
+            
+            player:=baseballAutoConfig.getDefaultPlayer()
+            targetAppTiile:=player.getAppTitle()
+        }
+        if not ( targetAppTiile =""){
+            winmove, %targetAppTiile%,,3841,0
+        }
+        ; MsgBox, % "Target App=" targetAppTiile
+
+        
+    
+    }
+
+    hiPlayerFunction(){
+          global globalCurrentPlayer, baseballAutoConfig
+        targetAppTiile:=globalCurrentPlayer.getAppTitle()
+        if( targetAppTiile = "" ){
+            
+            player:=baseballAutoConfig.getDefaultPlayer()
+            targetAppTiile:=player.getAppTitle()
+        }
+        if not ( targetAppTiile =""){
+            winmove, %targetAppTiile%,,0,0
+        }
+        ; winmove, %targetAppTiile%,,0,0    
     }
 
     reloadByGui() { 
