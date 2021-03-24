@@ -143,7 +143,7 @@ Class LeagueRunningMode{
         if ( this.gameController.searchImageFolder("리그모드\Button_skipBeforePlay") ){
             this.logger.log(this.player.getAppTitle() " 라인업 등을 넘어갑니다.") 
             if( this.gameController.searchAndClickFolder("리그모드\Button_skipBeforePlay") = true ){				
-				this.gameController.sleep(2)
+				this.gameController.sleep(1.5)
                 result+=1
                 result+=this.skippPlayLineupStatus()			
             }					
