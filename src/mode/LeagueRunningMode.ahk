@@ -167,7 +167,8 @@ Class LeagueRunningMode{
             this.gameController.sleep(2)			
             if ( this.gameController.searchImageFolder("리그모드\WIndow_GameStop") ){
                 this.logger.log("자동 방식을 활성화 합니다.") 
-                if ( baseballAutoConfig.enabledPlayers.length() > 1 )
+				WinGetPos, , , winW, winH, % this.player.getAppTitle
+				if( winW < 630 )
                     this.gameController.clickRatioPos(0.744, 0.114, 10)
                 else
                     this.gameController.clickRatioPos(0.76, 0.097, 20)
