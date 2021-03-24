@@ -24,10 +24,10 @@ Class LeagueRunningMode{
         counter+=this.skippBattleHistory( )
         counter+=this.choicePlayType( )
         counter+=this.checkSpeedUp()
-        counter+=this.skippPlayLineupStatus( )
-        counter+=this.checkSpeedUp()
-        counter+=this.activateAutoPlay( )		
-        counter+=this.checkAutoPlayEnding()
+        counter+=this.skippPlayLineupStatus( )		
+        counter+=this.checkSpeedUp()	
+		counter+=this.skippChanceStatus( )		
+        counter+=this.activateAutoPlay( )				
         counter+=this.skipLevelUpOrPopUp()
         counter+=this.checkGameResultWindow()
         counter+=this.checkMVPWindow()
@@ -68,12 +68,15 @@ Class LeagueRunningMode{
                     this.player.setBye()
                 }else if( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_이어하기") ){
                     this.logger.log("정상 요청이지만 이어하기를 수행했습니다.")
+					this.gameController.sleep(15)				
                     return 1
                 }
             }else{ 
                 if ( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_게임시작") ){
                     return 1
                 }else if( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_이어하기") ){
+					this.logger.log("경기가 이어합니다. 15초 기다립니다.")
+					this.gameController.sleep(15)				
                     return 1
                 }
             }		 
@@ -139,19 +142,22 @@ Class LeagueRunningMode{
         result:=0
         if ( this.gameController.searchImageFolder("리그모드\Button_skipBeforePlay") ){
             this.logger.log(this.player.getAppTitle() " 라인업 등을 넘어갑니다.") 
-            if( this.gameController.searchAndClickFolder("리그모드\Button_skipBeforePlay") = true ){
+            if( this.gameController.searchAndClickFolder("리그모드\Button_skipBeforePlay") = true ){				
+				this.gameController.sleep(1)
                 result+=1
                 result+=this.skippPlayLineupStatus()			
             }					
-        }
-        if ( this.gameController.searchImageFolder("리그모드\화면_찬스상황") ){
-            this.logger.log(this.player.getAppTitle() " 찬스상황 등을 넘어갑니다.") 
-            if( this.gameController.searchAndClickFolder("리그모드\화면_찬스상황\Button_취소") ){
-                result+=1
-            }			
-        }		
+        }        
         return result
     }
+	skippChanceStatus(){
+	   if ( this.gameController.searchImageFolder("리그모드\화면_찬스상황") ){
+            this.logger.log(this.player.getAppTitle() " 찬스상황 등을 넘어갑니다.") 
+            if( this.gameController.searchAndClickFolder("리그모드\화면_찬스상황\Button_취소") ){
+                return 1
+            }			
+        }		
+	}
     checkTotalLeagueEnd(){
         if ( this.gameController.searchImageFolder("리그모드\화면_리그_완전종료") ){
             this.logger.log(this.player.getAppTitle() " 리그가 종료 되었습니다. 우승했길....") 
