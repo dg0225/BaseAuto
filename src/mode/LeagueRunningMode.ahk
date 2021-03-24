@@ -29,6 +29,7 @@ Class LeagueRunningMode{
 		counter+=this.skippChanceStatus( )		
         counter+=this.activateAutoPlay( )				
         counter+=this.skipLevelUpOrPopUp()
+        counter+=this.checkAutoPlayEnding()        
         counter+=this.checkGameResultWindow()
         counter+=this.checkMVPWindow()
         counter+=this.checkTotalLeagueEnd()
