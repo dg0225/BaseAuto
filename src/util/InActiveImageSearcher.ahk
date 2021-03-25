@@ -37,7 +37,7 @@ Class InActiveImageSearcher{
         findResult:=false 
         pBitmapNeedle:=Gdip_CreateBitmapFromFile(A_ScriptDir this.pathPrefix target)         
         ; Sleep, 1000
-        if Gdip_ImageSearch( this.pBitmapHayStack,pBitmapNeedle, resultList ,0,0,0,0,10,0x000000,1,1) { 
+        if Gdip_ImageSearch( this.pBitmapHayStack,pBitmapNeedle, resultList ,0,0,0,0,this.percentage,0x000000,1,1) { 
             StringSplit, LISTArray, resultList, `, 
             intPosX:=LISTArray1 
             intPosY:=LISTArray2
