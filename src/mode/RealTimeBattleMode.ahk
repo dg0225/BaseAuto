@@ -26,6 +26,8 @@ Class RealTimeBattleMode{
         counter+=this.runStrike( )
         counter+=this.skippBeforeGameStart( )        
         counter+=this.skippPlayLineupStatus( )
+        counter+=this.runBunt( )
+        counter+=this.runStrike( )
         counter+=this.checkPopup( )
         counter+=this.checkBattleEnd( )
 
