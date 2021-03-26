@@ -82,7 +82,7 @@ Class BaseballAuto{
                             localChecker+=gameMode.checkAndRun()
                         } 
                         if( globalCurrentPlayer.getRole() ="리그")
-                            this.gameController.sleep(3)
+                            this.gameController.sleep(2)
                         ; this.logger.log( player.getAppTitle() " checker count=" localChecker)
                         if ( !player.needToStay() ){ 
                             ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
@@ -91,7 +91,7 @@ Class BaseballAuto{
                             ; Stay 를 벗어 나게 해주자
                             if ( localChecker = 0 ){
                                 if( globalCurrentPlayer.getRole() ="리그"){
-                                    if ( loopCount > 60 ){
+                                    if ( loopCount > 90 ){
                                         this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
                                         player.setUnknwon()
                                     }
