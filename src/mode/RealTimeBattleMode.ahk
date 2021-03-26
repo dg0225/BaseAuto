@@ -60,6 +60,9 @@ Class RealTimeBattleMode{
             this.player.setStay()
             this.logger.log("실시간 대전을 시작합니다") 
             if ( this.gameController.searchAndClickFolder("실시간대전\버튼_실시간대전_시작") ){
+                if( this.checkPopup() ){
+                    return 0
+                }
                 this.logger.log("15초 기다립니다") 
                 this.gameController.sleep(15)
                 return 1
