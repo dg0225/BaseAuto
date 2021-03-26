@@ -24,6 +24,7 @@ Class RealTimeBattleMode{
         counter+=this.playStartRealTimeBattle( ) 
         counter+=this.runBunt( )
         counter+=this.runStrike( )
+        counter+=this.skippBeforeGameStart( )        
         counter+=this.skippPlayLineupStatus( )
         counter+=this.checkPopup( )
         counter+=this.checkBattleEnd( )
@@ -87,12 +88,33 @@ Class RealTimeBattleMode{
         }
         return 0		
     }
+    skippBeforeGameStart(){
+        if ( this.gameController.searchImageFolder("실시간대전\버튼_라인업") ){
+            this.logger.log(this.player.getAppTitle() " 라인업 클릭 -> 후 클릭 2") 
+            if( this.gameController.searchAndClickFolder("실시간대전\버튼_라인업") = true ){				
+                loop 3
+                {
+                    this.gameController.clickRatioPos(0.5, 0.6, 50)
+                    this.gameController.sleep(2)			                
+                }
+                return 1			                
+            }
+            
+        }
+        return 0 
+    }
     skippPlayLineupStatus(){
         if ( this.gameController.searchImageFolder("실시간대전\버튼_스킵스킵") ){
             this.logger.log(this.player.getAppTitle() " - 스킵합니다") 
             if( this.gameController.searchAndClickFolder("실시간대전\버튼_스킵스킵") = true ){				
-                return 1			
+                ; loop 3
+                ; {
+                ;     this.gameController.clickRatioPos(0.6, 0.6, 100)
+                ;     this.gameController.sleep(3)			                
+                ; }
+                return 1			                
             }
+            
         }
         return 0 
     }
