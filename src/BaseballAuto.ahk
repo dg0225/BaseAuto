@@ -3,6 +3,7 @@
 
 #include %A_ScriptDir%\src\mode\GameStarterMode.ahk
 #include %A_ScriptDir%\src\mode\LeagueRunningMode.ahk
+#include %A_ScriptDir%\src\mode\RealTimeBattleMode.ahk
 
 Class BaseballAuto{
     __NEW(){
@@ -14,12 +15,20 @@ Class BaseballAuto{
     ; macroGui := new MC_MacroGui( logger )
 
     gameController := new MC_GameController()
-    modeArray := []
+    typePerMode := Object()
+    
 
     init(){
 
-        this.modeArray.Push( new GameStartMode( this.gameController ) ) 
-        this.modeArray.Push( new LeagueRunningMode( this.gameController ) ) 
+        
+        this.typePerMode["리그"]:=[]
+        this.typePerMode["리그"].Push(new GameStartMode( this.gameController ) ) 
+        this.typePerMode["리그"].Push(new LeagueRunningMode( this.gameController ) ) 
+
+        this.typePerMode["대전"]:=[]
+        this.typePerMode["대전"].Push(new GameStartMode( this.gameController ) ) 
+        this.typePerMode["대전"].Push(new RealTimeBattleMode( this.gameController ) ) 
+
         this.logger.log("BaseballAuto Ready !")
     }
 
@@ -63,13 +72,17 @@ Class BaseballAuto{
                             if( baseballAutoConfig.enabledPlayers.length() = 0 )
                                 this.running:=false 
                             break
-                        }					
-                        for index, gameMode in this.modeArray ; Enumeration is the recommended approach in most cases.
+                        }                    
+                        
+                        ; msgbox % this.typePerMode[globalCurrentPlayer.getRole()]
+                        modeList:= this.typePerMode[globalCurrentPlayer.getRole()]
+                        for index, gameMode in modeList ; Enumeration is the recommended approach in most cases.
                         {
                             gameMode.setPlayer(player) 
                             localChecker+=gameMode.checkAndRun()
                         } 
-                        this.gameController.sleep(3) 						 
+                        if( globalCurrentPlayer.getRole() ="리그")
+                            this.gameController.sleep(3)
                         ; this.logger.log( player.getAppTitle() " checker count=" localChecker)
                         if ( !player.needToStay() ){ 
                             ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())
@@ -77,9 +90,16 @@ Class BaseballAuto{
                         }else{
                             ; Stay 를 벗어 나게 해주자
                             if ( localChecker = 0 ){
-                                if ( loopCount > 60 ){
-                                    this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
-                                    player.setUnknwon()
+                                if( globalCurrentPlayer.getRole() ="리그"){
+                                    if ( loopCount > 60 ){
+                                        this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
+                                        player.setUnknwon()
+                                    }
+                                }else{
+                                    if ( loopCount > 180 ){
+                                        this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
+                                        player.setUnknwon()
+                                    }
                                 }
                                 loopCount+=1
                             } else{

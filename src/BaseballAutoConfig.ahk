@@ -138,9 +138,7 @@ class BaseAutoPlayer{
         return this.enabled
     }
 
-    getRole(){
-        return this.appRole
-    }
+    
     getAppTitle(){
         return this.appTitle
     }
@@ -210,11 +208,14 @@ class BaseAutoPlayer{
         this.AppTitle:=title 
     }
     setRole( role ){
-        if role not in 리그,ETC
+        if role not in 리그,대전,기타
         { 
             role:="리그"
         }
         this.appRole:=role
+    }
+    getRole(){
+        return this.appRole
     }
 
     getBattleType(){

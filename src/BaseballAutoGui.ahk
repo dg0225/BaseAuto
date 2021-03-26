@@ -104,7 +104,7 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="ComboBox"
-            guiTitle:="리그|기타"
+            guiTitle:="리그|대전|기타"
             guiLable:=player.getKeyRole() 
             if ( index = 1 )
                 option:="xs+110 ys+15 +Center w50"
