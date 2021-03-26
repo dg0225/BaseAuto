@@ -92,6 +92,7 @@ Class RealTimeBattleMode{
     }
     skippBeforeGameStart(){
         if ( this.gameController.searchImageFolder("실시간대전\버튼_라인업") ){
+            this.player.setStay()
             this.logger.log(this.player.getAppTitle() " 라인업 클릭 -> 후 클릭 3번") 
             if( this.gameController.searchAndClickFolder("실시간대전\버튼_라인업") = true ){				
                 loop 3
@@ -107,6 +108,7 @@ Class RealTimeBattleMode{
     }
     skippPlayLineupStatus(){
         if ( this.gameController.searchImageFolder("실시간대전\버튼_스킵스킵") ){
+            this.player.setStay()
             this.logger.log(this.player.getAppTitle() " - 스킵합니다") 
             if( this.gameController.searchAndClickFolder("실시간대전\버튼_스킵스킵") = true ){				
                 ; loop 3
