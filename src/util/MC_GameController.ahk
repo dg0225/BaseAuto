@@ -97,7 +97,9 @@ class MC_GameController{
         msec:=secSleep*1000
         Sleep, %msec%
     }
-
+    clickESC(){
+        this.controller.postClickESC()
+    }
     ;이미지 찾을때까지 대기후 클릭
     ; delay & 횟수가 필요
     waitingImageAndClickFolder( targetFolder , checkLimitCount:= 60, sleepDelay:= 2) {

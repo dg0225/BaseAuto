@@ -7,20 +7,17 @@
 
 Class BaseballAuto{
     __NEW(){
-
         this.init()
     }
 
     logger:= new AutoLogger( "시 스 템" )
-    ; macroGui := new MC_MacroGui( logger )
-
     gameController := new MC_GameController()
     typePerMode := Object()
     
 
     init(){
+        this.startMode:= new GameStartMode( this.gameController )
 
-        
         this.typePerMode["리그"]:=[]
         this.typePerMode["리그"].Push(new GameStartMode( this.gameController ) ) 
         this.typePerMode["리그"].Push(new LeagueRunningMode( this.gameController ) ) 
@@ -28,7 +25,6 @@ Class BaseballAuto{
         this.typePerMode["대전"]:=[]
         this.typePerMode["대전"].Push(new GameStartMode( this.gameController ) ) 
         this.typePerMode["대전"].Push(new RealTimeBattleMode( this.gameController ) ) 
-
         this.logger.log("BaseballAuto Ready !")
     }
 
@@ -41,7 +37,6 @@ Class BaseballAuto{
             this.logger.log("BaseballAuto Started!!")
 
             BaseballAutoGui.started()
-
             while( this.running = true ){ 
                 if ( baseballAutoConfig.enabledPlayers.length() = 0 ){
                     this.running:=false
@@ -50,7 +45,7 @@ Class BaseballAuto{
 
                 for playerIndex, player in baseballAutoConfig.enabledPlayers{
                     globalCurrentPlayer:=player
-                                        
+
                     if( globalCurrentPlayer.needToStop()){
                         baseballAutoConfig.enabledPlayers.remove(playerIndex)
                         if( baseballAutoConfig.enabledPlayers.length() = 0 )
@@ -72,8 +67,8 @@ Class BaseballAuto{
                             if( baseballAutoConfig.enabledPlayers.length() = 0 )
                                 this.running:=false 
                             break
-                        }                    
-                        
+                        } 
+
                         ; msgbox % this.typePerMode[globalCurrentPlayer.getRole()]
                         modeList:= this.typePerMode[globalCurrentPlayer.getRole()]
                         for index, gameMode in modeList ; Enumeration is the recommended approach in most cases.
@@ -91,6 +86,11 @@ Class BaseballAuto{
                             ; Stay 를 벗어 나게 해주자
                             if ( localChecker = 0 ){
                                 if( globalCurrentPlayer.getRole() ="리그"){
+                                    if( loopCount = 80 || loopCount = 90){
+                                        this.logger.log("ERROR : 어딘지 모르니 일단 뒤로가기!!!")
+                                        this.startMode.setPlayer(player)
+                                        this.startMode.goBackward()
+                                    }                                    
                                     if ( loopCount > 90 ){
                                         this.logger.log("ERROR : 갇혀 있으면 다른애들이 불쌍하다.. 풀어주자")
                                         player.setUnknwon()
@@ -108,7 +108,6 @@ Class BaseballAuto{
                         }
                     } 
                     globalCurrentPlayer.setCheckDone()
-
                 } 
             }
 

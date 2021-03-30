@@ -30,6 +30,7 @@ Class GameStartMode{
         }
         return 0
     }
+    
     skipAndroidAds(){
 
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_AdroidAds") ){
@@ -53,5 +54,18 @@ Class GameStartMode{
         }
         return result
     }
-
+    goBackward(){
+        
+        this.gmaeController.clickESC()
+        this.logger.log(this.player.getAppTitle() " 뒤로가기 - ESC ") 
+        this.gmaeController.sleep(3)
+        ; ControlSend, , ^a, 제목 없음 - 메모장
+        ; if ( this.gmaeController.searchImageFolder("게임실행모드\Buuon_Backward") ){
+        ;     this.logger.log("뒤로 가기를 눌러 봅니다") 
+        ;     if ( this.gmaeController.searchAndClickFolder("게임실행모드\Buuon_Backward") = true ){                
+        ;         this.logger.log(this.player.getAppTitle() " 뒤로가기!! 클릭") 
+        ;         this.gmaeController.sleep(3)
+        ;     }		
+        ; }
+    }
 }

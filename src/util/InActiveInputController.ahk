@@ -36,4 +36,9 @@ class InActiveInputController{
         sleep, 50	
         PostMessage, 0x202, 0, %lParam%, , % this.currentTargetTitle ;WM_LBUTTONUP       
     }
+
+    postClickESC( ){
+        PostMessage, 0x100, 27, 65537, , % this.currentTargetTitle ;WM_LBUTTONDOWN
+        PostMessage, 0x101, 27, 65537, , % this.currentTargetTitle ;WM_LBUTTONUP       
+    }
 }
