@@ -33,7 +33,7 @@ class InActiveInputController{
         ; PostMessage, 0x202, 0, %lParam%, TheRender, % this.currentTargetTitle ;WM_LBUTTONUP       
 
         PostMessage, 0x201, 1, %lParam%, , % this.currentTargetTitle ;WM_LBUTTONDOWN
-        sleep, 50	
+        ; sleep, 50	
         PostMessage, 0x202, 0, %lParam%, , % this.currentTargetTitle ;WM_LBUTTONUP       
     }
 
