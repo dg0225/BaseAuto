@@ -197,21 +197,25 @@ Class LeagueRunningMode{
         }
         return 0		
     } 
-    checkSpeedUp(){
-        result:=0
+    checkSpeedUp(before:=0){
+        result:=before
         if ( this.gameController.searchImageFolder("리그모드\button_playSlow") ){
             this.logger.log("자동은 빠르게 ") 
             if ( this.gameController.searchAndClickFolder("리그모드\button_playSlow" ) = true){				
                 if ( this.gameController.searchImageFolder("리그모드\화면_자동이닝설정") ){
                     this.logger.log("자동 이닝 관련 팝업이 나와 버렸습니다... 아 타이밍") 
                     if ( this.gameController.searchAndClickFolder("리그모드\화면_자동이닝설정\버튼_X" ) = true){
-                        this.checkSpeedUp()
+                        if(result >3 ){
+                            return result
+                        }
+                        result+=this.checkSpeedUp()
                     }
                 }		
-                return 1
+                result++
+                return result
             }
         }
-        return 0		
+        return result		
     }
     checkAutoPlayEnding(){
         if ( this.gameController.searchImageFolder("리그모드\화면_결과_타구장" ) ){		
