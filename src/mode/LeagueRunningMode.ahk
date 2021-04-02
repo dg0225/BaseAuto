@@ -24,7 +24,7 @@ Class LeagueRunningMode{
         counter+=this.skippBattleHistory( )
         counter+=this.choicePlayType( )
         counter+=this.checkSpeedUp()
-        counter+=this.skippPlayLineupStatus( )		
+        counter+=this.skippPlayLineupStatus(0)		
         counter+=this.checkSpeedUp()	
 		counter+=this.skippChanceStatus( )		
         counter+=this.activateAutoPlay( )				
@@ -139,14 +139,16 @@ Class LeagueRunningMode{
         return 0		
     }
 
-    skippPlayLineupStatus(){
-        result:=0
+    skippPlayLineupStatus(before){
+        result:=before
         if ( this.gameController.searchImageFolder("리그모드\Button_skipBeforePlay") ){
             this.logger.log(this.player.getAppTitle() " 라인업 등을 넘어갑니다.") 
             if( this.gameController.searchAndClickFolder("리그모드\Button_skipBeforePlay") = true ){				
 				this.gameController.sleep(1)
                 result+=1
-                result+=this.skippPlayLineupStatus()			
+                if( result > 4 )
+                    return result
+                result+=this.skippPlayLineupStatus(result)			
             }					
         }        
         return result
