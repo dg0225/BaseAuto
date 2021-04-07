@@ -228,8 +228,12 @@ Class BaseballAutoGui{
         return currentWindowHeight+5
     }
 
-    guiLog( title, subTitle, logMessage ){
+    guiLog( title, subTitle, logMessage ){        
         currentLog:=this.guiMain.Controls["GuiLoggerLogging"].get()
+        StringLen, length, currentLog
+        if( length > 1000000 ){
+            currentLog:=""
+        }
         this.guiMain.Controls["GuiLoggerLogging"].set( logMessage currentLog )
     }
     initConfigWindow(_height){
