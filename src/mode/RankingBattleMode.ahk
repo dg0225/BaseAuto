@@ -18,7 +18,7 @@ Class RankingBattleMode{
     checkAndRun()
     {
         counter:=0
-		
+
         counter+=this.startBattleMode( ) 	
         counter+=this.selectRankingBattle( )
         counter+=this.startRankingBattle( )
@@ -29,7 +29,7 @@ Class RankingBattleMode{
         counter+=this.checkMVPWindow( )
         counter+=this.checkPopup( )
         counter+=this.checkPlaying( )
-		counter+=this.checkRankingClose( )
+        counter+=this.checkRankingClose( )
         return counter
     }
 
@@ -56,15 +56,18 @@ Class RankingBattleMode{
     }		
     startRankingBattle(){
         if ( this.gameController.searchImageFolder("0.기본UI\2-1.랭킹대전_Base") ){		
-            this.player.setStay()
-            this.logger.log("랭킹 대전을 시작합니다") 
-            if ( this.gameController.searchAndClickFolder("랭대모드\버튼_게임시작") ){
-                if( this.checkPopup() ){
-                    return 0
-                }
 
+            if ( this.gameController.searchImageFolder("랭대모드\화면_상대있음") ){		
+                this.player.setStay()
+                this.logger.log("랭킹 대전을 시작합니다") 
+                if ( this.gameController.searchAndClickFolder("랭대모드\버튼_게임시작") ){                    
+                    return 1
+                }		 
+            }else{
+                this.logger.log("랭대 다 돈거 같아 시작하지 않습니다.") 
+                this.player.setFree()
                 return 1
-            }		 
+            }
         }
         return 0		
     }
@@ -138,7 +141,7 @@ Class RankingBattleMode{
     checkRankingClose(){
         if ( this.gameController.searchImageFolder("랭대모드\화면_랭대종료" ) ){		
             this.player.setStay()
-            this.logger.log("랭대는 이제 다 돌았네요")             
+            this.logger.log("랭대는 이제 다 돌았네요") 
             if( this.gameController.searchAndClickFolder("랭대모드\화면_랭대종료\버튼_확인" ) ){
                 this.player.setFree()
                 return 1
