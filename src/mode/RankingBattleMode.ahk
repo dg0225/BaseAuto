@@ -133,6 +133,18 @@ Class RankingBattleMode{
         }
         return 0 
     }
+
+    checkRankingClose(){
+        if ( this.gameController.searchImageFolder("랭대모드\화면_랭대종료" ) ){		
+            this.player.setStay()
+            this.logger.log("랭대는 이제 다 돌았네요")             
+            if( this.gameController.searchAndClickFolder("랭대모드\화면_랭대종료\버튼_확인" ) ){
+                this.player.setFree()
+                return 1
+            }
+        }
+        return 0 
+    }
     checkGameResultWindow(){
         if ( this.gameController.searchImageFolder("랭대모드\화면_경기_결과" ) ){		
             this.logger.log("경기 결과를 확인했습니다.") 
