@@ -4,6 +4,7 @@
 #include %A_ScriptDir%\src\mode\GameStarterMode.ahk
 #include %A_ScriptDir%\src\mode\LeagueRunningMode.ahk
 #include %A_ScriptDir%\src\mode\RealTimeBattleMode.ahk
+#include %A_ScriptDir%\src\mode\RankingBattleMode.ahk
 
 Class BaseballAuto{
     __NEW(){
@@ -25,6 +26,11 @@ Class BaseballAuto{
         this.typePerMode["대전"]:=[]
         this.typePerMode["대전"].Push(new GameStartMode( this.gameController ) ) 
         this.typePerMode["대전"].Push(new RealTimeBattleMode( this.gameController ) ) 
+
+        this.typePerMode["랭대"]:=[]
+        this.typePerMode["랭대"].Push(new GameStartMode( this.gameController ) ) 
+        this.typePerMode["랭대"].Push(new RankingBattleMode( this.gameController ) ) 
+
         this.logger.log("BaseballAuto Ready !")
     }
 

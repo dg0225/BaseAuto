@@ -28,6 +28,7 @@ class BaseballAutoConfig{
     }
 
     initConfig(){
+       
         This.players := []
         This.enabledPlayers:= []
 
@@ -65,6 +66,18 @@ class BaseballAutoConfig{
             ; msgbox % "player " A_Index " Enabled : " player["ENABLE"] " Title: " player["TITLE"] " Role : "player["ROLE"]
             this.players.Push( player)
         }
+       
+        
+
+    }
+    loadConfig(){
+         global baseballAutoGui
+        loadedJobOrder:=this.configFile.loadValue("GLOBAL_CONFIG","JobOrder")
+        if( loadedJobOrder = ""){
+            loadedJobOrder:="홈런,랭킹,친구"
+        }
+        baseballAutoGui.setJobOrder(loadedJobOrder)
+
     }
     setWantToResult(){
         for index,player in this.enabledPlayers
@@ -74,7 +87,7 @@ class BaseballAutoConfig{
 
     }
     saveConfig(){
-
+    global baseballAutoGui
         PLAYER_KEY:="PLAYERS_CONFIG"
         for index, element in this.players
         {
@@ -83,6 +96,8 @@ class BaseballAutoConfig{
             this.configFile.saveValue(PLAYER_KEY,element.getKeyRole(), element.getRole()) 
             this.configFile.saveValue(PLAYER_KEY,element.getKeyBattleType(), element.getBattleType()) 
         }
+        this.configFile.saveValue("GLOBAL_CONFIG","JobOrder",baseballAutoGui.getJobOrder())
+        
     }
     savePlayerResult( player ){
         this.configFile.saveValue("PLAYERS_CONFIG",player.getKeyResult(), player.getResult()) 
@@ -106,9 +121,7 @@ class BaseAutoPlayer{
         return this.result
     }
     addResult(){ 
-
         this.setResult( this.result + 1)
-
     } 
     setResult( result ){
         global baseballAutoGui, baseballAutoConfig
@@ -129,7 +142,7 @@ class BaseAutoPlayer{
     setPostSeason(){
         this.setResultColor(2)
     }
-    setResultColor( changeColor:=0){
+    setResultColor( changeColor:=0 ){
         global baseballAutoGui		
         baseballAutoGui.updateStatusColor( this.getKeyResult(), this.result, changeColor)	
     }
@@ -208,7 +221,7 @@ class BaseAutoPlayer{
         this.AppTitle:=title 
     }
     setRole( role ){
-        if role not in 리그,대전,기타
+        if role not in 리그,대전,랭대,홈런,친구,일꾼,기타
         { 
             role:="리그"
         }
@@ -248,6 +261,14 @@ class BaseAutoPlayer{
     }
     getKeyStatus(){
         return % "player" this.index "Status"
+    }
+
+    setWorkerNext(){
+
+    }
+
+    getWorkerRole(){
+
     }
 
 }

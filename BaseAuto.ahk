@@ -9,7 +9,7 @@ BooleanDebugMode:=true
 baseballAutoConfig :=new BaseballAutoConfig( "main.ini" )
 baseballAutoGui := new BaseballAutoGui("baseball")
 baseballAuto := new BaseballAuto()
-
+baseballAutoConfig.loadConfig()
 baseballAutoConfig.getLastGuiPosition( positionX, positionY )
 baseballAutoGui.show( positionX , positionY )
 

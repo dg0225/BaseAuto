@@ -104,7 +104,7 @@ Class BaseballAutoGui{
         for index, player in baseballAutoConfig.players
         {
             guiType:="ComboBox"
-            guiTitle:="리그|대전|기타"
+            guiTitle:="리그|대전|랭대|홈런|친구|일꾼|기타"
             guiLable:=player.getKeyRole() 
             if ( index = 1 )
                 option:="xs+110 ys+15 +Center w50"
@@ -237,11 +237,13 @@ Class BaseballAutoGui{
         this.guiMain.Controls["GuiLoggerLogging"].set( logMessage currentLog )
     }
     initConfigWindow(_height){
-        currentWindowHeight=80
+        currentWindowHeight=90
         this.guiMain.addGroupBox("Config", 10, _height , this.maxGroupWidth, currentWindowHeight , , true )
 
         this.guiMain.Add("CheckBox", "Pushbullet ", "xs+5 ys+20 h10", "configPushbulletEnabled",0)
         this.guiMain.Add("CheckBox", "SchreenShot Error ", "xp y+10", "configScreenShotOnError",0)
+        this.guiMain.Add("Text", "일꾼 순서 : ", "xp y+10", "configJobOrderText")
+        this.guiMain.Add("Edit", "홈런,랭킹,친구", "x+0 yp-3", "configJobOrder")
 
         return currentWindowHeight
     }
@@ -329,8 +331,7 @@ Class BaseballAutoGui{
             if( player.getEnabled() ){
                 baseballAutoConfig.enabledPlayers.push(player)
             }
-        }
-
+        }            
         baseballAutoConfig.saveConfig()
         ToolTip, Role Saved
         Sleep , 500
@@ -366,6 +367,12 @@ Class BaseballAutoGui{
         player.setAppTitle(this.guiMain.Controls[player.getKeyAppTitle()].get())
         player.setRole(this.guiMain.Controls[player.getKeyRole()].get())
         player.setBattleType(this.guiMain.Controls[player.getKeyBattleType()].get())
+    }
+    getJobOrder(){
+        return this.guiMain.Controls["configJobOrder"].get()
+    }
+    setJobOrder( order ){
+        this.guiMain.Controls["configJobOrder"].set(order)
     }
 
     started(){
