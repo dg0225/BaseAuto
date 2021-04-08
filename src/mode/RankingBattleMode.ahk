@@ -18,6 +18,7 @@ Class RankingBattleMode{
     checkAndRun()
     {
         counter:=0
+		
         counter+=this.startBattleMode( ) 	
         counter+=this.selectRankingBattle( )
         counter+=this.startRankingBattle( )
@@ -28,7 +29,7 @@ Class RankingBattleMode{
         counter+=this.checkMVPWindow( )
         counter+=this.checkPopup( )
         counter+=this.checkPlaying( )
-
+		counter+=this.checkRankingClose( )
         return counter
     }
 
