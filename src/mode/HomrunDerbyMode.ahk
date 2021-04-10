@@ -4,6 +4,7 @@
 Class HomrunDerbyMode{
 
     logger:= new AutoLogger( "홈런더비" ) 
+    closeChecker:=0
 
     __NEW( controller )
     {
@@ -23,14 +24,11 @@ Class HomrunDerbyMode{
         counter+=this.selectHomrunDerby( )
         counter+=this.startHomerunDerby( )
         counter+=this.skipPlayerProfile( )
-        ; counter+=this.checkSlowAndChance( ) 
 
-        counter+=this.checkGameResultWindow( )
-        counter+=this.checkMVPWindow( )
-        counter+=this.receiveReward( ) 	
-        counter+=this.checkPopup( )
         counter+=this.checkPlaying( )
-        counter+=this.checkFriendsBattleClose( )
+        counter+=this.checkMVPWindow( )
+        counter+=this.checkPopup( )
+        counter+=this.checkHomerunDerbyClose( )
         return counter
     }
 
@@ -58,17 +56,23 @@ Class HomrunDerbyMode{
 
     startHomerunDerby(){
         if ( this.gameController.searchImageFolder("0.기본UI\3-1.홈런더비_Base") ){		 
-            this.logger.log("홈런 더비를 시작합니다") 
-            if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){ 
-                this.logger.log("6초 기다립니다") 
-                this.gameController.sleep(6)
+            if(this.checkHomerunDerbyClose()){
                 return 1
-            }		 
+            }else{
+                this.player.setStay()
+                this.logger.log("홈런 더비를 시작합니다") 
+                if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){ 
+                    this.logger.log("6초 기다립니다") 
+                    this.gameController.sleep(6)
+                    return 1
+                }		 
+            }
         }
         return 0		
     }
     skipPlayerProfile(){
         if ( this.gameController.searchAndClickFolder("홈런더비모드\화면_투수프로필") ){		 
+            this.player.setStay()
             this.logger.log("홈런 더비 프로필 클릭 합니다~") 
             this.gameController.sleep(1)
             this.logger.log("홈런 더비 시작 하자!!") 
@@ -103,43 +107,29 @@ Class HomrunDerbyMode{
     }
 
     checkPlaying(){
-        ; 자동체크를 하기에는 위험한거 같아 그냥 2초씩 쉰다.
-        ; if ( this.gameController.searchImageFolder("친구대전\화면_자동중" ) ){		
-        ; this.player.setStay()
-        this.gameController.sleep(2)
-        ; return 1
-        ; }
-        return 0 
-    }
-
-    checkFriendsBattleClose(){
-        ; 더이상 돌 친구가 없다 등을 체크하던가
-        ; 횟수 제한을 여기에다 넣도록 하자.
-        ; if ( this.gameController.searchImageFolder("친구대전\화면_친구대전종료" ) ){		
-        ;     this.player.setStay()
-        ;     this.logger.log("친구대전은 다 돌았네요") 
-        ;     if( this.gameController.searchAndClickFolder("친구대전\화면_친구대전종료\버튼_확인" ) ){
-        ;         this.player.setFree()
-        ;         return 1
-        ;     }
-        ; }
-        return 0 
-    }
-
-    checkGameResultWindow(){
-        if ( this.gameController.searchImageFolder("1.공통\화면_경기_결과" ) ){		
-            this.logger.log("경기 결과를 확인했습니다.") 
+        if ( this.gameController.searchImageFolder("홈런더비모드\화면_진행중" ) ){		
             this.player.setStay()
-            if( this.gameController.searchAndClickFolder("1.공통\버튼_다음_확인" ) ){
-                return 1
+            this.logger.log("더비 랜덤 클릭 맞좀 봐라.") 
+            Loop, 200
+            {
+                if ( this.gameController.searchImageFolder("홈런더비모드\화면_진행중" ) ){
+                    this.gameController.clickRatioPos(0.5, 0.6, 80,false)
+                    Random, msec, 680, 940
+                    Sleep, %msec%
+                }else{
+                    this.logger.log("더비 랜덤 클릭 끝~~ 1개는 쳤을껄?") 
+                    break
+                }
             }
-        }
+        } 
         return 0 
     }
 
     checkMVPWindow(){
         if ( this.gameController.searchImageFolder("1.공통\화면_MVP" ) ){		
-            this.logger.log("MVP 를 확인했습니다.") 
+            this.player.setStay()
+            this.logger.log("홈런더비 종료를 확인했습니다.") 
+            this.closeChecker:=0
             if( this.gameController.searchAndClickFolder("1.공통\버튼_다음_확인" ) ){
                 this.player.addResult()
                 this.player.setFree()
@@ -147,15 +137,17 @@ Class HomrunDerbyMode{
             }
         }
         return 0 
-    }
-
-    receiveReward(){
-        if ( this.gameController.searchImageFolder("친구대전\버튼_모두받기" ) ){		
-            this.logger.log("받아라!! 보상 없어질라") 
-            if( this.gameController.searchAndClickFolder("친구대전\버튼_모두받기" ) ){
-                this.gameController.searchAndClickFolder("친구대전\버튼_모두받기\버튼_확인" )
-                return 1
+    } 
+    checkHomerunDerbyClose(){
+        if ( this.gameController.searchImageFolder("홈런더비모드\화면_볼없음" ) ){		 
+            this.closeChecker++
+            this.logger.log("홈런더비 다 돌았네요") 
+            this.player.setFree() 
+            if( this.closeChecker > 2 ){
+                this.closeChecker:=0
+                this.player.setBye()
             }
+            return 1
         }
         return 0 
     }

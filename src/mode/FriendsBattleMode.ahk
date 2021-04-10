@@ -5,6 +5,8 @@ Class FriendsBattleMode{
 
     logger:= new AutoLogger( "친구대전" ) 
 
+    closeChecker:=0
+
     __NEW( controller )
     {
         this.gameController :=controller
@@ -25,13 +27,13 @@ Class FriendsBattleMode{
         counter+=this.startFriendsBattle( )
         counter+=this.playFriendsBattle( ) 
         ; counter+=this.checkSlowAndChance( ) 
+        counter+=this.checkPlaying( )
 
         counter+=this.checkGameResultWindow( )
         counter+=this.checkMVPWindow( )
+
+        counter+=this.checkPopup( )        
         counter+=this.receiveReward( ) 	
-        counter+=this.checkPopup( )
-        counter+=this.checkPlaying( )
-        counter+=this.checkFriendsBattleClose( )
         return counter
     }
 
@@ -134,21 +136,7 @@ Class FriendsBattleMode{
         ; return 1
         ; }
         return 0 
-    }
-
-    checkFriendsBattleClose(){
-        ; 더이상 돌 친구가 없다 등을 체크하던가
-        ; 횟수 제한을 여기에다 넣도록 하자.
-        ; if ( this.gameController.searchImageFolder("친구대전\화면_친구대전종료" ) ){		
-        ;     this.player.setStay()
-        ;     this.logger.log("친구대전은 다 돌았네요") 
-        ;     if( this.gameController.searchAndClickFolder("친구대전\화면_친구대전종료\버튼_확인" ) ){
-        ;         this.player.setFree()
-        ;         return 1
-        ;     }
-        ; }
-        return 0 
-    }
+    }  
 
     checkGameResultWindow(){
         if ( this.gameController.searchImageFolder("1.공통\화면_경기_결과" ) ){		
@@ -166,13 +154,20 @@ Class FriendsBattleMode{
             this.logger.log("MVP 를 확인했습니다.") 
             if( this.gameController.searchAndClickFolder("1.공통\버튼_다음_확인" ) ){
                 this.player.addResult()
-                this.player.setFree()
+
+                if( this.player.needToStopFriendsBattle() ){
+                    this.logger.log("친구대전을 다 돌았습니다.") 
+                    this.player.setBye()
+                }else{
+                    this.logger.log("친구 대전이 " this.player.getRemainFriendsBattleCount() "회 남았습니다." )                    
+                    this.player.setFree()
+                }
                 return 1
             }
         }
         return 0 
     }
-    
+
     receiveReward(){
         if ( this.gameController.searchImageFolder("친구대전\버튼_모두받기" ) ){		
             this.logger.log("받아라!! 보상 없어질라") 

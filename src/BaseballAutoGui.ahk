@@ -322,8 +322,14 @@ Class BaseballAutoGui{
         } 
     }
     roleSaveByGui(){
+        this.saveGuiConfigs()
+        ToolTip, Role Saved
+        Sleep , 500
+        ToolTip
+        ; ToolTip, % "Enabled Players " baseballAutoConfig.enabledPlayers.length()
+    }
+    saveGuiConfigs(){
         global baseballAutoConfig
-
         baseballAutoConfig.enabledPlayers:=[]
         for index,player in baseballAutoConfig.players
         {
@@ -333,11 +339,6 @@ Class BaseballAutoGui{
             }
         }            
         baseballAutoConfig.saveConfig()
-        ToolTip, Role Saved
-        Sleep , 500
-        ToolTip
-        ; ToolTip, % "Enabled Players " baseballAutoConfig.enabledPlayers.length()
-
     }
     rolePassByGui(){
         global globalContinueFlag

@@ -5,7 +5,7 @@ class BaseballAutoConfig{
         this.configFile := new IniController( configFileName )
 
         This.players := []
-        This.enabledPlayers:= []
+        This.enabledPlayers:=Array()
         this.initConfig()
     }
     getDefaultPlayer(){
@@ -30,7 +30,7 @@ class BaseballAutoConfig{
     initConfig(){
        
         This.players := []
-        This.enabledPlayers:= []
+        This.enabledPlayers:= Array()
 
         PLAYER_KEY:="PLAYERS_CONFIG"
         loop, 4
@@ -116,6 +116,7 @@ class BaseAutoPlayer{
         this.status:="Unknwon"
         this.battleType:="전체"
         this.result:=0
+        this.remainFriendsBattleCount:=1
     } 
     getResult(){
         return this.result
@@ -149,6 +150,16 @@ class BaseAutoPlayer{
 
     getEnabled(){
         return this.enabled
+    }
+    getRemainFriendsBattleCount(){
+        return this.remainFriendsBattleCount
+    }
+    needToStopFriendsBattle(){
+        this.remainFriendsBattleCount--
+        if(this.remainFriendsBattleCount<= 0){
+            return true
+        }Else
+            return false
     }
 
     

@@ -43,10 +43,16 @@ Class BaseballAuto{
 
         this.logger.log("BaseballAuto Ready !")
     }
-
+ 
     start(){
         global BaseballAutoGui, baseballAutoConfig, globalCurrentPlayer,globalContinueFlag
-
+        BaseballAutoGui.saveGuiConfigs()
+        currentEnablePlayers:=Array()
+        for index, player in baseballAutoConfig.enabledPlayers
+        {
+            currentEnablePlayers.Push(player.clone())
+        }
+        
         if ( ! this.started ){
             this.started:=true
             this.running:=true
@@ -54,17 +60,17 @@ Class BaseballAuto{
 
             BaseballAutoGui.started()
             while( this.running = true ){ 
-                if ( baseballAutoConfig.enabledPlayers.length() = 0 ){
+                if ( currentEnablePlayers.length() = 0 ){
                     this.running:=false
                     this.logger.log("가능한 AppPlayer가 없습니다.")
                 }
 
-                for playerIndex, player in baseballAutoConfig.enabledPlayers{
+                for playerIndex, player in currentEnablePlayers{
                     globalCurrentPlayer:=player
 
                     if( globalCurrentPlayer.needToStop()){
-                        baseballAutoConfig.enabledPlayers.remove(playerIndex)
-                        if( baseballAutoConfig.enabledPlayers.length() = 0 )
+                        currentEnablePlayers.remove(playerIndex)
+                        if( currentEnablePlayers.length() = 0 )
                             this.running:=false
                         continue
                     }
@@ -79,8 +85,8 @@ Class BaseballAuto{
                         if not ( this.gameController.checkAppPlayer() ){
                             this.logger.log("Application Title을 확인하세요 변경 후 save ")
 
-                            baseballAutoConfig.enabledPlayers.remove(playerIndex)
-                            if( baseballAutoConfig.enabledPlayers.length() = 0 )
+                            currentEnablePlayers.remove(playerIndex)
+                            if( currentEnablePlayers.length() = 0 )
                                 this.running:=false 
                             break
                         } 
@@ -94,6 +100,7 @@ Class BaseballAuto{
                         } 
                         if( globalCurrentPlayer.getRole() ="리그")
                             this.gameController.sleep(2)
+
                         ; this.logger.log( player.getAppTitle() " checker count=" localChecker)
                         if ( !player.needToStay() ){ 
                             ; this.logger.log( "AUTO_PLAYING 확인. " globalCurrentPlayer.getAppTitle())

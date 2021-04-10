@@ -4,7 +4,8 @@
 Class RankingBattleMode{
 
     logger:= new AutoLogger( "랭킹대전" ) 
-
+    
+    closeChecker:=0
     __NEW( controller )
     {
         this.gameController :=controller
@@ -64,8 +65,14 @@ Class RankingBattleMode{
                     return 1
                 }		 
             }else{
-                this.logger.log("랭대 다 돈거 같아 시작하지 않습니다.") 
-                this.player.setFree()
+                this.closeChecker++                
+                this.logger.log("랭대 다 돈거 같아 시작하지 않습니다. .." + this.closeChecker) 
+                if( this.closeChecker > 2 ){
+                    this.closeChecker:=0
+                    this.player.setBye()
+                }else{
+                    this.player.setFree()
+                }                
                 return 1
             }
         }
@@ -141,6 +148,7 @@ Class RankingBattleMode{
     checkRankingClose(){
         if ( this.gameController.searchImageFolder("랭대모드\화면_랭대종료" ) ){		
             this.player.setStay()
+            
             this.logger.log("랭대는 이제 다 돌았네요") 
             if( this.gameController.searchAndClickFolder("랭대모드\화면_랭대종료\버튼_확인" ) ){
                 this.player.setFree()
@@ -163,8 +171,9 @@ Class RankingBattleMode{
         if ( this.gameController.searchImageFolder("1.공통\화면_MVP" ) ){		
             this.logger.log("MVP 를 확인했습니다.") 
             if( this.gameController.searchAndClickFolder("1.공통\버튼_다음_확인" ) ){
+                this.closeChecker:=0
                 this.player.addResult()
-                this.player.setFree()
+                this.player.setFree()                            
                 return 1
             }
         }

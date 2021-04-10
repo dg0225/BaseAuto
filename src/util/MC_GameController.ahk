@@ -129,7 +129,7 @@ class MC_GameController{
         }
         return false
     }
-    clickRatioPos( ratioX, ratioY, maxSize:=40 ) {
+    clickRatioPos( ratioX, ratioY, maxSize:=40 , needDelay:=true) {
         WinGetPos, winX, winY, winW, winH, % this.currentTargetTitle	
         targetX:= winW * ratioX 
         targetY:= winH * ratioY 
@@ -137,6 +137,6 @@ class MC_GameController{
         ; ToolTip, % "WinW = " winW ", WinH = " winH ", TargetX = " targetX ", targetY= "targetY
         this.logger.debug( "특정 비율을 클릭합니다.(화면) WinW=" winW ", WinH=" winH ", WinX" winX " , WinY" winY)
         this.logger.debug( "특정 비율을 클릭합니다. RatioX=" ratioX ", RatioY=" ratioY ", ResultX=" targetX ", ResultY=" targetY )
-        this.randomClick(targetX, targetY, 0, maxSize, true)
+        this.randomClick(targetX, targetY, 0, maxSize, needDelay)
     }
 }
