@@ -114,7 +114,7 @@ Class HomrunDerbyMode{
             {
                 if ( this.gameController.searchImageFolder("홈런더비모드\화면_진행중" ) ){
                     this.gameController.clickRatioPos(0.5, 0.6, 80,false)
-                    Random, msec, 680, 940
+                    Random, msec, 380, 740
                     Sleep, %msec%
                 }else{
                     this.logger.log("더비 랜덤 클릭 끝~~ 1개는 쳤을껄?") 
