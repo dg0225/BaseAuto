@@ -30,7 +30,7 @@ Class GameStartMode{
         }
         return 0
     }
-    
+
     skipAndroidAds(){
 
         if ( this.gmaeController.searchImageFolder("게임실행모드\Button_AdroidAds") ){
@@ -55,7 +55,7 @@ Class GameStartMode{
         return result
     }
     goBackward(){
-        
+
         this.gmaeController.clickESC()
         this.logger.log(this.player.getAppTitle() " 뒤로가기 - ESC ") 
         this.gmaeController.sleep(3)

@@ -1,9 +1,9 @@
 ﻿#include %A_ScriptDir%\src\util\AutoLogger.ahk
 #include %A_ScriptDir%\src\util\MC_GameController.ahk
 
-Class FriendsBattleMode{
+Class HomrunDerbyMode{
 
-    logger:= new AutoLogger( "친구대전" ) 
+    logger:= new AutoLogger( "홈런더비" ) 
 
     __NEW( controller )
     {
@@ -19,11 +19,10 @@ Class FriendsBattleMode{
     {
         counter:=0
 
-        counter+=this.startBattleMode( ) 	
-        counter+=this.selectFriendsBattle( )
-        counter:= this.selectTopFriends( )
-        counter+=this.startFriendsBattle( )
-        counter+=this.playFriendsBattle( ) 
+        counter+=this.startSpecialMode( ) 	
+        counter+=this.selectHomrunDerby( )
+        counter+=this.startHomerunDerby( )
+        counter+=this.skipPlayerProfile( )
         ; counter+=this.checkSlowAndChance( ) 
 
         counter+=this.checkGameResultWindow( )
@@ -35,71 +34,48 @@ Class FriendsBattleMode{
         return counter
     }
 
-    startBattleMode(){
+    startSpecialMode(){
         if ( this.gameController.searchImageFolder("0.기본UI\0.메인화면_Base") ){
-            this.logger.log(this.player.getAppTitle() "친구 대전 을 시작합니다")
+            this.logger.log(this.player.getAppTitle() "홈런더비를 시작합니다")
             this.player.setStay()
-            if ( this.gameController.searchAndClickFolder("0.기본UI\0.메인화면_버튼_대전_팀별") ){
+            if ( this.gameController.searchAndClickFolder("0.기본UI\0.메인화면_버튼_스페셜_팀별") ){
                 return 1
             }
         }
         return 0
     }
-    
-    selectFriendsBattle(){
-        if ( this.gameController.searchImageFolder("0.기본UI\2.대전모드_Base") ){		
+
+    selectHomrunDerby(){
+        if ( this.gameController.searchImageFolder("0.기본UI\3.스페셜모드_Base") ){		
             this.player.setStay()
-            this.logger.log("친구 대전을 선택합니다") 
-            if ( this.gameController.searchAndClickFolder("0.기본UI\2.대전모드_버튼_친구대전") ){
+            this.logger.log("홈런 더비를 선택합니다") 
+            if ( this.gameController.searchAndClickFolder("0.기본UI\3.스페셜모드_버튼_홈런더비") ){
                 return 1
             }		 
         }
         return 0		
     }		
 
-    selectTopFriends(){
-        if ( this.gameController.searchImageFolder("친구대전\버튼_탑대상") ){		
-            this.player.setStay()
-            this.logger.log("젤 위 대상을 선택합니다") 
-            if ( this.gameController.searchAndClickFolder("친구대전\버튼_탑대상",0,30) ){
-                return 1
-            }		 
-        }else{
-            return 10
-        }
-        return 0	
-
-    }
-
-    startFriendsBattle(){
-        if ( this.gameController.searchImageFolder("0.기본UI\2-2.친구대전_Base") ){		 
-            if ( this.gameController.searchImageFolder("친구대전\화면_대상선택상태") ){		
-                this.player.setStay()
-                this.logger.log("친구 대전을 시작합니다") 
-                if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){ 
-                    return 1
-                }		 
-            }else{
-                this.logger.log("친구가 없어서 시작하지 않습니다.") 
-                this.player.setFree()
-                return 1
-            }
-        }
-        return 0		
-    }
-
-    playFriendsBattle(){
-        if ( this.gameController.searchImageFolder("친구대전\화면_친구대전준비") ){		
-            this.player.setStay()
-            this.logger.log("친구대전 경기를 시작합니다") 
-            if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){
-                this.logger.log("5초 기다립니다") 
-                this.gameController.sleep(5)
+    startHomerunDerby(){
+        if ( this.gameController.searchImageFolder("0.기본UI\3-1.홈런더비_Base") ){		 
+            this.logger.log("홈런 더비를 시작합니다") 
+            if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){ 
+                this.logger.log("6초 기다립니다") 
+                this.gameController.sleep(6)
                 return 1
             }		 
         }
         return 0		
-    } 
+    }
+    skipPlayerProfile(){
+        if ( this.gameController.searchAndClickFolder("홈런더비모드\화면_투수프로필") ){		 
+            this.logger.log("홈런 더비 프로필 클릭 합니다~") 
+            this.gameController.sleep(1)
+            this.logger.log("홈런 더비 시작 하자!!") 
+            this.gameController.clickRatioPos(0.5, 0.6, 80)
+        }
+        return 0		
+    }
 
     checkPopup(counter:=0){
         localCounter:=counter
@@ -112,10 +88,10 @@ Class FriendsBattleMode{
                 this.checkPopup(localCounter)
             }
         }
-
-        if ( this.gameController.searchImageFolder("친구대전\화면_팝업체크" ) ){		
+        ; 아직 아래 없음
+        if ( this.gameController.searchImageFolder("홈런더비모드\화면_팝업체크" ) ){		
             this.logger.log("팝업을 제거합니다. 보상을 안받았나.") 
-            if( this.gameController.searchAndClickFolder("친구대전\화면_팝업체크\버튼_확인" ) ){
+            if( this.gameController.searchAndClickFolder("홈런더비모드\화면_팝업체크\버튼_확인" ) ){
                 if( localCounter > 5 ){
                     return localCounter
                 }
@@ -172,7 +148,7 @@ Class FriendsBattleMode{
         }
         return 0 
     }
-    
+
     receiveReward(){
         if ( this.gameController.searchImageFolder("친구대전\버튼_모두받기" ) ){		
             this.logger.log("받아라!! 보상 없어질라") 

@@ -201,9 +201,9 @@ Class LeagueRunningMode{
         result:=before 
         if ( this.gameController.searchAndClickFolder("1.공통\버튼_빠르게" ) = true){
             this.logger.log("자동은 빠르게 ") 
-            if ( this.gameController.searchImageFolder("리그모드\화면_자동이닝설정") ){
+            if ( this.gameController.searchImageFolder("1.공통\화면_자동이닝설정") ){
                 this.logger.log("자동 이닝 관련 팝업이 나와 버렸습니다... 아 타이밍") 
-                if ( this.gameController.searchAndClickFolder("리그모드\화면_자동이닝설정\버튼_X" ) = true){
+                if ( this.gameController.searchAndClickFolder("1.공통\화면_자동이닝설정\버튼_X" ) = true){
                     if(result >3 ){
                         return result
                     }
@@ -240,9 +240,7 @@ Class LeagueRunningMode{
                             this.player.addResult()
                             return 1
                         }				
-
                     }
-
                 }
             } 
         }
@@ -255,7 +253,6 @@ Class LeagueRunningMode{
             if ( this.gameController.searchAndClickFolder("1.공통\버튼_팝업스킵" ) ){
                 return 1
             }
-
         }
         return 0 
     }
@@ -266,7 +263,6 @@ Class LeagueRunningMode{
             if( this.gameController.searchAndClickFolder("1.공통\버튼_다음_확인" ) ){
                 return 1
             }
-
         }
         return 0 
     }
@@ -277,33 +273,7 @@ Class LeagueRunningMode{
             if( this.gameController.searchAndClickFolder("1.공통\버튼_다음_확인" ) ){
                 return 1
             }
-
         }
         return 0 
-    }
-
-	/*
-	checkAutoPlayEnding(){
-		loop 
-		{
-			if( this.gameController.searchImageFolder("리그모드\화면_결과_타구장" ) ){		
-				; 타구장 결과
-				this.logger.log("경기 종료를 확인했습니다.")        
-				break	
-			}else{
-				this.logger.log("경기 종료를 기다립니다.")        
-				this.gameController.sleep(10)
-			}
-			
-			if( A_index > 12 ){
-				this.logger.log("2분 경과 다른 상태를 체크 합니다.")        				
-				return
-			}
-		}
-		
-		; if( GuiBoolScreenShotResult = true )
-			; funcCaptureSubScreen( "reward" )
-			; fPrintStatus("전투 완료가 확인되었습니다.")				
-	}
-    */
+    }	
 }

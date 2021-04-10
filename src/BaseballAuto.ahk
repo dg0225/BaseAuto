@@ -6,6 +6,7 @@
 #include %A_ScriptDir%\src\mode\RealTimeBattleMode.ahk
 #include %A_ScriptDir%\src\mode\RankingBattleMode.ahk
 #include %A_ScriptDir%\src\mode\FriendsBattleMode.ahk
+#include %A_ScriptDir%\src\mode\HomrunDerbyMode.ahk
 
 Class BaseballAuto{
     __NEW(){
@@ -36,6 +37,9 @@ Class BaseballAuto{
         this.typePerMode["친구"].Push(new GameStartMode( this.gameController ) ) 
         this.typePerMode["친구"].Push(new FriendsBattleMode( this.gameController ) ) 
 
+        this.typePerMode["홈런"]:=[]
+        this.typePerMode["홈런"].Push(new GameStartMode( this.gameController ) ) 
+        this.typePerMode["홈런"].Push(new HomrunDerbyMode( this.gameController ) ) 
 
         this.logger.log("BaseballAuto Ready !")
     }
