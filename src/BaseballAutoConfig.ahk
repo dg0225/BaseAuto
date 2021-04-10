@@ -116,7 +116,7 @@ class BaseAutoPlayer{
         this.status:="Unknwon"
         this.battleType:="전체"
         this.result:=0
-        this.remainFriendsBattleCount:=1
+        this.remainFriendsBattleCount:=40
     } 
     getResult(){
         return this.result
