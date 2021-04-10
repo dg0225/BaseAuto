@@ -18,12 +18,12 @@ Class FriendsBattleMode{
     checkAndRun()
     {
         counter:=0
-        counter+=this.receiveReward( ) 	
+
         counter+=this.startBattleMode( ) 	
         counter+=this.selectFriendsBattle( )
         exist:= this.selectTopFriends( )
         if( exist = 0 ){
-            
+
         }
         ; counter+=this.selectTopFriends( )
 
@@ -33,12 +33,13 @@ Class FriendsBattleMode{
 
         counter+=this.checkGameResultWindow( )
         counter+=this.checkMVPWindow( )
+        counter+=this.receiveReward( ) 	
         counter+=this.checkPopup( )
         counter+=this.checkPlaying( )
         counter+=this.checkFriendsBattleClose( )
         return counter
     }
-   
+
     startBattleMode()
     {
         if ( this.gameController.searchImageFolder("0.기본UI\0.메인화면_Base") ){		
@@ -74,7 +75,7 @@ Class FriendsBattleMode{
 
     }
     startFriendsBattle(){
-        if ( this.gameController.searchImageFolder("0.기본UI\2-2.친구대전_Base") ){		                
+        if ( this.gameController.searchImageFolder("0.기본UI\2-2.친구대전_Base") ){		 
             if ( this.gameController.searchImageFolder("친구대전\화면_대상선택상태") ){		
                 this.player.setStay()
                 this.logger.log("친구 대전을 시작합니다") 
@@ -115,7 +116,7 @@ Class FriendsBattleMode{
         }
 
         if ( this.gameController.searchImageFolder("친구대전\화면_팝업체크" ) ){		
-            this.logger.log("무슨 팝업이지.") 
+            this.logger.log("팝업을 제거합니다. 보상을 안받았나.") 
             if( this.gameController.searchAndClickFolder("친구대전\화면_팝업체크\버튼_확인" ) ){
                 if( localCounter > 5 ){
                     return localCounter
@@ -131,14 +132,11 @@ Class FriendsBattleMode{
         ; if ( this.gameController.searchImageFolder("랭대모드\화면_자동중" ) ){		
             ; this.player.setStay()
             this.gameController.sleep(2)
-            ; return 1
+        ; return 1
         ; }
         return 0 
     }
-    receiveReward(){
 
-
-    }
     checkFriendsBattleClose(){
         ; if ( this.gameController.searchImageFolder("랭대모드\화면_랭대종료" ) ){		
         ;     this.player.setStay()
@@ -151,7 +149,6 @@ Class FriendsBattleMode{
         return 0 
     }
 
-    
     checkGameResultWindow(){
         if ( this.gameController.searchImageFolder("1.공통\화면_경기_결과" ) ){		
             this.logger.log("경기 결과를 확인했습니다.") 
@@ -173,5 +170,16 @@ Class FriendsBattleMode{
         }
         return 0 
     }
-
+    receiveReward(){
+        if ( this.gameController.searchImageFolder("친구대전\버튼_모두받기" ) ){		
+            this.logger.log("받아라!! 보상 없어질라") 
+            if( this.gameController.searchAndClickFolder("친구대전\버튼_모두받기" ) ){
+                if( this.gameController.searchAndClickFolder("친구대전\버튼_모두받기\버튼_확인" ) ){
+                    return 1
+                }
+                return 1
+            }
+        }
+        return 0 
+    }
 }
