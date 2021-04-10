@@ -1,9 +1,9 @@
 ﻿#include %A_ScriptDir%\src\util\AutoLogger.ahk
 #include %A_ScriptDir%\src\util\MC_GameController.ahk
 
-Class RankingBattleMode{
+Class FriendsBattleMode{
 
-    logger:= new AutoLogger( "랭킹대전" ) 
+    logger:= new AutoLogger( "친구대전" ) 
 
     __NEW( controller )
     {
@@ -18,25 +18,31 @@ Class RankingBattleMode{
     checkAndRun()
     {
         counter:=0
-
+        counter+=this.receiveReward( ) 	
         counter+=this.startBattleMode( ) 	
         counter+=this.selectFriendsBattle( )
+        exist:= this.selectTopFriends( )
+        if( exist = 0 ){
+            
+        }
+        ; counter+=this.selectTopFriends( )
+
         counter+=this.startFriendsBattle( )
         counter+=this.playFriendsBattle( ) 
-        counter+=this.checkSlowAndChance( ) 
+        ; counter+=this.checkSlowAndChance( ) 
 
         counter+=this.checkGameResultWindow( )
         counter+=this.checkMVPWindow( )
         counter+=this.checkPopup( )
         counter+=this.checkPlaying( )
-        counter+=this.checkRankingClose( )
+        counter+=this.checkFriendsBattleClose( )
         return counter
     }
-
+   
     startBattleMode()
     {
         if ( this.gameController.searchImageFolder("0.기본UI\0.메인화면_Base") ){		
-            this.logger.log(this.player.getAppTitle() "랭킹 대전 을 시작합니다")
+            this.logger.log(this.player.getAppTitle() "친구 대전 을 시작합니다")
             this.player.setStay()
             if ( this.gameController.searchAndClickFolder("0.기본UI\0.메인화면_버튼_대전_팀별") ){
                 return 1
@@ -47,24 +53,36 @@ Class RankingBattleMode{
     selectFriendsBattle(){
         if ( this.gameController.searchImageFolder("0.기본UI\2.대전모드_Base") ){		
             this.player.setStay()
-            this.logger.log("랭킹 대전을 선택합니다") 
-            if ( this.gameController.searchAndClickFolder("0.기본UI\2.대전모드_버튼_랭킹대전") ){
+            this.logger.log("친구 대전을 선택합니다") 
+            if ( this.gameController.searchAndClickFolder("0.기본UI\2.대전모드_버튼_친구대전") ){
                 return 1
             }		 
         }
         return 0		
     }		
-    startFriendsBattle(){
-        if ( this.gameController.searchImageFolder("0.기본UI\2-1.랭킹대전_Base") ){		
+    selectTopFriends(){
+        if ( this.gameController.searchImageFolder("친구대전\버튼_탑대상") ){		
+            this.player.setStay()
+            this.logger.log("젤 위 대상을 선택합니다") 
+            if ( this.gameController.searchAndClickFolder("친구대전\버튼_탑대상",0,30) ){
+                return 1
+            }		 
+        }else{
+            return 10
+        }
+        return 0	
 
-            if ( this.gameController.searchImageFolder("랭대모드\화면_상대있음") ){		
+    }
+    startFriendsBattle(){
+        if ( this.gameController.searchImageFolder("0.기본UI\2-2.친구대전_Base") ){		                
+            if ( this.gameController.searchImageFolder("친구대전\화면_대상선택상태") ){		
                 this.player.setStay()
-                this.logger.log("랭킹 대전을 시작합니다") 
-                if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){                    
+                this.logger.log("친구 대전을 시작합니다") 
+                if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){ 
                     return 1
                 }		 
             }else{
-                this.logger.log("랭대 다 돈거 같아 시작하지 않습니다.") 
+                this.logger.log("친구가 없어서 시작하지 않습니다.") 
                 this.player.setFree()
                 return 1
             }
@@ -72,37 +90,17 @@ Class RankingBattleMode{
         return 0		
     }
     playFriendsBattle(){
-        if ( this.gameController.searchImageFolder("랭대모드\화면_랭킹대전준비") ){		
+        if ( this.gameController.searchImageFolder("친구대전\화면_친구대전준비") ){		
             this.player.setStay()
-            this.logger.log("경기를 시작합니다") 
+            this.logger.log("친구대전 경기를 시작합니다") 
             if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){
-                this.logger.log("4초 기다립니다") 
-                this.gameController.sleep(4)
+                this.logger.log("5초 기다립니다") 
+                this.gameController.sleep(5)
                 return 1
             }		 
         }
         return 0		
     } 
-
-    checkSlowAndChance(counter:=0){
-        localCounter:=counter
-        if ( this.gameController.searchImageFolder("1.공통\화면_찬스" ) ){		
-            this.logger.log("찬스는 하지 않겠다") 
-            if( this.gameController.searchAndClickFolder("1.공통\화면_찬스\버튼_취소" ) ){
-                if( localCounter > 5 )
-                    return localCounter
-                localCounter++
-                this.checkSlowAndChance(localCounter)
-            }			
-        }
-        if( this.gameController.searchAndClickFolder("1.공통\버튼_빠르게" ) ){
-            this.logger.log("빠르게 빠르게..") 
-            localCounter++ 
-            return localCounter
-        }			
-        return localCounter
-    }
-
     checkPopup(counter:=0){
         localCounter:=counter
 
@@ -116,9 +114,9 @@ Class RankingBattleMode{
             }
         }
 
-        if ( this.gameController.searchImageFolder("랭대모드\화면_팝업체크" ) ){		
-            this.logger.log("주말 팝업인가.") 
-            if( this.gameController.searchAndClickFolder("랭대모드\화면_팝업체크\버튼_확인" ) ){
+        if ( this.gameController.searchImageFolder("친구대전\화면_팝업체크" ) ){		
+            this.logger.log("무슨 팝업이지.") 
+            if( this.gameController.searchAndClickFolder("친구대전\화면_팝업체크\버튼_확인" ) ){
                 if( localCounter > 5 ){
                     return localCounter
                 }
@@ -130,25 +128,30 @@ Class RankingBattleMode{
     }
 
     checkPlaying(){
-        if ( this.gameController.searchImageFolder("랭대모드\화면_자동중" ) ){		
-            this.player.setStay()
+        ; if ( this.gameController.searchImageFolder("랭대모드\화면_자동중" ) ){		
+            ; this.player.setStay()
             this.gameController.sleep(2)
-            return 1
-        }
+            ; return 1
+        ; }
+        return 0 
+    }
+    receiveReward(){
+
+
+    }
+    checkFriendsBattleClose(){
+        ; if ( this.gameController.searchImageFolder("랭대모드\화면_랭대종료" ) ){		
+        ;     this.player.setStay()
+        ;     this.logger.log("랭대는 이제 다 돌았네요") 
+        ;     if( this.gameController.searchAndClickFolder("랭대모드\화면_랭대종료\버튼_확인" ) ){
+        ;         this.player.setFree()
+        ;         return 1
+        ;     }
+        ; }
         return 0 
     }
 
-    checkRankingClose(){
-        if ( this.gameController.searchImageFolder("랭대모드\화면_랭대종료" ) ){		
-            this.player.setStay()
-            this.logger.log("랭대는 이제 다 돌았네요") 
-            if( this.gameController.searchAndClickFolder("랭대모드\화면_랭대종료\버튼_확인" ) ){
-                this.player.setFree()
-                return 1
-            }
-        }
-        return 0 
-    }
+    
     checkGameResultWindow(){
         if ( this.gameController.searchImageFolder("1.공통\화면_경기_결과" ) ){		
             this.logger.log("경기 결과를 확인했습니다.") 
