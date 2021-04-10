@@ -117,6 +117,7 @@ class BaseAutoPlayer{
         this.battleType:="전체"
         this.result:=0
         this.remainFriendsBattleCount:=40
+        this.remainRealTimeBattleCount:=1
     } 
     getResult(){
         return this.result
@@ -157,6 +158,17 @@ class BaseAutoPlayer{
     needToStopFriendsBattle(){
         this.remainFriendsBattleCount--
         if(this.remainFriendsBattleCount<= 0){
+            return true
+        }Else
+            return false
+    }
+    
+    getRemainRealTimeBattleCount(){
+        return this.remainRealTimeBattleCount
+    }
+    needToStopRealTimeBattle(){
+        this.remainRealTimeBattleCount--
+        if(this.remainRealTimeBattleCount<= 0){
             return true
         }Else
             return false

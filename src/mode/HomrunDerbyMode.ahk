@@ -141,11 +141,12 @@ Class HomrunDerbyMode{
     checkHomerunDerbyClose(){
         if ( this.gameController.searchImageFolder("홈런더비모드\화면_볼없음" ) ){		 
             this.closeChecker++
-            this.logger.log("홈런더비 다 돌았네요") 
-            this.player.setFree() 
+            this.logger.log("홈런더비 다 돌았네요. .." + this.closeChecker)
             if( this.closeChecker > 2 ){
                 this.closeChecker:=0
                 this.player.setBye()
+            }else{
+                this.player.setFree() 
             }
             return 1
         }
