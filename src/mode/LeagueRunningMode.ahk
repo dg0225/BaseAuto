@@ -99,11 +99,11 @@ Class LeagueRunningMode{
                     return 1
                 }
             }else{
-                if ( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_게임시작") ){
+                if ( this.gameController.searchAndClickFolder("1.공통\버튼_게임시작") ){
                     this.logger.log("경기가 시작 됩니다. 15초 기다립니다.")
                     this.gameController.sleep(15)
                     return 1
-                }else if ( this.gameController.searchAndClickFolder("리그모드\버튼_플레이시작_이어하기") ){
+                }else if ( this.gameController.searchAndClickFolder("1.공통\버튼_이어하기") ){
                     this.logger.log("경기가 이어합니다. 15초 기다립니다.")
                     this.gameController.sleep(15)				
                     return 1
